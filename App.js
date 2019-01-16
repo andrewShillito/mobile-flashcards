@@ -5,7 +5,7 @@ import { createStore } from "redux";
 import reducer from "./reducers";
 import middleware from "./middleware";
 import { Provider } from "react-redux";
-import CustomStatusBar from "./components/customStatusBar";
+import CustomStatusBar from "./components/CustomStatusBar";
 import Home from "./components/Home";
 
 const StackNavigator = createStackNavigator({

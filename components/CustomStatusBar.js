@@ -10,4 +10,4 @@ function CustomStatusBar({backgroundColor, ...props}) {
   );
 }
 
-export default customStatusBar;
+export default CustomStatusBar;

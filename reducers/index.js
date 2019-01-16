@@ -27,7 +27,7 @@ export default function decks(store = {}, action) {
     case ADD_CARD:
       return {
         ...store,
-        store[action.title]: {
+        [action.title]: {
           ...store[action.title],
           "questions": store[action.title].questions.concat([action.card])
         }
@@ -35,7 +35,7 @@ export default function decks(store = {}, action) {
     case REMOVE_CARD:
       return {
         ...store,
-        store[action.title]: {
+        [action.title]: {
           ...store[action.title],
           "questions": store[action.title].questions.filter((question) => {
             return (question.question !== action.card.question || question.answer !== action.card.answer);
