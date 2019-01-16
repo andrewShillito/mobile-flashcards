@@ -9,8 +9,8 @@ const getDecks = function() {
   return _getDecks();
 }
 
-const getDeck = function(id) {
-  return _getDeck(id);
+const getDeck = function(title) {
+  return _getDeck(title);
 }
 
 const saveDeckTitle = function(title) {
