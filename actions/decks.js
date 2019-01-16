@@ -4,9 +4,10 @@ import {
   REMOVE_DECK,
 } from "./types";
 
-export const receiveDecks = () => {
+export const receiveDecks = (decks) => {
   return {
     type: RECEIVE_DECKS,
+    decks,
   };
 }
 
