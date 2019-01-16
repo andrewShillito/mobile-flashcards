@@ -3,6 +3,7 @@ import {
   _getDeck,
   _saveDeckTitle,
   _addCardToDeck,
+  _removeDeck,
 } from "./_data";
 
 const getDecks = function() {
@@ -21,9 +22,14 @@ const addCardToDeck = function(title, card) { // card must be formatted on front
   return _addCardToDeck(title, card);
 }
 
+const removeDeck = function(title) {
+  return _removeDeck(title);
+}
+
 export {
   getDecks,
   getDeck,
   saveDeckTitle,
   addCardToDeck,
+  removeDeck,
 }

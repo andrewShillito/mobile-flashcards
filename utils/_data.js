@@ -58,15 +58,29 @@ const _saveDeckTitle = function(title) {
   });
 }
 
-const _addCardToDeck(title, card) { //card must be formatted on front end
+const _addCardToDeck = function(title, card) { //card must be formatted on front end
   return new Promise((res, rej) => {
-    decks[title] !== undefined
-      ? decks[title] = {
-          ...decks[title],
-          "questions": decks[title].questions.concat([card]),
-        }
-      : rej(Error("Deck not found"));
+    setTimeout(() => {
+      decks[title] !== undefined
+        ? decks[title] = {
+            ...decks[title],
+            "questions": decks[title].questions.concat([card]),
+          }
+        : rej(Error("Deck not found"));
+    }, 500);
   });
+}
+
+const _removeDeck = function(title) {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      decks[title] !== undefined
+        ? rej(Error("Deck not found"))
+        : decks = {...decks},
+          delete decks[title],
+          res({...decks});
+    }, 500)
+  })
 }
 
 export {
@@ -74,4 +88,5 @@ export {
   _getDeck,
   _saveDeckTitle,
   _addCardToDeck,
+  _removeDeck,
 };
