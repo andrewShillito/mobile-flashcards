@@ -58,7 +58,7 @@ const _saveDeckTitle = function(title) {
   });
 }
 
-const _addCardToDeck(title, card) {
+const _addCardToDeck(title, card) { //card must be formatted on front end
   return new Promise((res, rej) => {
     decks[title] !== undefined
       ? decks[title] = {

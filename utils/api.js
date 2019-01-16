@@ -17,7 +17,7 @@ const saveDeckTitle = function(title) {
   return _saveDeckTitle(title);
 }
 
-const addCardToDeck = function(title, card) {
+const addCardToDeck = function(title, card) { // card must be formatted on front end
   return _addCardToDeck(title, card);
 }
 
