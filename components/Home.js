@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import Deck from "./Deck";
 import { connect } from "react-redux";
 import { handleReceiveDecks } from "../actions/decks";
@@ -8,21 +8,30 @@ class Home extends React.Component {
   componentDidMount() {
     this.props.dispatch(handleReceiveDecks());
   }
+  renderItem = ({ item }) => {
+    console.log(item)
+    return <Deck deck={item} />
+  }
   render() {
     const { decks } = this.props;
     return (
       <View>
-        {Object.keys(decks).map((title) => (
-          <Deck deck={decks[title]} key={title} />
-        ))}
+        <FlatList
+          data={decks}
+          renderItem={this.renderItem}
+          keyExtractor={(item) => item.title}
+          />
       </View>
     );
   }
 }
 
 function mapStateToProps({ decks }) {
+  // mapping decks object to an array
   return {
-    decks,
+    decks: Object.keys(decks).map(title => {
+      return decks[title];
+    })
   }
 }
 
