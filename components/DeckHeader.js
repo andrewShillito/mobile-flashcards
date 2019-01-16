@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-export default function DeckHeader({ name }) {
+export default function DeckHeader({ children }) {
   return (
     <View>
-      <Text>{name}</Text>
+      <Text>{children}</Text>
     </View>
   );
 }

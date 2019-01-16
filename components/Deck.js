@@ -4,9 +4,10 @@ import DeckHeader from "./DeckHeader";
 
 class Deck extends React.Component {
   render() {
+    const deck = this.props;
     return (
       <TouchableOpacity>
-        <DeckHeader name="React" />
+        <DeckHeader>{deck.title}</DeckHeader>
       </TouchableOpacity>
     );
   }
