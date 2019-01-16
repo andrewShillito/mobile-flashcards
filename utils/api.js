@@ -22,7 +22,7 @@ const addCardToDeck = function(title, card) { // card must be formatted on front
   return _addCardToDeck(title, card);
 }
 
-const removeDeck = function(title) {
+const deleteDeck = function(title) {
   return _removeDeck(title);
 }
 
@@ -31,5 +31,5 @@ export {
   getDeck,
   saveDeckTitle,
   addCardToDeck,
-  removeDeck,
+  deleteDeck,
 }

@@ -1,5 +1,5 @@
 import { RECEIVE_DECKS, ADD_DECK, REMOVE_DECK } from "./types";
-import { saveDeckTitle, getDeck, getDecks, removeDeck } from "../utils/api";
+import { saveDeckTitle, getDeck, getDecks, deleteDeck } from "../utils/api";
 
 const receiveDecks = (decks) => {
   return {
@@ -45,8 +45,8 @@ const removeDeck = (title) => {
 
 export const handleRemoveDeck = (title) => {
   return dispatch => {
-    return removeDeck(title)
+    return deleteDeck(title)
       .then(() => dispatch(removeDeck(title)))
-      catch((err) => console.log(err));
+      .catch((err) => console.log(err));
   };
 }

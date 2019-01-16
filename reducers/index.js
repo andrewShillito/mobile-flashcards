@@ -5,8 +5,9 @@ import {
   ADD_CARD,
   REMOVE_CARD,
 } from "../actions/types";
+import { combineReducers } from "redux";
 
-export default function decks(store = {}, action) {
+function decks(store = {}, action) {
   switch(action.type) {
     case RECEIVE_DECKS:
       return {
@@ -46,3 +47,7 @@ export default function decks(store = {}, action) {
       return store;
   }
 }
+
+export default combineReducers({
+  decks,
+});
