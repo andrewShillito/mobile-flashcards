@@ -11,7 +11,7 @@ export const deckStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "blue",
+    backgroundColor: "steelblue",
     height: 150,
     marginLeft: 20,
     marginRight: 20,
@@ -23,6 +23,12 @@ export const deckStyles = StyleSheet.create({
     color: "white",
     fontSize: 30,
   },
+});
+
+export const newStyles = StyleSheet.create({
+  new: {
+
+  }
 });
 
 export const cardStyles = StyleSheet.create({

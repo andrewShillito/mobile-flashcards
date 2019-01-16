@@ -1,20 +1,39 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createAppContainer, createStackNavigator } from "react-navigation";
+import { createAppContainer, createStackNavigator, createBottomTabNavigator } from "react-navigation";
 import { createStore } from "redux";
 import reducer from "./reducers";
 import middleware from "./middleware";
 import { Provider } from "react-redux";
 import CustomStatusBar from "./components/CustomStatusBar";
 import Home from "./components/Home";
+import New from "./components/New";
+import { FontAwesome } from "@expo/vector-icons";
 
-const StackNavigator = createStackNavigator({
+const Tabs = createBottomTabNavigator({
   Home: {
     screen: Home,
+    navigationOptions: {
+      tabBarLabel: "Home",
+      tabBarIcon: ({tintColor}) => <FontAwesome name="home" size={30} color={tintColor} />
+    }
   },
-});
+  New: {
+    screen: New,
+    navigationOptions: {
+      tabBarLabel: "New",
+      tabBarIcon: ({tintColor}) => <FontAwesome name="plus-square" size={30} color={tintColor} />
+    }
+  },
+})
 
-const AppContainer = createAppContainer(StackNavigator);
+// const StackNavigator = createStackNavigator({
+//   Home: {
+//     Tabs,
+//   },
+// });
+
+const AppContainer = createAppContainer(Tabs);
 
 export default class App extends React.Component {
   render() {
