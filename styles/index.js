@@ -16,7 +16,6 @@ export const deckStyles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginTop: 10,
-    borderColor: "black",
     borderRadius: 5,
   },
   deckHeader: {
@@ -33,4 +32,20 @@ export const newStyles = StyleSheet.create({
 
 export const cardStyles = StyleSheet.create({
 
+});
+
+export const buttonStyles = StyleSheet.create({
+  submitBtn: {
+    backgroundColor: "steelblue",
+    marginVertical: 20,
+    marginHorizontal: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 80,
+    borderRadius: 5
+  },
+  text: {
+    color: "white",
+    fontSize: 30,
+  },
 });
