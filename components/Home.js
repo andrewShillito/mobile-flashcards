@@ -9,10 +9,12 @@ class Home extends React.Component {
     this.props.dispatch(handleReceiveDecks());
   }
   render() {
+    const { decks } = this.props;
     return (
       <View>
-        <Deck name="Deck 1"/>
-        <Text>{JSON.stringify(this.props)}</Text>
+        {Object.keys(decks).map((title) => (
+          <Deck deck={decks[title]} key={title} />
+        ))}
       </View>
     );
   }

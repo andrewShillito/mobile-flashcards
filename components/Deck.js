@@ -4,7 +4,7 @@ import DeckHeader from "./DeckHeader";
 
 class Deck extends React.Component {
   render() {
-    const deck = this.props;
+    const { deck } = this.props;
     return (
       <TouchableOpacity>
         <DeckHeader>{deck.title}</DeckHeader>
