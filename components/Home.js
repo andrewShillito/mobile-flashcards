@@ -9,13 +9,12 @@ class Home extends React.Component {
     this.props.dispatch(handleReceiveDecks());
   }
   renderItem = ({ item }) => {
-    console.log(item)
     return <Deck deck={item} />
   }
   render() {
-    const { decks } = this.props;
+    const { decks } = this.props; //array instead of obj because of mapStateToProps below
     return (
-      <View>
+      <View style={{flex: 1}}>
         <FlatList
           data={decks}
           renderItem={this.renderItem}
