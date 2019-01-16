@@ -20,7 +20,8 @@ export const deckStyles = StyleSheet.create({
     borderRadius: 5,
   },
   deckHeader: {
-    color: "white"
+    color: "white",
+    fontSize: 30,
   },
 });
 
