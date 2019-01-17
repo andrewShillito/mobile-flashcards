@@ -26,13 +26,6 @@ const Tabs = createBottomTabNavigator({
       tabBarIcon: ({tintColor}) => <FontAwesome name="plus-square" size={30} color={tintColor} />
     }
   },
-  Edit: {
-    screen: Edit,
-    navigationOptions: {
-      tabBarLabel: "Edit",
-      tabBarIcon: ({tintColor}) => <FontAwesome name="edit" size={30} color={tintColor} />
-    }
-  }
 })
 
 // const StackNavigator = createStackNavigator({
@@ -40,6 +33,16 @@ const Tabs = createBottomTabNavigator({
 //     Tabs,
 //   },
 // });
+
+
+// Edit: {
+//   screen: Edit,
+//   navigationOptions: {
+//     tabBarLabel: "Edit",
+//     tabBarIcon: ({tintColor}) => <FontAwesome name="edit" size={30} color={tintColor} />
+//   }
+// }
+
 
 const AppContainer = createAppContainer(Tabs);
 
