@@ -26,7 +26,21 @@ export const deckStyles = StyleSheet.create({
 
 export const newStyles = StyleSheet.create({
   new: {
-
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  input: {
+    flex: 1,
+    marginHorizontal: 20,
+    marginVertical: 20,
+  },
+  label: {
+    flex: 1,
+    fontSize: 30,
+  },
+  header: {
+    fontSize: 30,
   }
 });
 
@@ -42,7 +56,9 @@ export const buttonStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: 80,
-    borderRadius: 5
+    borderRadius: 5,
+    paddingHorizontal: 40,
+
   },
   text: {
     color: "white",

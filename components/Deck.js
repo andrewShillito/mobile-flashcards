@@ -1,13 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import DeckHeader from "./DeckHeader";
-import { deckStyles } from "../styles";
+import { deckStyles as styles } from "../styles";
 
 class Deck extends React.Component {
   render() {
     const { deck } = this.props;
     return (
-      <TouchableOpacity style={deckStyles.deck}>
+      <TouchableOpacity style={styles.deck}>
         <DeckHeader>{deck.title}</DeckHeader>
       </TouchableOpacity>
     );
