@@ -40,7 +40,7 @@ export default class App extends React.Component {
     return (
       <Provider store={createStore(reducer, middleware)}>
         <View style={styles.appContainer}>
-          <CustomStatusBar backgroundColor="purple" barStyle="light-content" />
+          <CustomStatusBar backgroundColor="steelblue" barStyle="light-content" />
           <AppContainer />
         </View>
       </Provider>

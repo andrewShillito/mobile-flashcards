@@ -30,7 +30,7 @@ class New extends React.Component {
     return (
       <View style={styles.new}>
         <Text style={styles.header}>Create a new deck</Text>
-        <View>
+        <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
             placeholder="Deck Title"
