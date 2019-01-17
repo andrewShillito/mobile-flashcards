@@ -28,19 +28,18 @@ export const newStyles = StyleSheet.create({
   new: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
   },
   input: {
-    flex: 1,
     marginHorizontal: 20,
-    marginVertical: 20,
+    fontSize: 30,
   },
   label: {
     flex: 1,
     fontSize: 30,
   },
   header: {
-    fontSize: 30,
+    fontSize: 40,
   }
 });
 

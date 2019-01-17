@@ -2,13 +2,24 @@ import React from 'react';
 import { Text, View, TextInput } from 'react-native';
 import SubmitBtn from "./SubmitBtn";
 import { newStyles as styles } from "../styles";
+import { connect } from "react-redux";
+import { handleAddDeck } from "../actions/decks";
 
 class New extends React.Component {
   state = {
-    title: ""
+    title: "",
   }
   onPress = () => {
-    console.log("pressed")
+    if (this.state.title === "") {
+      return;
+    }
+    else {
+      this.setState(() => ({
+        title: '',
+      }));
+      this.props.dispatch(handleAddDeck(this.state.title));
+      this.props.navigation.navigate("Home");
+    }
   }
   onChange = ({ title }) => {
     this.setState(() => ({
@@ -18,12 +29,13 @@ class New extends React.Component {
   render() {
     return (
       <View style={styles.new}>
-        <Text style={styles.text}>New Route</Text>
+        <Text style={styles.header}>Create a new deck</Text>
         <View>
           <TextInput
-            style={styles.text}
+            style={styles.input}
             placeholder="Deck Title"
             onChangeText={(title) => this.onChange({title})}
+            value={this.state.title}
             />
         </View>
         <SubmitBtn onPress={this.onPress}>Submit</SubmitBtn>
@@ -32,4 +44,4 @@ class New extends React.Component {
   }
 }
 
-export default New;
+export default connect()(New);

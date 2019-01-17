@@ -17,7 +17,7 @@ function decks(store = {}, action) {
     case ADD_DECK:
       return {
         ...store,
-        [action.deck.title]: action.deck,
+        ...action.deck,
       }
     case REMOVE_DECK:
       const newState = {
