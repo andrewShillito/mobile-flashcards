@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import CustomStatusBar from "./components/CustomStatusBar";
 import Home from "./components/Home";
 import New from "./components/New";
+import Edit from "./components/Edit";
 import { FontAwesome } from "@expo/vector-icons";
 
 const Tabs = createBottomTabNavigator({
@@ -25,6 +26,13 @@ const Tabs = createBottomTabNavigator({
       tabBarIcon: ({tintColor}) => <FontAwesome name="plus-square" size={30} color={tintColor} />
     }
   },
+  Edit: {
+    screen: Edit,
+    navigationOptions: {
+      tabBarLabel: "Edit",
+      tabBarIcon: ({tintColor}) => <FontAwesome name="edit" size={30} color={tintColor} />
+    }
+  }
 })
 
 // const StackNavigator = createStackNavigator({
