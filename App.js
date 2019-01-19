@@ -29,6 +29,15 @@ const Tabs = createBottomTabNavigator({
   },
 })
 
+const DeckStack = createStackNavigator({
+  DeckDetail: {
+    screen: DeckDetail,
+  },
+  Edit: {
+    screen: Edit,
+  },
+})
+
 const MainStack = createStackNavigator({
   Home: {
     screen: Tabs,
@@ -38,8 +47,8 @@ const MainStack = createStackNavigator({
     }
   },
   Deck: {
-    screen: DeckDetail,
-  }
+    screen: DeckStack,
+  },
 });
 
 const AppContainer = createAppContainer(MainStack);
