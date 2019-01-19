@@ -9,7 +9,10 @@ class Home extends React.Component {
     this.props.dispatch(handleReceiveDecks());
   }
   renderItem = ({ item }) => {
-    return <Deck deck={item} />
+    return <Deck deck={item} onPress={this.onPress} />
+  }
+  onPress = (title) => {
+    this.props.navigation.navigate("Deck");
   }
   render() {
     const { decks } = this.props; //array instead of obj because of mapStateToProps below

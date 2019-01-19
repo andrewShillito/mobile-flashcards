@@ -5,9 +5,9 @@ import { deckStyles as styles } from "../styles";
 
 class Deck extends React.Component {
   render() {
-    const { deck } = this.props;
+    const { deck, onPress } = this.props;
     return (
-      <TouchableOpacity style={styles.deck}>
+      <TouchableOpacity style={styles.deck} onPress={() => onPress(deck.title)}>
         <DeckHeader>{deck.title}</DeckHeader>
       </TouchableOpacity>
     );

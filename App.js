@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import New from "./components/New";
 import Edit from "./components/Edit";
 import { FontAwesome } from "@expo/vector-icons";
+import DeckDetail from "./components/DeckDetail";
 
 const Tabs = createBottomTabNavigator({
   Home: {
@@ -28,23 +29,16 @@ const Tabs = createBottomTabNavigator({
   },
 })
 
-// const StackNavigator = createStackNavigator({
-//   Home: {
-//     Tabs,
-//   },
-// });
+const Stack = createStackNavigator({
+  Home: {
+    screen: Tabs,
+  },
+  Deck: {
+    screen: DeckDetail,
+  }
+});
 
-
-// Edit: {
-//   screen: Edit,
-//   navigationOptions: {
-//     tabBarLabel: "Edit",
-//     tabBarIcon: ({tintColor}) => <FontAwesome name="edit" size={30} color={tintColor} />
-//   }
-// }
-
-
-const AppContainer = createAppContainer(Tabs);
+const AppContainer = createAppContainer(Stack);
 
 export default class App extends React.Component {
   render() {
