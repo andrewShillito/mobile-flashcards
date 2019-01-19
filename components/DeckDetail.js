@@ -19,10 +19,9 @@ class DeckDetail extends React.Component {
 }
 
 function mapStateToProps({ decks }, { navigation }) {
-  console.log("state:", state);
-  console.log("exProps:", exProps)
+  const title = navigation.state.params.title;
   return {
-    ...state,
+    deck: decks[title],
   };
 }
 
