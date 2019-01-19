@@ -4,6 +4,8 @@ import {
   _saveDeckTitle,
   _addCardToDeck,
   _removeDeck,
+  _setActiveDeck,
+  _clearActiveDeck,
 } from "./_data";
 
 const getDecks = function() {
@@ -26,10 +28,20 @@ const deleteDeck = function(title) {
   return _removeDeck(title);
 }
 
+const setActiveDeck = function(title) {
+  return _setActiveDeck(title);
+}
+
+const clearActiveDeck = function() {
+  return _clearActiveDeck();
+}
+
 export {
   getDecks,
   getDeck,
   saveDeckTitle,
   addCardToDeck,
   deleteDeck,
+  setActiveDeck,
+  clearActiveDeck,
 }

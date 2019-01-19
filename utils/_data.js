@@ -23,6 +23,8 @@ let decks = {
   }
 }
 
+let activeDeck = null;
+
 const formatDeck = function(title) {
   return {
     [title]: {
@@ -80,7 +82,30 @@ const _removeDeck = function(title) {
           delete decks[title],
           res({...decks});
     }, 500)
-  })
+  });
+}
+
+const _setActiveDeck = function(title) {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      if (title !== "" && title in decks) {
+        activeDeck = title;
+        res(decks[title]);
+      }
+      else {
+        rej(Error("Invalid deck name"));
+      }
+    }, 200)
+  });
+}
+
+const _clearActiveDeck = function() {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      activeDeck = null;
+      res();
+    }, 200)
+  });
 }
 
 export {
