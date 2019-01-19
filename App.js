@@ -57,6 +57,12 @@ const DeckTabs = createBottomTabNavigator({
   }
 );
 
+DeckTabs.navigationOptions = ({navigation}) => {
+  return {
+    headerTitle: navigation.state.params.title,
+  };
+}
+
 const MainStack = createStackNavigator({
   Home: {
     screen: Tabs,
@@ -67,9 +73,6 @@ const MainStack = createStackNavigator({
   },
   Deck: {
     screen: DeckTabs,
-    navigationOptions: {
-      title: "",
-    }
   },
 });
 
