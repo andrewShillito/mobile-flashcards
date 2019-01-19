@@ -32,6 +32,10 @@ const Tabs = createBottomTabNavigator({
 const Stack = createStackNavigator({
   Home: {
     screen: Tabs,
+    navigationOptions: {
+      title: "Home",
+      header: null,
+    }
   },
   Deck: {
     screen: DeckDetail,
