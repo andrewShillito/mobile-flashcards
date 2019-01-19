@@ -1,6 +1,9 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { connect } from "react-redux";
+import Deck from "./Deck";
+import SubmitBtn from "./SubmitBtn";
+import DeckInfo from "./DeckInfo";
 
 class DeckDetail extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -9,10 +12,12 @@ class DeckDetail extends React.Component {
     };
   }
   render() {
-    console.log(this.props);
+    const { title, questions } = this.props.deck;
     return (
-      <View>
-        <Text>Deck Detail</Text>
+      <View style={{flex: 1, justifyContent: "center"}}>
+        <DeckInfo title={title} />
+        <SubmitBtn>Edit Deck</SubmitBtn>
+        <SubmitBtn>Start Quiz</SubmitBtn>
       </View>
     );
   }
