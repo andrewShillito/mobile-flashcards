@@ -4,6 +4,8 @@ import {
   REMOVE_DECK,
   ADD_CARD,
   REMOVE_CARD,
+  SET_ACTIVE_DECK,
+  CLEAR_ACTIVE_DECK,
 } from "../actions/types";
 import { combineReducers } from "redux";
 
@@ -48,6 +50,18 @@ function decks(store = {}, action) {
   }
 }
 
+function activeDeck(store = null, action) {
+  switch (action.type) {
+    case SET_ACTIVE_DECK:
+      return action.title;
+    case CLEAR_ACTIVE_DECK:
+      return null;
+    default:
+      return store;
+  }
+}
+
 export default combineReducers({
   decks,
+  activeDeck,
 });
