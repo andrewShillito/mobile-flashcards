@@ -13,7 +13,6 @@ function DeckInfo(props) {
 }
 
 function mapStateToProps({ decks }, { title }) {
-  console.log("TITLE:", title);
   return {
     deck: decks[title],
   };

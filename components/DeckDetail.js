@@ -23,7 +23,6 @@ class DeckDetail extends React.Component {
 }
 
 function mapStateToProps({ decks }, { navigation }) {
-  console.log("NAVIGATION:", navigation)
   const title = navigation.state.params.title;
   return {
     deck: decks[title],
