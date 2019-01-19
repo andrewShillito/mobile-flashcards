@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createAppContainer, createStackNavigator, createBottomTabNavigator } from "react-navigation";
+import { createAppContainer, createStackNavigator, createBottomTabNavigator, createSwitchNavigator } from "react-navigation";
 import { createStore } from "redux";
 import reducer from "./reducers";
 import middleware from "./middleware";
@@ -8,9 +8,10 @@ import { Provider } from "react-redux";
 import CustomStatusBar from "./components/CustomStatusBar";
 import Home from "./components/Home";
 import New from "./components/New";
-import Edit from "./components/Edit";
-import { FontAwesome } from "@expo/vector-icons";
+import EditDeck from "./components/EditDeck";
+import { FontAwesome, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 import DeckDetail from "./components/DeckDetail";
+import AddCard from "./components/AddCard";
 
 const Tabs = createBottomTabNavigator({
   Home: {
@@ -29,14 +30,32 @@ const Tabs = createBottomTabNavigator({
   },
 })
 
-const DeckStack = createStackNavigator({
+const DeckTabs = createBottomTabNavigator({
   DeckDetail: {
     screen: DeckDetail,
+    navigationOptions: {
+      tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name='cards-outline' size={30} color={tintColor} />
+    }
+    },
+  AddCard: {
+    screen: AddCard,
+    navigationOptions: {
+      tabBarLabel: "Add Card",
+      tabBarIcon: ({tintColor}) => <Entypo name="add-to-list" size={30} color={tintColor} />
+    }
   },
-  Edit: {
-    screen: Edit,
+  EditDeck: {
+    screen: EditDeck,
+    navigationOptions: {
+      tabBarLabel: "Edit Deck",
+      tabBarIcon: ({tintColor}) => <FontAwesome name="edit" size={30} color={tintColor} />
+    }
+    },
   },
-})
+  {
+    initialRouteName: "DeckDetail",
+  }
+);
 
 const MainStack = createStackNavigator({
   Home: {
@@ -47,7 +66,10 @@ const MainStack = createStackNavigator({
     }
   },
   Deck: {
-    screen: DeckStack,
+    screen: DeckTabs,
+    navigationOptions: {
+      title: "",
+    }
   },
 });
 

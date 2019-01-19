@@ -9,6 +9,7 @@ class DeckDetail extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.state.params.title,
+      tabBarLabel: navigation.state.params.title,
     };
   }
   goToEdit = () =>{
@@ -27,6 +28,7 @@ class DeckDetail extends React.Component {
 }
 
 function mapStateToProps({ decks }, { navigation }) {
+  console.log("NAVIGATION:", navigation)
   const title = navigation.state.params.title;
   return {
     deck: decks[title],
