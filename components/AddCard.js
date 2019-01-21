@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import RouteTitle from "./RouteTitle";
 import SubmitBtn from "./SubmitBtn";
 import { inputStyles } from "../styles";
+import { handleAddCard } from "../actions/cards";
 
 class AddCard extends React.Component {
   state = {
@@ -16,14 +17,27 @@ class AddCard extends React.Component {
     }));
   }
   validateInput = () => {
-    return (this.state.question.length && this.state.answer.length);
+    let msg = '';
+    (this.state.question.length && this.state.answer.length)
+      ? msg = "Ready for submission"
+      : msg = "Must complete both fields";
+    return msg;
   }
   onSubmit = () => {
-    console.log(this.state);
+    if (this.validateInput()) {
+      const newCard = {
+        question: this.state.question,
+        answer: this.state.answer,
+      };
+      handleAddCard(this.props.deck.title, newCard);
+    }
+    else {
+      alert("Must complete both fields");
+    }
   }
   render() {
     const title = this.props.navigation.state.params.title;
-    const validInput = this.validateInput;
+    const validInput = this.validateInput();
 
     return (
       <View style={{flex:1}}>
@@ -44,12 +58,19 @@ class AddCard extends React.Component {
             value={this.state.answer}
             />
         </View>
-        <SubmitBtn disabled={!validInput} onPress={this.onSubmit}>Submit</SubmitBtn>
+        <SubmitBtn onPress={this.onSubmit}>Submit</SubmitBtn>
+        <View>
+          <Text>{validInput}</Text>
+        </View>
       </View>
     );
   }
 }
 
+function mapStateToProps({ decks, activeDeck }){
+  return {
+    deck: decks[activeDeck],
+  };
+}
 
-
-export default connect()(AddCard);
+export default connect(mapStateToProps)(AddCard);
