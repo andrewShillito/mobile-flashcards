@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import SubmitBtn from "./SubmitBtn";
 import { inputStyles } from "../styles";
 
+
 class EditDeck extends React.Component {
   static navigationOptions = ({navigation}) => {
     return {
@@ -11,7 +12,7 @@ class EditDeck extends React.Component {
     };
   }
   state = {
-    title: this.props.navigation.state.params.title,
+    title: '',
   }
   addCard = () => {
     this.props.navigation.navigate("AddCard");
@@ -21,17 +22,22 @@ class EditDeck extends React.Component {
       title,
     }));
   }
+  changeTitle = (oldTitle, newTitle) => {
+    // this.props.dispatch() // need to edit the store if I am going to change 
+    // the deck title - need new actions and reducer changes
+  }
   render() {
     return (
       <View>
         <View style={inputStyles.inputContainer}>
           <TextInput
             style={inputStyles.input}
-            placeholder="Deck Title"
+            placeholder="New Title"
             onChangeText={(title) => this.onChange({title})}
             value={this.state.title}
             />
         </View>
+        <SubmitBtn onPress={() => this.changeTitle(this.props.navigation.state.params.title, this.state.title)}>Submit</SubmitBtn>
       </View>
     );
   }

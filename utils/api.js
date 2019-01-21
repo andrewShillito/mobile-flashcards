@@ -6,6 +6,7 @@ import {
   _removeDeck,
   _setActiveDeck,
   _clearActiveDeck,
+  _editDeckTitle,
 } from "./_data";
 
 const getDecks = function() {
@@ -36,6 +37,10 @@ const clearActiveDeck = function() {
   return _clearActiveDeck();
 }
 
+const editDeckTitle = function(oldTitle, newTitle) {
+  return _editDeckTitle(oldTitle, newTitle);
+}
+
 export {
   getDecks,
   getDeck,
@@ -44,4 +49,5 @@ export {
   deleteDeck,
   setActiveDeck,
   clearActiveDeck,
+  editDeckTitle,
 }

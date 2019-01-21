@@ -60,6 +60,19 @@ const _saveDeckTitle = function(title) {
   });
 }
 
+const _editDeckTitle = function(oldTitle, newTitle) {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      decks[oldTitle] === undefined
+        ? rej(Error("Deck not found"))
+        : decks[newTitle] = {
+          ...decks[oldTitle],
+          title: newTitle,
+        }, delete decks[oldTitle], res(decks[newTitle]);
+    })
+  })
+}
+
 const _addCardToDeck = function(title, card) { //card must be formatted on front end
   return new Promise((res, rej) => {
     setTimeout(() => {
@@ -114,4 +127,5 @@ export {
   _saveDeckTitle,
   _addCardToDeck,
   _removeDeck,
+  _editDeckTitle,
 };

@@ -87,7 +87,6 @@ export const inputStyles = StyleSheet.create({
     width: 270,
   },
   label: {
-    flex: 1,
     fontSize: 30,
   },
 })
