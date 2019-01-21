@@ -31,10 +31,7 @@ const HomeStack = createStackNavigator({
     }
   },
   EditDeck: {
-    screen: EditDeck,
-    navigationOptions: {
-      title: "Edit Deck", // Maybe change to be "Edit ${deckTitle}"
-    }
+    screen: EditDeck, //header title is dynamically set via nav params deckDetail -> editDeck
   }
 });
 

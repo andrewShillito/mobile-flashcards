@@ -11,14 +11,19 @@ class DeckDetail extends React.Component {
       title: navigation.state.params.title,
     };
   }
+  startQuiz = () => {
+    this.props.navigation.navigate("Home"); // change to go to quiz
+  }
+  editDeck = () => {
+    this.props.navigation.navigate("EditDeck", { title: this.props.deck.title });
+  }
   render() {
     const { title, questions } = this.props.deck;
-    console.log(this.props);
     return (
       <View style={{flex: 1, justifyContent: "center"}}>
         <DeckInfo title={title} />
-        <SubmitBtn>Start Quiz</SubmitBtn>
-        <SubmitBtn>Edit Deck</SubmitBtn>
+        <SubmitBtn onPress={this.startQuiz}>Start Quiz</SubmitBtn>
+        <SubmitBtn onPress={this.editDeck}>Edit Deck</SubmitBtn>
       </View>
     );
   }

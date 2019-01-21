@@ -72,3 +72,22 @@ export const buttonStyles = StyleSheet.create({
     fontSize: 30,
   },
 });
+
+export const inputStyles = StyleSheet.create({
+  input: {
+    marginHorizontal: 20,
+    fontSize: 30,
+    paddingBottom: 5,
+  },
+  inputContainer: {
+    borderStyle: "solid",
+    borderColor: "white",
+    borderBottomColor: "black",
+    borderWidth: 1,
+    width: 270,
+  },
+  label: {
+    flex: 1,
+    fontSize: 30,
+  },
+})
