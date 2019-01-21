@@ -13,70 +13,49 @@ import { FontAwesome, MaterialCommunityIcons, Entypo } from "@expo/vector-icons"
 import DeckDetail from "./components/DeckDetail";
 import AddCard from "./components/AddCard";
 
-const Tabs = createBottomTabNavigator({
+const HomeStack = createStackNavigator({
   Home: {
     screen: Home,
     navigationOptions: {
-      tabBarLabel: "Home",
-      tabBarIcon: ({tintColor}) => <FontAwesome name="home" size={30} color={tintColor} />
+      header: null,
+      title: "Home",
     }
   },
-  New: {
-    screen: New,
-    navigationOptions: {
-      tabBarLabel: "New",
-      tabBarIcon: ({tintColor}) => <FontAwesome name="plus-square" size={30} color={tintColor} />
-    }
-  },
-})
-
-const DeckTabs = createBottomTabNavigator({
   DeckDetail: {
-    screen: DeckDetail,
-    navigationOptions: {
-      tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name='cards-outline' size={30} color={tintColor} />
-    }
+    screen: DeckDetail, //set header title dynamically to be deck title
     },
   AddCard: {
     screen: AddCard,
     navigationOptions: {
-      tabBarLabel: "Add Card",
-      tabBarIcon: ({tintColor}) => <Entypo name="add-to-list" size={30} color={tintColor} />
+      title: "Add Card",
     }
   },
   EditDeck: {
     screen: EditDeck,
     navigationOptions: {
-      tabBarLabel: "Edit Deck",
-      tabBarIcon: ({tintColor}) => <FontAwesome name="edit" size={30} color={tintColor} />
+      title: "Edit Deck", // Maybe change to be "Edit ${deckTitle}"
     }
-    },
-  },
-  {
-    initialRouteName: "DeckDetail",
   }
-);
-
-DeckTabs.navigationOptions = ({navigation}) => {
-  return {
-    headerTitle: navigation.state.params.title,
-  };
-}
-
-const MainStack = createStackNavigator({
-  Home: {
-    screen: Tabs,
-    navigationOptions: {
-      title: "Home",
-      header: null,
-    }
-  },
-  Deck: {
-    screen: DeckTabs,
-  },
 });
 
-const AppContainer = createAppContainer(MainStack);
+const Tabs = createBottomTabNavigator({
+  Home: {
+    screen: HomeStack,
+    navigationOptions: {
+      tabBarLabel: "Home",
+      tabBarIcon: ({tintColor}) => <FontAwesome name="home" size={30} color={tintColor} />,
+    }
+  },
+  New: {
+     screen: New,
+     navigationOptions: {
+       tabBarLabel: "New",
+       tabBarIcon: ({tintColor}) => <FontAwesome name="plus-square" size={30} color={tintColor} />
+     }
+   },
+});
+
+const AppContainer = createAppContainer(Tabs);
 
 export default class App extends React.Component {
   render() {

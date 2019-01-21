@@ -8,15 +8,17 @@ import DeckInfo from "./DeckInfo";
 class DeckDetail extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      tabBarLabel: navigation.state.params.title,
+      title: navigation.state.params.title,
     };
   }
   render() {
     const { title, questions } = this.props.deck;
+    console.log(this.props);
     return (
       <View style={{flex: 1, justifyContent: "center"}}>
         <DeckInfo title={title} />
         <SubmitBtn>Start Quiz</SubmitBtn>
+        <SubmitBtn>Edit Deck</SubmitBtn>
       </View>
     );
   }

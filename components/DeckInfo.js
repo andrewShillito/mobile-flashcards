@@ -3,7 +3,6 @@ import { View, Text } from "react-native";
 import { connect } from "react-redux";
 
 function DeckInfo(props) {
-  console.log(props);
   return (
     <View style={{alignItems: "center"}}>
       <Text style={{fontSize: 30}}>Number of Cards</Text>
