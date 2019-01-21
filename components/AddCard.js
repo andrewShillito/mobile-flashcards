@@ -18,6 +18,9 @@ class AddCard extends React.Component {
   validateInput = () => {
     return (this.state.question.length && this.state.answer.length);
   }
+  onSubmit = () => {
+    console.log(this.state);
+  }
   render() {
     const title = this.props.navigation.state.params.title;
     const validInput = this.validateInput;
@@ -41,7 +44,7 @@ class AddCard extends React.Component {
             value={this.state.answer}
             />
         </View>
-        <SubmitBtn disabled={!validInput} onPress={}>Submit</SubmitBtn>
+        <SubmitBtn disabled={!validInput} onPress={this.onSubmit}>Submit</SubmitBtn>
       </View>
     );
   }
