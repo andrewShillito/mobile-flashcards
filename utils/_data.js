@@ -74,13 +74,15 @@ const _editDeckTitle = function(oldTitle, newTitle) {
 }
 
 const _addCardToDeck = function(deckTitle, card) { //card must be formatted on front end
+  console.log("Data func:", deckTitle, card)
   return new Promise((res, rej) => {
     setTimeout(() => {
-      if (decks[deckTitle !== undefined]) {
+      if (decks[deckTitle] !== undefined) {
         decks[deckTitle] = {
             ...decks[deckTitle],
             "questions": decks[deckTitle].questions.concat([card]),
           };
+        console.log("Decks:", decks)
         res(decks[deckTitle]);
       }
       else {

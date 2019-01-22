@@ -19,6 +19,7 @@ export const handleAddCard = (deckTitle, card) => {
   return dispatch => {
     return addCardToDeck(deckTitle, card)
       .then((deck) => {
+        console.log(deck)
         dispatch(addCard(deckTitle, card));
       })
       .catch((err) => console.log(err));

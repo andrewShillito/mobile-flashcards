@@ -17,11 +17,16 @@ class AddCard extends React.Component {
     }));
   }
   validateInput = () => {
-    let msg = '';
-    (this.state.question.length && this.state.answer.length)
-      ? msg = "Ready for submission"
-      : msg = "Must complete both fields";
-    return msg;
+    if (this.state.question.length && this.state.answer.length) {
+      return true;
+    }
+    return false;
+  }
+  generateMessage = () => {
+    if (this.validateInput()) {
+      return "Ready for submission";
+    }
+    return "Must complete both fields";
   }
   onSubmit = () => {
     if (this.validateInput()) {
@@ -29,7 +34,9 @@ class AddCard extends React.Component {
         question: this.state.question,
         answer: this.state.answer,
       };
-      handleAddCard(this.props.deck.title, newCard);
+      console.log("New Card:", newCard);
+      this.props.dispatch(handleAddCard(this.props.deck.title, newCard));
+      this.props.navigation.navigate("DeckDetail");
     }
     else {
       alert("Must complete both fields");
@@ -37,11 +44,11 @@ class AddCard extends React.Component {
   }
   render() {
     const title = this.props.navigation.state.params.title;
-    const validInput = this.validateInput();
+    const message = this.generateMessage();
+    const color = message === "Ready for submission" ? "green" : "red";
 
     return (
-      <View style={{flex:1}}>
-        <RouteTitle>{`Add card to ${title}`}</RouteTitle>
+      <View style={{flex:1, justifyContent: "space-evenly", alignItems: "center"}}>
         <View style={inputStyles.inputContainer}>
           <TextInput
             style={inputStyles.input}
@@ -58,9 +65,11 @@ class AddCard extends React.Component {
             value={this.state.answer}
             />
         </View>
-        <SubmitBtn onPress={this.onSubmit}>Submit</SubmitBtn>
         <View>
-          <Text>{validInput}</Text>
+          <SubmitBtn onPress={this.onSubmit}>Submit</SubmitBtn>
+          <View style={{alignItems: "center"}}>
+            <Text style={{color: color}}>{message}</Text>
+          </View>
         </View>
       </View>
     );
