@@ -10,7 +10,7 @@ import {
 import { combineReducers } from "redux";
 
 function decks(store = {}, action) {
-  console.log("Reducer:", action)
+  // console.log("Reducer:", action)
   switch(action.type) {
     case RECEIVE_DECKS:
       return {

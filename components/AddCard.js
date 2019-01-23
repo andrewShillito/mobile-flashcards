@@ -34,7 +34,7 @@ class AddCard extends React.Component {
         question: this.state.question,
         answer: this.state.answer,
       };
-      console.log("New Card:", newCard);
+      // console.log("New Card:", newCard);
       this.props.dispatch(handleAddCard(this.props.deck.title, newCard));
       this.props.navigation.navigate("DeckDetail");
     }
