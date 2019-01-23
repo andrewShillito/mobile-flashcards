@@ -28,7 +28,7 @@ class EditDeck extends React.Component {
     // the deck title - need new actions and reducer changes
     console.log("Edit Deck Component:", oldTitle, newTitle);
     this.props.dispatch(handleEditTitle(oldTitle, newTitle));
-    this.props.navigation.navigate("Home");
+    this.props.navigation.navigate("DeckDetail", { title: newTitle });
   }
   render() {
     return (

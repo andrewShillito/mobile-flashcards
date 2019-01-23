@@ -3,7 +3,6 @@ import { Text, View, FlatList } from 'react-native';
 import Deck from "./Deck";
 import { connect } from "react-redux";
 import { handleReceiveDecks } from "../actions/decks";
-import { setActiveDeck } from "../actions/activeDeck";
 
 class Home extends React.Component {
   componentDidMount() {
@@ -13,7 +12,6 @@ class Home extends React.Component {
     return <Deck deck={item} onPress={this.onPress} />
   }
   onPress = (title) => {
-    this.props.dispatch(setActiveDeck(title));
     this.props.navigation.navigate("DeckDetail", { title, });
   }
   render() {

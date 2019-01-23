@@ -37,7 +37,6 @@ function decks(store = {}, action) {
         [action.newDeck.title]: action.newDeck,
       }
       delete newState[action.oldTitle];
-
       return newState;
     case ADD_CARD:
       return {
@@ -62,18 +61,6 @@ function decks(store = {}, action) {
   }
 }
 
-function activeDeck(store = null, action) {
-  switch (action.type) {
-    case SET_ACTIVE_DECK:
-      return action.title;
-    case CLEAR_ACTIVE_DECK:
-      return null;
-    default:
-      return store;
-  }
-}
-
 export default combineReducers({
   decks,
-  activeDeck,
 });

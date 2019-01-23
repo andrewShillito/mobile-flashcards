@@ -1,6 +1,5 @@
 import { RECEIVE_DECKS, ADD_DECK, REMOVE_DECK, EDIT_TITLE } from "./types";
 import { saveDeckTitle, getDeck, getDecks, deleteDeck, editDeckTitle } from "../utils/api";
-import { setActiveDeck } from "./activeDeck";
 
 const receiveDecks = (decks) => {
   return {
@@ -67,7 +66,6 @@ export const handleEditTitle = (oldTitle, newTitle) => {
     return editDeckTitle(oldTitle, newTitle)
       .then((newDeck) => { // can refactor to accept the new deck instead of re-doing creation in the reducer
         console.log("NEW DECK CREATED IN _DATA:", newDeck);
-        dispatch(setActiveDeck(newDeck.title));
         dispatch(editTitle(oldTitle, newDeck));
       })
       .catch((err) => console.log(err));
