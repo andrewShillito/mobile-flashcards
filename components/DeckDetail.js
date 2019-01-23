@@ -7,6 +7,7 @@ import DeckInfo from "./DeckInfo";
 
 class DeckDetail extends React.Component {
   static navigationOptions = ({ navigation }) => {
+    console.log("Detail Navigation:", navigation);
     return {
       title: navigation.state.params.title,
     };
@@ -21,6 +22,7 @@ class DeckDetail extends React.Component {
     this.props.navigation.navigate("AddCard", { title: this.props.deck.title });
   }
   render() {
+    console.log("Detail Props:", this.props);
     const { title, questions } = this.props.deck;
     return (
       <View style={{flex: 1, justifyContent: "center"}}>
@@ -34,7 +36,8 @@ class DeckDetail extends React.Component {
 }
 
 function mapStateToProps({ decks, activeDeck }, { navigation }) {
-  const title = activeDeck;
+  console.log("Detail Map State:", decks, activeDeck, navigation);
+  const title = activeDeck ? activeDeck : navigation.state.params.title;
   return {
     deck: decks[title],
   };

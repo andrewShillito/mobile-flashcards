@@ -3,6 +3,7 @@ import { View, Text, TextInput } from "react-native";
 import { connect } from "react-redux";
 import SubmitBtn from "./SubmitBtn";
 import { inputStyles } from "../styles";
+import { handleEditTitle } from "../actions/decks";
 
 
 class EditDeck extends React.Component {
@@ -22,9 +23,12 @@ class EditDeck extends React.Component {
       title,
     }));
   }
-  changeTitle = (oldTitle, newTitle) => {
-    // this.props.dispatch() // need to edit the store if I am going to change 
+  editTitle = (oldTitle, newTitle) => {
+    // this.props.dispatch() // need to edit the store if I am going to change
     // the deck title - need new actions and reducer changes
+    console.log("Edit Deck Component:", oldTitle, newTitle);
+    this.props.dispatch(handleEditTitle(oldTitle, newTitle));
+    this.props.navigation.navigate("Home");
   }
   render() {
     return (
@@ -37,7 +41,7 @@ class EditDeck extends React.Component {
             value={this.state.title}
             />
         </View>
-        <SubmitBtn onPress={() => this.changeTitle(this.props.navigation.state.params.title, this.state.title)}>Submit</SubmitBtn>
+        <SubmitBtn onPress={() => this.editTitle(this.props.navigation.state.params.title, this.state.title)}>Submit</SubmitBtn>
       </View>
     );
   }

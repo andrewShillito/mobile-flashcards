@@ -6,11 +6,13 @@ import {
   REMOVE_CARD,
   SET_ACTIVE_DECK,
   CLEAR_ACTIVE_DECK,
+  EDIT_TITLE,
 } from "../actions/types";
 import { combineReducers } from "redux";
 
 function decks(store = {}, action) {
-  // console.log("Reducer:", action)
+  console.log("Reducer:", action)
+  let newState;
   switch(action.type) {
     case RECEIVE_DECKS:
       return {
@@ -23,10 +25,19 @@ function decks(store = {}, action) {
         ...action.deck,
       }
     case REMOVE_DECK:
-      const newState = {
+      newState = {
         ...store,
       };
       delete newState[action.title];
+      return newState;
+    case EDIT_TITLE:
+      console.log("Creating new State:", action.type, action.oldTitle, action.newDeck);
+      newState = {
+        ...store,
+        [action.newDeck.title]: action.newDeck,
+      }
+      delete newState[action.oldTitle];
+
       return newState;
     case ADD_CARD:
       return {
