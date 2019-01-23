@@ -63,18 +63,19 @@ const _saveDeckTitle = function(title) {
 const _editDeckTitle = function(oldTitle, newTitle) {
   return new Promise((res, rej) => {
     setTimeout(() => {
-      decks[oldTitle] === undefined
-        ? rej(Error("Deck not found"))
-        : decks[newTitle] = {
-          ...decks[oldTitle],
-          title: newTitle,
-        }, delete decks[oldTitle], res(decks[newTitle]);
+      if (decks[oldTitle] === undefined) {
+        rej(Error("Deck not found"));
+      }
+      decks[newTitle] = {
+        ...decks[oldTitle],
+        title: newTitle,
+      };
     })
   })
 }
 
 const _addCardToDeck = function(deckTitle, card) { //card must be formatted on front end
-  console.log("Data func:", deckTitle, card)
+  // console.log("Data func:", deckTitle, card)
   return new Promise((res, rej) => {
     setTimeout(() => {
       if (decks[deckTitle] !== undefined) {
@@ -82,7 +83,7 @@ const _addCardToDeck = function(deckTitle, card) { //card must be formatted on f
             ...decks[deckTitle],
             "questions": decks[deckTitle].questions.concat([card]),
           };
-        console.log("Decks:", decks)
+        // console.log("Decks:", decks)
         res(decks[deckTitle]);
       }
       else {
