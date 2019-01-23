@@ -70,8 +70,11 @@ const _editDeckTitle = function(oldTitle, newTitle) {
         ...decks[oldTitle],
         title: newTitle,
       };
-    })
-  })
+
+      delete decks[oldTitle];
+      res(decks[newTitle]);
+    });
+  });
 }
 
 const _addCardToDeck = function(deckTitle, card) { //card must be formatted on front end
