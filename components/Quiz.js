@@ -3,7 +3,8 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import Question from "./Question";
 import SubmitBtn from "./SubmitBtn";
-import { FontAwesome } from "@expo/vector-icons"
+import { FontAwesome } from "@expo/vector-icons";
+import Score from "./Score";
 
 class Quiz extends React.Component {
   state = {
@@ -51,7 +52,7 @@ class Quiz extends React.Component {
         numCorrect: this.getNumCorrect(scoreData),
         scoreData,
       };
-    })
+    });
   }
   getNumCorrect = (scoreData) => {
     return Object.keys(scoreData).reduce((acc, curr) => {
@@ -60,6 +61,25 @@ class Quiz extends React.Component {
       }
       return acc;
     }, 0)
+  }
+  goToDeckDetail = () => {
+    this.setState(() => ({
+      index: 0,
+      showAnswer: false,
+      message: "Show Answer",
+      numCorrect: 0,
+      scoreData: {},
+    }));
+    this.props.navigation.navigate("DeckDetail");
+  }
+  startOver = () => {
+    this.setState(() => ({
+      index: 0,
+      showAnswer: false,
+      message: "Show Answer",
+      numCorrect: 0,
+      scoreData: {},
+    }));
   }
   render() {
     const deck = this.props.deck;
@@ -73,11 +93,11 @@ class Quiz extends React.Component {
           <Question question={question} answer={answer} showAnswer={this.state.showAnswer} />
           <SubmitBtn onPress={this.toggleShowAnswer} type="textButton">{this.state.message}</SubmitBtn>
           <View style={{flexDirection: "row", justifyContent: "space-around"}}>
-            <TouchableOpacity onPress={this.markIncorrect} style={{justifyContent: "center", alignItems: "center"}}>
+            <TouchableOpacity onPress={() => {this.markIncorrect(); this.increment()}} style={{justifyContent: "center", alignItems: "center"}}>
               <Text style={{fontSize: 20, marginBottom: 5}}>Incorrect</Text>
               <FontAwesome name="window-close" size={50} color="red" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.markCorrect} style={{justifyContent: "center", alignItems: "center"}}>
+            <TouchableOpacity onPress={() => {this.markCorrect; this.increment()}} style={{justifyContent: "center", alignItems: "center"}}>
               <Text style={{fontSize: 20, marginBottom: 5}}>Correct</Text>
               <FontAwesome name="check-square-o" size={50} color="green" />
             </TouchableOpacity>
@@ -86,13 +106,20 @@ class Quiz extends React.Component {
             <SubmitBtn onPress={this.decrement} type="textButton">Previous Question</SubmitBtn>
             <SubmitBtn onPress={this.increment} type="textButton">Next Question</SubmitBtn>
           </View>
-
         </View>
       );
     }
     return (
-      <View>
-        <Text>Placeholder all done</Text>
+      <View style={{flex: 1, justifyContent: "space-between"}}>
+        <Text style={{fontSize: 40, alignSelf: "center", marginTop: 20}}>Score</Text>
+        <View style={{alignItems: "center", justifyContent: "space-between"}}>
+          <Text style={{fontSize: 30}}>{`${this.state.numCorrect} out of ${deck.questions.length} correct`}</Text>
+          <Text style={{fontSize: 30}}>{`${Number(Math.round((this.state.numCorrect/deck.questions.length)+'e2')+"e-2")*100}%`}</Text>
+        </View>
+        <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end"}}>
+          <SubmitBtn onPress={this.startOver} type="textButton">Retake Quiz</SubmitBtn>
+          <SubmitBtn onPress={this.goToDeckDetail} type="textButton">Go to Deck Home</SubmitBtn>
+        </View>
       </View>
     );
   }
