@@ -3,11 +3,11 @@ import { View, Text } from "react-native";
 import SubmitBtn from "./SubmitBtn";
 import { connect } from "react-redux";
 
-class Score extends React.Component {
+class ScoreDetails extends React.Component {
   render() {
     return (
       <View>
-        <Text></Text>
+        <Text>Score Details Route</Text>
       </View>
     );
   }
@@ -17,4 +17,4 @@ function mapStateToProps({ }) {
   return;
 }
 
-export default connect()(Score);
+export default connect()(ScoreDetails);
