@@ -8,6 +8,7 @@ import EditDeck from "./components/EditDeck";
 import { FontAwesome, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 import DeckDetail from "./components/DeckDetail";
 import AddCard from "./components/AddCard";
+import Quiz from "./components/Quiz";
 
 const HomeStack = createStackNavigator({
   Home: {
@@ -28,6 +29,12 @@ const HomeStack = createStackNavigator({
   },
   EditDeck: {
     screen: EditDeck, //header title is dynamically set via nav screenProps (originate in redux store)
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      title: "Quiz" //maybe dynamically show progress ie: Question 1 of 2 , Q 3 of 10
+    }
   }
 });
 

@@ -12,7 +12,7 @@ class DeckDetail extends React.Component {
     };
   }
   startQuiz = () => {
-    this.props.navigation.navigate("Home"); // change to go to quiz
+    this.props.navigation.navigate("Quiz");
   }
   editDeck = () => {
     this.props.navigation.navigate("EditDeck");
