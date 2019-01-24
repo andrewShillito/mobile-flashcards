@@ -27,10 +27,8 @@ let activeDeck = null;
 
 const formatDeck = function(title) {
   return {
-    [title]: {
-      title,
-      questions: [],
-    },
+    title,
+    questions: [],
   };
 }
 
@@ -78,14 +76,10 @@ const _editDeckTitle = function(oldTitle, newTitle) {
 }
 
 const _addCardToDeck = function(deckTitle, card) { //card must be formatted on front end
-  console.log("_addCard:", deckTitle, card);
-  console.log("_decks:", decks);
   return new Promise((res, rej) => {
     setTimeout(() => {
       if (decks[deckTitle] !== undefined) {
-        console.log("decks[deckTitle]:", decks[deckTitle], "type of:", typeof decks[deckTitle].questions);
-        let newQuestions = decks[deckTitle][deckTitle].questions.concat([card]);
-        console.log("newQuestions:", newQuestions);
+        let newQuestions = decks[deckTitle].questions.concat([card]);
         decks[deckTitle] = {
             ...decks[deckTitle],
             "questions": decks[deckTitle].questions.length ? decks[deckTitle].questions.concat([card]) : [card],
