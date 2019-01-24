@@ -42,7 +42,7 @@ class AddCard extends React.Component {
     }
   }
   render() {
-    const title = this.props.navigation.state.params.title;
+    const title = this.props.deck.title;
     const message = this.generateMessage();
     const color = message === "Ready for submission" ? "green" : "red";
 

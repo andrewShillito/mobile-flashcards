@@ -9,10 +9,11 @@ class New extends React.Component {
   static navigationOptions = (data) => {
   }
   state = {
-    title: "",
+    title: "", // add feedback message for submission (ie: warning or let them know it is ready)
   }
   onPress = () => {
     if (this.state.title === "") {
+      alert("Title cannot be blank");
       return;
     }
     else {
@@ -20,7 +21,7 @@ class New extends React.Component {
         title: '',
       }));
       this.props.dispatch(handleAddDeck(this.state.title));
-      this.props.navigation.navigate("Home");
+      this.props.navigation.navigate("DeckDetail");
     }
   }
   onChange = ({ title }) => {

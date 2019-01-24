@@ -32,6 +32,7 @@ export const handleAddDeck = (title) => {
     return saveDeckTitle(title)
       .then(deck => {
         dispatch(addDeck(deck));
+        dispatch(setActiveDeck(title));
       })
       .catch(err => console.log(err));
   };
