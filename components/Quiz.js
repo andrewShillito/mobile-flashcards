@@ -86,7 +86,6 @@ class Quiz extends React.Component {
   }
   render() {
     const deck = this.props.deck;
-    console.log("Quiz State:", this.state);
     if (this.state.index < deck.questions.length) {
       const card = deck.questions[this.state.index];
       const { question, answer } = card;
@@ -98,11 +97,11 @@ class Quiz extends React.Component {
           <View style={{flexDirection: "row", justifyContent: "space-around"}}>
             <TouchableOpacity onPress={() => {this.markIncorrect(); this.increment()}} style={{justifyContent: "center", alignItems: "center"}}>
               <Text style={{fontSize: 20, marginBottom: 5}}>Incorrect</Text>
-              <FontAwesome name="window-close" size={50} color="red" />
+              <FontAwesome name="window-close" size={50} color="#dc3545" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {this.markCorrect(); this.increment()}} style={{justifyContent: "center", alignItems: "center"}}>
               <Text style={{fontSize: 20, marginBottom: 5}}>Correct</Text>
-              <FontAwesome name="check-square-o" size={50} color="green" />
+              <FontAwesome name="check-square-o" size={50} color="#28a745" />
             </TouchableOpacity>
           </View>
         </View>

@@ -11,17 +11,26 @@ export const deckStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "steelblue",
+    backgroundColor: "white",
     height: 150,
     marginLeft: 20,
     marginRight: 20,
     marginTop: 10,
     borderRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2},
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   deckHeader: {
-    color: "white",
-    fontSize: 30,
+    color: "#343a40",
+    fontSize: 35,
   },
+  text: {
+    color: "#343a40",
+    fontSize: 25,
+  }
 });
 
 export const newStyles = StyleSheet.create({
@@ -65,6 +74,11 @@ export const buttonStyles = StyleSheet.create({
     height: 80,
     borderRadius: 5,
     paddingHorizontal: 40,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2},
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   submitBtnText: {
     color: "white",

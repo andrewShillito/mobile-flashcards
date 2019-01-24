@@ -10,6 +10,7 @@ class Deck extends React.Component {
     return (
       <TouchableOpacity style={styles.deck} onPress={() => onPress(deck.title)}>
         <DeckHeader>{deck.title}</DeckHeader>
+        <Text style={styles.text}>{`${deck.questions.length} card${deck.questions.length>1 || deck.questions.length === 0 ? "s" : ""}`}</Text>
       </TouchableOpacity>
     );
   }
