@@ -8,7 +8,7 @@ import { handleEditTitle } from "../actions/decks";
 
 class EditDeck extends React.Component {
   static navigationOptions = ({ screenProps }) => {
-    console.log("Edit Deck ScreenProps", screenProps);
+    // console.log("Edit Deck ScreenProps", screenProps);
     return {
       title: `Edit ${screenProps.activeDeck}`,
     };
@@ -29,9 +29,14 @@ class EditDeck extends React.Component {
     // the deck title - need new actions and reducer changes
     // console.log("Edit Deck Component:", oldTitle, newTitle);
     this.props.dispatch(handleEditTitle(oldTitle, newTitle));
-    this.props.navigation.navigate("Home");
+    this.setState(() => ({
+      title: "",
+    }));
+    this.props.navigation.navigate("DeckDetail");
   }
   render() {
+    const { activeDeck } = this.props;
+
     return (
       <View>
         <View style={inputStyles.inputContainer}>
@@ -42,10 +47,16 @@ class EditDeck extends React.Component {
             value={this.state.title}
             />
         </View>
-        <SubmitBtn onPress={() => this.editTitle(this.props.navigation.state.params.title, this.state.title)}>Submit</SubmitBtn>
+        <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
       </View>
     );
   }
 }
 
-export default connect()(EditDeck);
+function mapStateToProps({ activeDeck }) {
+  return {
+    activeDeck,
+  }
+}
+
+export default connect(mapStateToProps)(EditDeck);

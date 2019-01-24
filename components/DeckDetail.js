@@ -23,10 +23,10 @@ class DeckDetail extends React.Component {
   }
   render() {
     // console.log("Detail Props:", this.props);
-    const { title, questions } = this.props.deck;
+    // const { title, questions } = this.props.deck;
     return (
       <View style={{flex: 1, justifyContent: "center"}}>
-        <DeckInfo title={title} />
+        <DeckInfo title={this.props.deck ? this.props.deck.title : ""} />
         <SubmitBtn onPress={this.startQuiz}>Start Quiz</SubmitBtn>
         <SubmitBtn onPress={this.addCard}>Add Card</SubmitBtn>
         <SubmitBtn onPress={this.editDeck}>Edit Deck</SubmitBtn>
@@ -37,9 +37,8 @@ class DeckDetail extends React.Component {
 
 function mapStateToProps({ decks, activeDeck }, { navigation }) {
   // console.log("Detail Map State:", decks, activeDeck, navigation);
-  const title = activeDeck ? activeDeck : navigation.state.params.title;
   return {
-    deck: decks[title],
+    deck: decks[activeDeck],
   };
 }
 

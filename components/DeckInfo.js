@@ -6,14 +6,14 @@ function DeckInfo(props) {
   return (
     <View style={{alignItems: "center"}}>
       <Text style={{fontSize: 30}}>Number of Cards</Text>
-      <Text style={{fontSize: 30}}>{props.deck.questions.length}</Text>
+      <Text style={{fontSize: 30}}>{props.deck ? props.deck.questions.length : ""}</Text>
     </View>
   );
 }
 
 function mapStateToProps({ decks }, { title }) {
   return {
-    deck: decks[title],
+    deck: title ? decks[title] : undefined,
   };
 }
 
