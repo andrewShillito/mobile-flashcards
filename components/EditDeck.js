@@ -5,7 +5,6 @@ import SubmitBtn from "./SubmitBtn";
 import { inputStyles } from "../styles";
 import { handleEditTitle } from "../actions/decks";
 
-
 class EditDeck extends React.Component {
   static navigationOptions = ({ screenProps }) => {
     return {
@@ -34,8 +33,8 @@ class EditDeck extends React.Component {
     const { activeDeck } = this.props;
 
     return (
-      <View>
-        <View style={inputStyles.inputContainer}>
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+        <View style={[inputStyles.inputContainer, {marginBottom: 40}]}>
           <TextInput
             style={inputStyles.input}
             placeholder="New Title"
