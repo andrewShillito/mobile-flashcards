@@ -47,8 +47,7 @@ class Quiz extends React.Component {
       <View>
         <Text>Placeholder all done</Text>
       </View>
-    )
-
+    );
   }
 }
 
