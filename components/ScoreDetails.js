@@ -6,8 +6,8 @@ import { connect } from "react-redux";
 class ScoreDetails extends React.Component {
   render() {
     return (
-      <View>
-        <Text>Score Details Route</Text>
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+        <Text style={{fontSize: 30}}>Coming Soon!</Text>
       </View>
     );
   }

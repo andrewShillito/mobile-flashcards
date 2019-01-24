@@ -12,6 +12,10 @@ class DeckDetail extends React.Component {
     };
   }
   startQuiz = () => {
+    if (this.props.deck.questions.length === 0) {
+      alert("Deck has no cards. Add a card first.");
+      return;
+    }
     this.props.navigation.navigate("Quiz");
   }
   editDeck = () => {
