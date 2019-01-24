@@ -6,10 +6,10 @@ import SubmitBtn from "./SubmitBtn";
 import DeckInfo from "./DeckInfo";
 
 class DeckDetail extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    console.log("Detail Navigation:", navigation);
+  static navigationOptions = ({ screenProps}) => {
+    console.log("Detail Navigation:", screenProps);
     return {
-      title: navigation.state.params.title,
+      title: screenProps.title,
     };
   }
   startQuiz = () => {

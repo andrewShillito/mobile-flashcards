@@ -14,7 +14,7 @@ class Home extends React.Component {
   }
   onPress = (title) => {
     this.props.dispatch(setActiveDeck(title));
-    this.props.navigation.navigate("DeckDetail", { title, });
+    this.props.navigation.navigate("DeckDetail");
   }
   render() {
     const { decks } = this.props; //array instead of obj because of mapStateToProps below
