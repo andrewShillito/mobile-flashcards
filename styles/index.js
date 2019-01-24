@@ -65,12 +65,21 @@ export const buttonStyles = StyleSheet.create({
     height: 80,
     borderRadius: 5,
     paddingHorizontal: 40,
-
   },
-  text: {
+  submitBtnText: {
     color: "white",
     fontSize: 30,
   },
+  textButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    color: "steelblue",
+    margin: 15,
+  },
+  textButtonText: {
+    color: "steelblue",
+    fontSize: 20,
+  }
 });
 
 export const inputStyles = StyleSheet.create({

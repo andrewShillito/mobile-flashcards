@@ -17,6 +17,10 @@ class Quiz extends React.Component {
     }));
   }
   decrement = () => {
+    if (this.state.index === 0) {
+      alert("Already at first card");
+      return;
+    }
     this.setState((prevState) => ({
       index: prevState.index-1,
       showAnswer: false,
@@ -35,11 +39,15 @@ class Quiz extends React.Component {
       const card = deck.questions[this.state.index];
       const { question, answer } = card;
       return (
-        <View>
-          <Text>{`${this.state.index + 1} of ${deck.questions.length}`}</Text>
+        <View style={{justifyContent: "space-between", flex: 1}}>
+          <Text style={{alignSelf: "center", justifyContent: "flex-start", fontSize: 20}}>{`${this.state.index + 1} of ${deck.questions.length}`}</Text>
           <Question question={question} answer={answer} showAnswer={this.state.showAnswer} />
-          <SubmitBtn onPress={this.toggleShowAnswer}>{this.state.message}</SubmitBtn>
-          <SubmitBtn onPress={this.increment}>Next Question</SubmitBtn>
+          <SubmitBtn onPress={this.toggleShowAnswer} type="textButton">{this.state.message}</SubmitBtn>
+          <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end"}}>
+            <SubmitBtn onPress={this.decrement} type="textButton">Previous Question</SubmitBtn>
+            <SubmitBtn onPress={this.increment} type="textButton">Next Question</SubmitBtn>
+          </View>
+
         </View>
       );
     }
