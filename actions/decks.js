@@ -62,11 +62,9 @@ const editTitle = (oldTitle, newDeck) => {
 }
 
 export const handleEditTitle = (oldTitle, newTitle) => {
-  console.log("Handle func:", oldTitle, newTitle);
   return dispatch => {
     return editDeckTitle(oldTitle, newTitle)
       .then((newDeck) => { // can refactor to accept the new deck instead of re-doing creation in the reducer
-        console.log("NEW DECK CREATED IN _DATA:", newDeck);
         dispatch(setActiveDeck(newDeck.title));
         dispatch(editTitle(oldTitle, newDeck));
       })

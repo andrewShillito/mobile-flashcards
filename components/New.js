@@ -7,7 +7,6 @@ import { handleAddDeck } from "../actions/decks";
 
 class New extends React.Component {
   static navigationOptions = (data) => {
-    // console.log("NEW SCREEN PROPS:", data, data.screenProps);
   }
   state = {
     title: "",

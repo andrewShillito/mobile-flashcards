@@ -7,7 +7,6 @@ import DeckInfo from "./DeckInfo";
 
 class DeckDetail extends React.Component {
   static navigationOptions = ({ screenProps }) => {
-    // console.log("Detail Navigation:", screenProps);
     return {
       title: screenProps.activeDeck,
     };
@@ -22,8 +21,6 @@ class DeckDetail extends React.Component {
     this.props.navigation.navigate("AddCard");
   }
   render() {
-    // console.log("Detail Props:", this.props);
-    // const { title, questions } = this.props.deck;
     return (
       <View style={{flex: 1, justifyContent: "center"}}>
         <DeckInfo title={this.props.deck ? this.props.deck.title : ""} />
@@ -36,7 +33,6 @@ class DeckDetail extends React.Component {
 }
 
 function mapStateToProps({ decks, activeDeck }, { navigation }) {
-  // console.log("Detail Map State:", decks, activeDeck, navigation);
   return {
     deck: decks[activeDeck],
   };

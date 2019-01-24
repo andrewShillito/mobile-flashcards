@@ -31,7 +31,6 @@ function decks(store = {}, action) {
       delete newState[action.title];
       return newState;
     case EDIT_TITLE:
-      // console.log("Creating new State:", action.type, action.oldTitle, action.newDeck);
       newState = {
         ...store,
         [action.newDeck.title]: action.newDeck,
