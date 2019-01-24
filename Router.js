@@ -18,7 +18,7 @@ const HomeStack = createStackNavigator({
     }
   },
   DeckDetail: {
-    screen: DeckDetail, //set header title dynamically to be deck title
+    screen: DeckDetail, //header title set dynamically to be deck title
     },
   AddCard: {
     screen: AddCard,
@@ -27,7 +27,7 @@ const HomeStack = createStackNavigator({
     }
   },
   EditDeck: {
-    screen: EditDeck, //header title is dynamically set via nav params deckDetail -> editDeck
+    screen: EditDeck, //header title is dynamically set via nav screenProps (originate in redux store)
   }
 });
 
