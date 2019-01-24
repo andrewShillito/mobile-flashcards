@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Stylesheet } from "react-native";
+import { View } from "react-native";
 import { createAppContainer, createStackNavigator, createBottomTabNavigator, createSwitchNavigator } from "react-navigation";
 import { connect } from "react-redux";
 import Home from "./components/Home";
@@ -68,4 +68,10 @@ class Router extends React.Component {
   }
 }
 
-export default connect()(Router);
+function mapStateToProps({ activeDeck }) {
+  return {
+    activeDeck,
+  };
+}
+
+export default connect(mapStateToProps)(Router);

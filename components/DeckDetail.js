@@ -6,23 +6,23 @@ import SubmitBtn from "./SubmitBtn";
 import DeckInfo from "./DeckInfo";
 
 class DeckDetail extends React.Component {
-  static navigationOptions = ({ screenProps}) => {
-    console.log("Detail Navigation:", screenProps);
+  static navigationOptions = ({ screenProps }) => {
+    // console.log("Detail Navigation:", screenProps);
     return {
-      title: screenProps.title,
+      title: screenProps.activeDeck,
     };
   }
   startQuiz = () => {
     this.props.navigation.navigate("Home"); // change to go to quiz
   }
   editDeck = () => {
-    this.props.navigation.navigate("EditDeck", { title: this.props.deck.title });
+    this.props.navigation.navigate("EditDeck");
   }
   addCard = () => {
-    this.props.navigation.navigate("AddCard", { title: this.props.deck.title });
+    this.props.navigation.navigate("AddCard");
   }
   render() {
-    console.log("Detail Props:", this.props);
+    // console.log("Detail Props:", this.props);
     const { title, questions } = this.props.deck;
     return (
       <View style={{flex: 1, justifyContent: "center"}}>
@@ -36,7 +36,7 @@ class DeckDetail extends React.Component {
 }
 
 function mapStateToProps({ decks, activeDeck }, { navigation }) {
-  console.log("Detail Map State:", decks, activeDeck, navigation);
+  // console.log("Detail Map State:", decks, activeDeck, navigation);
   const title = activeDeck ? activeDeck : navigation.state.params.title;
   return {
     deck: decks[title],

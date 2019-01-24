@@ -7,9 +7,10 @@ import { handleEditTitle } from "../actions/decks";
 
 
 class EditDeck extends React.Component {
-  static navigationOptions = ({navigation}) => {
+  static navigationOptions = ({ screenProps }) => {
+    console.log("Edit Deck ScreenProps", screenProps);
     return {
-      title: `Edit ${navigation.state.params.title}` // title passed from DeckDetail component via nagiation
+      title: `Edit ${screenProps.activeDeck}`,
     };
   }
   state = {
@@ -26,7 +27,7 @@ class EditDeck extends React.Component {
   editTitle = (oldTitle, newTitle) => {
     // this.props.dispatch() // need to edit the store if I am going to change
     // the deck title - need new actions and reducer changes
-    console.log("Edit Deck Component:", oldTitle, newTitle);
+    // console.log("Edit Deck Component:", oldTitle, newTitle);
     this.props.dispatch(handleEditTitle(oldTitle, newTitle));
     this.props.navigation.navigate("Home");
   }
