@@ -1,7 +1,7 @@
 # Mobile flashcards
 A React Native App for iOS built using expo-cli, react navigation, and redux.
 
-## To Run App
+## To Install and Run App
 
 #### Using Yarn
 ```
@@ -18,13 +18,16 @@ cd mobile-flashcards
 npm install
 npm start
 ```
-Will start an expo server in a new browser tab.  You can then connect to expo via iPhone, Android, or emulator to run app.
+Will start an expo server in a new browser tab.  You can then connect to expo via iPhone, Android, or emulator to run the app.
 
 ## Features
 
-1. Create flashcard decks and cards
-2. Edit your deck's title
-3. Quiz yourself with your flashcard decks
+1. Create flashcard decks
+2. Access your decks on the home screen
+3. Add new cards to your decks
+4. Edit your deck's title
+5. Quiz yourself with your flashcard decks
+6. View a score report at the end of your quiz
 
 ## Tab Navigator Routes
 
