@@ -5,6 +5,7 @@ import Question from "./Question";
 import SubmitBtn from "./SubmitBtn";
 import { FontAwesome } from "@expo/vector-icons";
 import ScoreDetails from "./ScoreDetails";
+import { clearLocalNotifications, setLocalNotification } from "../utils/notifications";
 
 class Quiz extends React.Component {
   state = {
@@ -107,6 +108,9 @@ class Quiz extends React.Component {
         </View>
       );
     }
+    clearLocalNotifications(); // quiz completed so clear existing notification(s)
+    setLocalNotification(); // set new notification for tomorrow
+
     return (
       <View style={{flex: 1, justifyContent: "space-between"}}>
         <Text style={{fontSize: 40, alignSelf: "center", marginTop: 20}}>Score</Text>

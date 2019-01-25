@@ -10,9 +10,8 @@ import { Permissions } from "expo";
 class Home extends React.Component {
   componentDidMount() {
     this.props.dispatch(handleReceiveDecks());
-    // this.askPermission();
-    clearLocalNotifications();
-    // setTimeout(clearLocalNotifications, 20000); // for development
+    this.askPermission();
+    // clearLocalNotifications(); // for development
   }
   renderItem = ({ item }) => {
     return <Deck deck={item} onPress={this.onPress} />
@@ -25,8 +24,7 @@ class Home extends React.Component {
     Permissions.askAsync(Permissions.NOTIFICATIONS)
       .then(({ status }) => {
         if (status === "granted") {
-          console.log("success");
-          setLocalNotification(); // currently just logging info
+          setLocalNotification(); //sets new notification for 5pm tomorrow if no existing notification
         }
       });
   }

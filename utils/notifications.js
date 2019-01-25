@@ -26,40 +26,31 @@ export function clearLocalNotifications() {
 
 function getNotificationTime() {
   let tomorrow = new Date(Date.now());
-
-  // tomorrow.setDate(tomorrow.getDate() + 1) //uncomment for actual build
-  // tomorrow.setHours(17);
-
-  // tomorrow.setSeconds(tomorrow.getSeconds() + 10); // comment out for actual build
-  tomorrow.setMinutes(tomorrow.getMinutes() + 1);
-
-  console.log(tomorrow.toString());
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  tomorrow.setHours(17);
+  // tomorrow.setMinutes(tomorrow.getMinutes() + 1); // just for development
   return tomorrow;
 }
 
 export function setLocalNotification() {
   AsyncStorage.getItem(NOTIFICATION_KEY)
     .then((data) => {
-      console.log("JSON Result:", JSON.parse(data));
       return JSON.parse(data);
     })
     .then((data) => {
-      console.log("data:", data === null)
       if (data === null) {
-        console.log("if route")
         Permissions.askAsync(Permissions.NOTIFICATIONS)
           .then(({ status }) => {
-            console.log(status);
             if (status === "granted") {
               const notificationTime = getNotificationTime();
               Notifications.scheduleLocalNotificationAsync(
                 createNotification(),
                 {
                   time: notificationTime,
+                  repeat: "day",
                 });
             }
             AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
-            (AsyncStorage.getItem(NOTIFICATION_KEY)).then(res => console.log(res));
           })
       }
     })
