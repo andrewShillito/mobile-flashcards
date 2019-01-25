@@ -6,7 +6,7 @@ const NOTIFICATION_KEY = "mobileFlashcards:notifications";
 function createNotification() {
   return {
     title: "Review your flashcards!",
-    body: "👋 don't forget to study today",
+    body: "👋 don't forget to study today!",
     ios: {
       sound: true,
     },
