@@ -10,8 +10,9 @@ import { Permissions } from "expo";
 class Home extends React.Component {
   componentDidMount() {
     this.props.dispatch(handleReceiveDecks());
-    this.askPermission();
-    // clearLocalNotifications();
+    // this.askPermission();
+    clearLocalNotifications();
+    // setTimeout(clearLocalNotifications, 20000); // for development
   }
   renderItem = ({ item }) => {
     return <Deck deck={item} onPress={this.onPress} />
@@ -25,7 +26,7 @@ class Home extends React.Component {
       .then(({ status }) => {
         if (status === "granted") {
           console.log("success");
-          setLocalNotification();
+          setLocalNotification(); // currently just logging info
         }
       });
   }
