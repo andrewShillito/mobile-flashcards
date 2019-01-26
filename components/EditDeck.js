@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import SubmitBtn from "./SubmitBtn";
 import { inputStyles } from "../styles";
-import { handleEditTitle } from "../actions/decks";
+import { handleEditTitle, handleRemoveDeck } from "../actions/decks";
 
 class EditDeck extends React.Component {
   static navigationOptions = ({ screenProps }) => {
@@ -30,7 +30,7 @@ class EditDeck extends React.Component {
     this.props.navigation.navigate("DeckDetail");
   }
   deleteDeck = () => {
-    // this.props.dispatch(handleDeleteDeck(this.props.activeDeck)); - haven't implemented yet
+    this.props.dispatch(handleRemoveDeck(this.props.activeDeck));
     this.setState(() => ({
       title: "",
     }));

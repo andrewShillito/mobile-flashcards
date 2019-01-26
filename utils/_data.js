@@ -129,15 +129,18 @@ const _addCardToDeck = function(deckTitle, card) { //card must be formatted on f
 }
 
 const _removeDeck = function(title) {
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      decks[title] !== undefined
-        ? rej(Error("Deck not found"))
-        : decks = {...decks},
-          delete decks[title],
-          res({...decks});
-    }, 500)
-  });
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then(JSON.parse)
+    .then((data) => {
+      if (data[title] === undefined) {
+        return Error("Deck not found");
+      }
+      delete data[title];
+      AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
+        .catch((error) => console.log(error));
+      return {...data};
+    })
+    .catch((error) => console.log(error));
 }
 
 const _setActiveDeck = function(title) { //doesn't need to be tied into async storage - this could by synchronous code
