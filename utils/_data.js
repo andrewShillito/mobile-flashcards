@@ -49,10 +49,7 @@ const _getDecks = function() {
       if ( data === null) {
         AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
         // first time running app - set async storage with dummy data
-      } else {
-        console.log("asyncStorage data:", data);
-        decks = data; // replace decks dummy data with decks data in asyncStorage -
-        // don't need this after build out of asyncStorage logic
+        return {...decks}; //return dummy data as async storage is set
       }
       return {...data};
     })
