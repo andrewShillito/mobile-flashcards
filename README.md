@@ -39,7 +39,7 @@ Will start an expo server in a new browser tab.  You can then connect to expo vi
 
 1. DeckDetail - View options and basic info (number of cards and title) of selected deck.
 2. Quiz - Quiz yourself on your deck choosing correct or incorrect to track your score. Displays a score report when quiz is completed.
-3. EditDeck - Change deck title. Additional features in development.
+3. EditDeck - Change deck title or delete the deck.
 4. AddCard - Add a card to the deck.
 
 *Coming soon - ScoreDetails and EditCards*
