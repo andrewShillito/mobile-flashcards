@@ -25,9 +25,10 @@ Will start an expo server in a new browser tab.  You can then connect to expo vi
 1. Create flashcard decks
 2. Access your decks on the home screen
 3. Add new cards to your decks
-4. Edit your deck's title
-5. Quiz yourself with your flashcard decks
-6. View a score report at the end of your quiz
+4. Edit your decks' titles
+5. Delete decks
+6. Quiz yourself with your flashcard decks
+7. View a short score report at the end of your quiz
 
 ## Tab Navigator Routes
 
