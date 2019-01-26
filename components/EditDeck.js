@@ -40,16 +40,18 @@ class EditDeck extends React.Component {
     const { activeDeck } = this.props;
 
     return (
-      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-        <View style={[inputStyles.inputContainer, {marginBottom: 40}]}>
-          <TextInput
-            style={inputStyles.input}
-            placeholder="New Title"
-            onChangeText={(title) => this.onChange({title})}
-            value={this.state.title}
-            />
+      <View style={{flex: 1, justifyContent: "space-evenly", alignItems: "center"}}>
+        <View>
+          <View style={[inputStyles.inputContainer, {marginBottom: 40}]}>
+            <TextInput
+              style={inputStyles.input}
+              placeholder="New Title"
+              onChangeText={(title) => this.onChange({title})}
+              value={this.state.title}
+              />
+          </View>
+          <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
         </View>
-        <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
         <TouchableOpacity onPress={this.deleteDeck} style={{marginTop: 40}}>
           <Text style={{color: "#dc3545", fontSize: 20}}>Delete Deck</Text>
         </TouchableOpacity>
