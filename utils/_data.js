@@ -143,21 +143,20 @@ const _removeDeck = function(title) {
     .catch((error) => console.log(error));
 }
 
-const _setActiveDeck = function(title) { //doesn't need to be tied into async storage - this could by synchronous code
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      if (title !== "" && title in decks) {
+const _setActiveDeck = function(title) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then(JSON.parse)
+    .then((data) => {
+      if (title !== "" && title in data){
         activeDeck = title;
-        res(decks[title]);
+        return data[title];
       }
-      else {
-        rej(Error("Invalid deck name"));
-      }
-    }, 200)
-  });
+      return Error("Invalid deck name");
+    })
+    .catch((error) => console.log(error));
 }
 
-const _clearActiveDeck = function() { //doesn't need to be tied into async storage - this could by synchronous code
+const _clearActiveDeck = function() {
   return new Promise((res, rej) => {
     setTimeout(() => {
       activeDeck = null;
