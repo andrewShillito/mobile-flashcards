@@ -36,7 +36,7 @@ const formatDeck = function(title) {
   };
 }
 
-const _resetAsyncStorage = function() { //for development purposes
+const _resetAsyncStorage = function() { //for development purposes - resets AsyncStorage to dummy data
   return AsyncStorage.removeItem(DECKS_STORAGE_KEY)
     .then(AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks)))
 }
@@ -51,11 +51,10 @@ const _getDecks = function() {
         // first time running app - set async storage with dummy data
       } else {
         console.log("asyncStorage data:", data);
-        decks = data; // replace decks dummy data with decks data in asyncStorage
+        decks = data; // replace decks dummy data with decks data in asyncStorage -
+        // don't need this after build out of asyncStorage logic
       }
-      return new Promise((res, rej) => {
-        setTimeout(() => res({...decks}), 500);
-      })
+      return {...data};
     })
     .catch(err => console.log(err));
 }
@@ -71,22 +70,21 @@ const _getDeck = function(id) {
 }
 
 const _saveDeckTitle = function(title) {
-  // return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify())
-  if (decks[title] === undefined) {
-    decks[title] = formatDeck(title);
-    return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({ [decks[title].title]: decks[title] }))
-      .then((data) => {
-        // console.log("merge data:", data);
-        AsyncStorage.getItem(DECKS_STORAGE_KEY).then(JSON.parse).then((result) => console.log("Async post merge state:", result))
-        return decks[title];
-      })
-      .catch((error) => console.log(error));
-  }
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      rej(Error("That deck name is already in use"))
-    }, 500);
-  });
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then(JSON.parse)
+    .then((data) => {
+      if (data[title] === undefined) {
+        let newDeck = formatDeck(title);
+        data[title] = newDeck;
+        return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
+          .then(() => {
+            return data[title];
+          })
+          .catch((error) => console.log(error));
+      }
+      return Error("That deck name is already in use");
+    })
+    .catch((error) => console.log(error));
 }
 
 const _editDeckTitle = function(oldTitle, newTitle) {
