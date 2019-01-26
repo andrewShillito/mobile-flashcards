@@ -1,6 +1,6 @@
 import { RECEIVE_DECKS, ADD_DECK, REMOVE_DECK, EDIT_TITLE } from "./types";
 import { saveDeckTitle, getDeck, getDecks, deleteDeck, editDeckTitle } from "../utils/api";
-import { setActiveDeck } from "./activeDeck";
+import { setActiveDeck, clearActiveDeck } from "./activeDeck";
 
 const receiveDecks = (decks) => {
   return {
@@ -48,7 +48,10 @@ const removeDeck = (title) => {
 export const handleRemoveDeck = (title) => {
   return dispatch => {
     return deleteDeck(title)
-      .then(() => dispatch(removeDeck(title)))
+      .then(() => {
+        dispatch(removeDeck(title));
+        dispatch(clearActiveDeck());
+      })
       .catch((err) => console.log(err));
   };
 }
