@@ -59,14 +59,16 @@ const _getDecks = function() {
     .catch(err => console.log(err));
 }
 
-const _getDeck = function(id) {
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      decks[id] !== undefined
-        ? res({...decks[id]})
-        : rej(Error("Deck not found"));
-    }, 500);
-  });
+const _getDeck = function(id) { //id is the deck title
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then(JSON.parse)
+    .then((data) => {
+      if (data[id] === undefined) {
+        return Error("Deck not found");
+      }
+      return {...data[id]};
+    })
+    .catch((error) => console.log(error));
 }
 
 const _saveDeckTitle = function(title) {
