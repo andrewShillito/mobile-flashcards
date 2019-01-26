@@ -139,7 +139,7 @@ const _removeDeck = function(title) {
   });
 }
 
-const _setActiveDeck = function(title) {
+const _setActiveDeck = function(title) { //doesn't need to be tied into async storage - this could by synchronous code
   return new Promise((res, rej) => {
     setTimeout(() => {
       if (title !== "" && title in decks) {
@@ -153,7 +153,7 @@ const _setActiveDeck = function(title) {
   });
 }
 
-const _clearActiveDeck = function() {
+const _clearActiveDeck = function() { //doesn't need to be tied into async storage - this could by synchronous code
   return new Promise((res, rej) => {
     setTimeout(() => {
       activeDeck = null;

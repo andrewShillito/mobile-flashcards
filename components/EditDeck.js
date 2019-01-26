@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import SubmitBtn from "./SubmitBtn";
 import { inputStyles } from "../styles";
@@ -29,6 +29,13 @@ class EditDeck extends React.Component {
     }));
     this.props.navigation.navigate("DeckDetail");
   }
+  deleteDeck = () => {
+    // this.props.dispatch(handleDeleteDeck(this.props.activeDeck)); - haven't implemented yet
+    this.setState(() => ({
+      title: "",
+    }));
+    this.props.navigation.navigate("Home");
+  }
   render() {
     const { activeDeck } = this.props;
 
@@ -43,6 +50,9 @@ class EditDeck extends React.Component {
             />
         </View>
         <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
+        <TouchableOpacity onPress={this.deleteDeck} style={{marginTop: 40}}>
+          <Text style={{color: "#dc3545", fontSize: 20}}>Delete Deck</Text>
+        </TouchableOpacity>
       </View>
     );
   }

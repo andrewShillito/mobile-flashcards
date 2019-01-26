@@ -54,7 +54,6 @@ export const handleRemoveDeck = (title) => {
 }
 
 const editTitle = (oldTitle, newDeck) => {
-  console.log("Action Creator:", oldTitle, newDeck);
   return {
     type: EDIT_TITLE,
     oldTitle,
@@ -66,7 +65,6 @@ export const handleEditTitle = (oldTitle, newTitle) => {
   return dispatch => {
     return editDeckTitle(oldTitle, newTitle)
       .then((newDeck) => {
-        console.log("handleFunc return:", newDeck);
         dispatch(setActiveDeck(newDeck.title));
         dispatch(editTitle(oldTitle, newDeck));
       })

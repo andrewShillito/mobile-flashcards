@@ -30,7 +30,7 @@ class DeckDetail extends React.Component {
         <DeckInfo title={this.props.deck ? this.props.deck.title : ""} />
         <SubmitBtn onPress={this.startQuiz}>Start Quiz</SubmitBtn>
         <SubmitBtn onPress={this.addCard}>Add Card</SubmitBtn>
-        <SubmitBtn onPress={this.editDeck}>Edit Deck</SubmitBtn>
+        <SubmitBtn onPress={this.editDeck} type="textButton">Edit Deck</SubmitBtn>
       </View>
     );
   }
