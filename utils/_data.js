@@ -1,3 +1,7 @@
+import { AsyncStorage } from "react-native";
+
+const DECKS_STORAGE_KEY = "mobileFlashcards:decks"
+
 let decks = {
   React: {
     title: 'React',
@@ -32,10 +36,37 @@ const formatDeck = function(title) {
   };
 }
 
+// const _getPersistentDecks = function() {
+//   AsyncStorage.getItem(DECKS_STORAGE_KEY)
+//     .then(JSON.parse)
+//     .then((data) => {
+//       console.log("async storage data:", data)
+//       return data;
+//     })
+//     .catch(err => console.log(err));
+// }
+
+// _getPersistentDecks = async() => {
+//   let data = await JSON.parse(AsyncStorage.getItem(DECKS_STORAGE_KEY));
+//   console.log("async storage data:", data);
+//   return data;
+// }
+
 const _getDecks = function() {
-  return new Promise((res, rej) => {
-    setTimeout(() => res({...decks}), 1000);
-  });
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then(JSON.parse)
+    .then((data) => {
+      if ( data === null) {
+        AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
+      } else {
+        console.log("asyncStorage data:", data);
+        // decks = data;
+      }
+      return new Promise((res, rej) => {
+        setTimeout(() => res({...decks}), 500);
+      })
+    })
+    .catch(err => console.log(err));
 }
 
 const _getDeck = function(id) {
