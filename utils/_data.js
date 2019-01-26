@@ -90,20 +90,23 @@ const _saveDeckTitle = function(title) {
 }
 
 const _editDeckTitle = function(oldTitle, newTitle) {
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      if (decks[oldTitle] === undefined) {
-        rej(Error("Deck not found"));
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then(JSON.parse)
+    .then((data) => {
+      if (data[oldTitle] === undefined) {
+        return Error("Deck not found");
       }
-      decks[newTitle] = {
-        ...decks[oldTitle],
+      data[newTitle] = {
+        ...data[oldTitle],
         title: newTitle,
       };
-
-      delete decks[oldTitle];
-      res(decks[newTitle]);
-    });
-  });
+      data[oldTitle] = undefined; // potentially unnecessary
+      delete data[oldTitle];
+      AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
+        .catch((error) => console.log(error));
+      return data[newTitle];
+    })
+    .catch((error) => console.log(error));
 }
 
 const _addCardToDeck = function(deckTitle, card) { //card must be formatted on front end

@@ -65,7 +65,8 @@ const editTitle = (oldTitle, newDeck) => {
 export const handleEditTitle = (oldTitle, newTitle) => {
   return dispatch => {
     return editDeckTitle(oldTitle, newTitle)
-      .then((newDeck) => { // can refactor to accept the new deck instead of re-doing creation in the reducer
+      .then((newDeck) => {
+        console.log("handleFunc return:", newDeck);
         dispatch(setActiveDeck(newDeck.title));
         dispatch(editTitle(oldTitle, newDeck));
       })
