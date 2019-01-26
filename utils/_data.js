@@ -36,16 +36,22 @@ const formatDeck = function(title) {
   };
 }
 
+const _resetAsyncStorage = function() { //for development purposes
+  return AsyncStorage.removeItem(DECKS_STORAGE_KEY)
+    .then(AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks)))
+}
+
 const _getDecks = function() {
+  // return _resetAsyncStorage() //for development purposes
   return AsyncStorage.getItem(DECKS_STORAGE_KEY)
     .then(JSON.parse)
     .then((data) => {
       if ( data === null) {
         AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
-        // first time running app - set with async storage with dummy data
+        // first time running app - set async storage with dummy data
       } else {
         console.log("asyncStorage data:", data);
-        decks = data; // replace decks dummy data with persistent decks data
+        decks = data; // replace decks dummy data with decks data in asyncStorage
       }
       return new Promise((res, rej) => {
         setTimeout(() => res({...decks}), 500);
@@ -65,11 +71,20 @@ const _getDeck = function(id) {
 }
 
 const _saveDeckTitle = function(title) {
+  // return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify())
+  if (decks[title] === undefined) {
+    decks[title] = formatDeck(title);
+    return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({ [decks[title].title]: decks[title] }))
+      .then((data) => {
+        // console.log("merge data:", data);
+        AsyncStorage.getItem(DECKS_STORAGE_KEY).then(JSON.parse).then((result) => console.log("Async post merge state:", result))
+        return decks[title];
+      })
+      .catch((error) => console.log(error));
+  }
   return new Promise((res, rej) => {
     setTimeout(() => {
-      decks[title] !== undefined
-        ? rej(Error("That deck name is already in use"))
-        : decks[title] = formatDeck(title), res(decks[title]);
+      rej(Error("That deck name is already in use"))
     }, 500);
   });
 }
