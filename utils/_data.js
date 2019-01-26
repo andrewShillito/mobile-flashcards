@@ -36,31 +36,16 @@ const formatDeck = function(title) {
   };
 }
 
-// const _getPersistentDecks = function() {
-//   AsyncStorage.getItem(DECKS_STORAGE_KEY)
-//     .then(JSON.parse)
-//     .then((data) => {
-//       console.log("async storage data:", data)
-//       return data;
-//     })
-//     .catch(err => console.log(err));
-// }
-
-// _getPersistentDecks = async() => {
-//   let data = await JSON.parse(AsyncStorage.getItem(DECKS_STORAGE_KEY));
-//   console.log("async storage data:", data);
-//   return data;
-// }
-
 const _getDecks = function() {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY)
     .then(JSON.parse)
     .then((data) => {
       if ( data === null) {
         AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
+        // first time running app - set with async storage with dummy data
       } else {
         console.log("asyncStorage data:", data);
-        // decks = data;
+        decks = data; // replace decks dummy data with persistent decks data
       }
       return new Promise((res, rej) => {
         setTimeout(() => res({...decks}), 500);
