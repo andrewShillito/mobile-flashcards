@@ -11,6 +11,8 @@ import AddCard from "./components/AddCard";
 import Quiz from "./components/Quiz";
 import ScoreDetails from "./components/ScoreDetails";
 
+import Edit from "./components/Edit";
+
 const HomeStack = createStackNavigator({
   Home: {
     screen: Home,
@@ -68,6 +70,13 @@ const Tabs = createBottomTabNavigator({
      navigationOptions: {
        tabBarLabel: "New",
        tabBarIcon: ({tintColor}) => <FontAwesome name="plus-square" size={30} color={tintColor} />
+     }
+   },
+   Edit: {
+     screen: Edit,
+     navigationOptions: {
+       tabBarLabel: "Edit Deck",
+       tabBarIcon: ({tintColor}) => <FontAwesome name="edit" size={30} color={tintColor} />
      }
    },
 });
