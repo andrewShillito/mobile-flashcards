@@ -15,17 +15,16 @@ class SelectDeckModal extends React.Component{
       modalVisible: visible,
     }));
   }
-  renderItem({ item }) {
+  renderItem = ({ item }) => {
     return (
       <View>
         <TouchableOpacity onPress={() => this.setDeck(item.title)}>
           <Text style={{color: "white"}}>{item.title}</Text>
-          <Text>does this work?</Text>
         </TouchableOpacity>
       </View>
     );
   }
-  setDeck(title) {
+  setDeck = (title) => {
     this.setState(() => ({
       selectedDeck: title,
     }));
@@ -35,17 +34,17 @@ class SelectDeckModal extends React.Component{
     const { decks } = this.props;
 
     return (
-      <View>
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
         <Modal
           visible={this.state.modalVisible}
           onRequestClose={() => alert("Modal closed")}
           animationType="slide"
           transparent={true}
           >
-          <View style={{marginTop: 22, marginHorizontal: 22, backgroundColor: "gray", alignSelf: "center", width: 300, height: 300,}}>
+          <View style={{flex: 1, marginVertical: 21, marginHorizontal: 21, backgroundColor: "gray", alignSelf: "center", width: 350, height: 350}}>
             <TouchableOpacity
               onPress={() => this.setModalVisibility(false)}
-              style={{alignSelf: "flex-end", justifyContent: "flex-start"}}
+              style={{alignSelf: "flex-end", justifyContent: "flex-start", marginTop: 21, marginRight: 21}}
               >
               <FontAwesome name="close" size={30} color="red" />
             </TouchableOpacity>
