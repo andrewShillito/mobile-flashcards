@@ -41,7 +41,7 @@ class SelectDeckModal extends React.Component{
           animationType="slide"
           transparent={true}
           >
-          <View style={{flex: 1, marginVertical: 21, marginHorizontal: 21, backgroundColor: "gray", alignSelf: "center", width: 350, height: 350}}>
+          <View style={{marginVertical: 21, marginHorizontal: 21, backgroundColor: "gray", alignSelf: "center", width: 350, height: 350}}>
             <TouchableOpacity
               onPress={() => this.setModalVisibility(false)}
               style={{alignSelf: "flex-end", justifyContent: "flex-start", marginTop: 21, marginRight: 21}}
