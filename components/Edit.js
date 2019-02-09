@@ -7,9 +7,8 @@ import SubmitBtn from "./SubmitBtn";
 class Edit extends React.Component{
   render() {
     return (
-      <View style={{flex: 1, justifyContent: "space-evenly", alignItems: "center"}}>
-        <Text>Edit Route</Text>
-        <SelectDeckModal></SelectDeckModal>
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+        <SelectDeckModal />
       </View>
     );
   }

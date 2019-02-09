@@ -40,11 +40,12 @@ class SelectDeckModal extends React.Component{
           onRequestClose={() => alert("Modal closed")}
           animationType="slide"
           transparent={true}
+          style={{flex:1, justifyContent: "center", alignItems: "center"}}
           >
-          <View style={{marginVertical: 21, marginHorizontal: 21, backgroundColor: "gray", alignSelf: "center", width: 350, height: 350}}>
+          <View style={{backgroundColor: "gray", alignSelf: "center", width: 350, height: 350, marginTop: 20}}>
             <TouchableOpacity
               onPress={() => this.setModalVisibility(false)}
-              style={{alignSelf: "flex-end", justifyContent: "flex-start", marginTop: 21, marginRight: 21}}
+              style={{alignSelf: "flex-end", justifyContent: "flex-start", marginTop: 5, marginRight: 10}}
               >
               <FontAwesome name="close" size={30} color="red" />
             </TouchableOpacity>
