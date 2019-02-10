@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, Animated, Dimensions } from 'react-native';
+import { Text, View, TouchableOpacity, Animated } from 'react-native';
 import DeckHeader from "./DeckHeader";
 import { deckStyles as styles } from "../styles";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
