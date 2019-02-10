@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, Animated } from 'react-native';
+import { Text, View, TouchableOpacity, Animated, Dimensions } from 'react-native';
 import DeckHeader from "./DeckHeader";
 import { deckStyles as styles } from "../styles";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -8,53 +8,66 @@ class Deck extends React.Component {
   state = {
     marginRight: new Animated.Value(0),
     pannedLeft: false,
+    color: "white",
+    width: new Animated.Value(Dimensions.get("window").width),
+    buttonWidth: new Animated.Value(0),
   }
 
   handleTouch = () => {
-    let finalVal = 60
+    let marginRight = 60;
+    let color = "green";
+    let buttonWidth = 40;
     if (this.state.pannedLeft) {
-      finalVal = 0;
+      marginRight = 0;
+      color = "white";
+      buttonWidth = 0;
+      Animated.parallel([
+        Animated.timing(this.state.marginRight, {
+          toValue: marginRight,
+          duration: 300,
+        }),
+        Animated.timing(this.state.buttonWidth, {
+          toValue: buttonWidth,
+          duration: 300,
+        })
+      ]).start(() => {this.setState((prevState) => ({
+        pannedLeft: !prevState.pannedLeft,
+        color: color,
+      }))});
     }
-    Animated.timing(
-      this.state.marginRight,
-      {
-        toValue: finalVal,
-        duration: 300,
-      }
-    ).start(() => this.setState((prevState) => ({ pannedLeft: !prevState.pannedLeft })));
+    else {
+      this.setState({ color: color });
+      Animated.parallel([
+        Animated.timing(this.state.marginRight, {
+          toValue: marginRight,
+          duration: 300,
+        }),
+        Animated.timing(this.state.buttonWidth, {
+          toValue: buttonWidth,
+          duration: 300,
+        })
+      ]).start(() => this.setState((prevState) => ({ pannedLeft: !prevState.pannedLeft })));
+    }
   }
   render() {
     const { deck, onPress } = this.props;
-    const marginRight = this.state.marginRight;
-    const showButtons = this.state.pannedLeft;
-
-    const rightButtons =
-      <Animated.View>
-        <TouchableOpacity onPress={() => onPress(deck.title)}>
-          <FontAwesome name="info" size={30} color="green"></FontAwesome>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => onPress(deck.title)}>
-          <MaterialCommunityIcons name="cards" size={30} color="green"></MaterialCommunityIcons>
-        </TouchableOpacity>
-      </Animated.View>
+    const { marginRight, color, width, buttonWidth } = this.state;
+    console.log("Width:", width);
 
     return (
-      <Animated.View style={{marginRight: marginRight, flexDirection: "row"}}>
+      <Animated.View style={{flexDirection: "row", flex: 1, marginRight: marginRight, minWidth: this.state.width}}>
         <TouchableOpacity style={styles.deck} onPress={this.handleTouch}>
           <DeckHeader>{deck.title}</DeckHeader>
           <Text style={styles.text}>{`${deck.questions.length} card${deck.questions.length>1 || deck.questions.length === 0 ? "s" : ""}`}</Text>
         </TouchableOpacity>
-        {showButtons
-          ? <Animated.View style={{justifyContent: "space-evenly", alignItems: "center"}}>
-              <TouchableOpacity onPress={() => onPress(deck.title)}>
-                <FontAwesome name="info" size={40} color="green"></FontAwesome>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => onPress(deck.title)}>
-                <MaterialCommunityIcons name="cards" size={40} color="green"></MaterialCommunityIcons>
-              </TouchableOpacity>
-            </Animated.View>
-          : null
-      }
+        <Animated.View style={{justifyContent: "space-evenly", alignItems: "center", width: buttonWidth}}>
+          <TouchableOpacity onPress={() => onPress(deck.title)}>
+            <FontAwesome name="info" size={40} color={color}></FontAwesome>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => onPress(deck.title)}>
+            <MaterialCommunityIcons name="cards" size={40} color={color}></MaterialCommunityIcons>
+          </TouchableOpacity>
+        </Animated.View>
       </Animated.View>
     );
   }
