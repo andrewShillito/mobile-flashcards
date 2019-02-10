@@ -44,7 +44,7 @@ class Deck extends React.Component {
       })
     ]).start(() => this.setState((prevState) => ({ pannedLeft: !prevState.pannedLeft })));
   }
-  
+
   render() {
     const { deck, onPress } = this.props;
     const { marginRight, buttonWidth } = this.state;
@@ -55,21 +55,21 @@ class Deck extends React.Component {
           <DeckHeader>{deck.title}</DeckHeader>
           <Text style={styles.text}>{`${deck.questions.length} card${deck.questions.length>1 || deck.questions.length === 0 ? "s" : ""}`}</Text>
         </TouchableOpacity>
-        <Animated.View style={{justifyContent: "space-evenly", alignItems: "center", width: buttonWidth, marginRight: marginRight}}>
+        <Animated.View style={{justifyContent: "space-between", alignItems: "center", width: buttonWidth, marginRight: marginRight, marginTop: 10}}>
           <TouchableOpacity onPress={() => {
               this.closeButtons();
               onPress(deck.title)}}>
-            <FontAwesome name="info" size={40} color="green"></FontAwesome>
+            <FontAwesome name="info" size={40} color="#17a2b8"></FontAwesome>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
               this.closeButtons();
               onPress(deck.title)}}>
-            <MaterialCommunityIcons name="cards" size={40} color="green"></MaterialCommunityIcons>
+            <MaterialCommunityIcons name="cards" size={40} color="#28a745"></MaterialCommunityIcons>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
               this.closeButtons();
               onPress(deck.title)}}>
-            <FontAwesome name="edit" size={40} color="green"></FontAwesome>
+            <FontAwesome name="edit" size={40} color="#ffc107"></FontAwesome>
           </TouchableOpacity>
         </Animated.View>
       </Animated.View>
