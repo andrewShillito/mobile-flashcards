@@ -44,6 +44,7 @@ class Deck extends React.Component {
       })
     ]).start(() => this.setState((prevState) => ({ pannedLeft: !prevState.pannedLeft })));
   }
+  
   render() {
     const { deck, onPress } = this.props;
     const { marginRight, buttonWidth } = this.state;
@@ -64,6 +65,11 @@ class Deck extends React.Component {
               this.closeButtons();
               onPress(deck.title)}}>
             <MaterialCommunityIcons name="cards" size={40} color="green"></MaterialCommunityIcons>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+              this.closeButtons();
+              onPress(deck.title)}}>
+            <FontAwesome name="edit" size={40} color="green"></FontAwesome>
           </TouchableOpacity>
         </Animated.View>
       </Animated.View>
