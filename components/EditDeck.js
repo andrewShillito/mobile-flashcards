@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import SubmitBtn from "./SubmitBtn";
 import { inputStyles } from "../styles";
 import { handleEditTitle, handleRemoveDeck } from "../actions/decks";
+import EditCards from "./EditCards";
 
 class EditDeck extends React.Component {
   static navigationOptions = ({ screenProps }) => {
@@ -31,7 +32,7 @@ class EditDeck extends React.Component {
   }
   deleteDeck = () => {
     this.props.dispatch(handleRemoveDeck(this.props.activeDeck));
-    this.clearInput()
+    this.clearInput();
     this.props.navigation.navigate("Home");
   }
   clearInput = () => {
@@ -44,23 +45,23 @@ class EditDeck extends React.Component {
 
     return (
       <View style={{flex: 1, justifyContent: "space-evenly", alignItems: "center"}}>
-        <View>
-          <View style={[inputStyles.inputContainer, {marginBottom: 40}]}>
-            <TextInput
-              style={inputStyles.input}
-              placeholder="New Title"
-              onChangeText={(title) => this.onChange({title})}
-              value={this.state.title}
-              />
+        <View style={{flex: 1, justifyContent: "space-evenly", alignItems: "center"}}>
+          <View>
+            <View style={[inputStyles.inputContainer, {marginBottom: 40}]}>
+              <TextInput
+                style={inputStyles.input}
+                placeholder="New Title"
+                onChangeText={(title) => this.onChange({title})}
+                value={this.state.title}
+                />
+            </View>
+            <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
           </View>
-          <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
+          <TouchableOpacity onPress={this.deleteDeck} style={{marginTop: 40}}>
+            <Text style={{color: "#dc3545", fontSize: 20}}>Delete Deck</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => console.log("pressed edit cards")} style={{marginTop: 40}}>
-          <Text style={{color: "#ffc107", fontSize: 20}}>Edit Cards</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.deleteDeck} style={{marginTop: 40}}>
-          <Text style={{color: "#dc3545", fontSize: 20}}>Delete Deck</Text>
-        </TouchableOpacity>
+        <EditCards></EditCards>
       </View>
     );
   }
