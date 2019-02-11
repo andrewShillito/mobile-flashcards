@@ -6,17 +6,20 @@ import Card from "./Card";
 
 class EditCards extends React.Component {
   renderItem = ({ item }) => {
+    console.log("item", item)
     return (
       <Card question={item} />
     );
   }
   render() {
     const { deck } = this.props;
-    console.log(deck.questions);
+    console.log("Questions", deck.questions);
     const { height } = Dimensions.get("window");
-
+    const resultingHeight = Math.round(height*.50)-40;
+    console.log("height:", resultingHeight);
+    
     return (
-      <View style={{height: Math.round(height*.50)-40, marginTop: 40}}>
+      <View style={{height: resultingHeight, marginTop: 40}}>
         <FlatList
           data={deck.questions}
           renderItem={this.renderItem}

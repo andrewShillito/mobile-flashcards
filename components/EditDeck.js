@@ -46,7 +46,7 @@ class EditDeck extends React.Component {
 
     return (
       <View style={{flex: 1, justifyContent: "space-evenly", alignItems: "center"}}>
-        <View style={{flex: 1, justifyContent: "space-evenly", alignItems: "center", height: Math.round(height*.50)}}>
+        <View style={{justifyContent: "space-evenly", alignItems: "center", height: Math.round(height*.50)}}>
           <View>
             <View style={[inputStyles.inputContainer, {marginBottom: 40}]}>
               <TextInput
