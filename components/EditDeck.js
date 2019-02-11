@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Dimensions } from "react-native";
 import { connect } from "react-redux";
 import SubmitBtn from "./SubmitBtn";
 import { inputStyles } from "../styles";
@@ -42,10 +42,11 @@ class EditDeck extends React.Component {
   }
   render() {
     const { activeDeck } = this.props;
+    const { height } = Dimensions.get("window");
 
     return (
       <View style={{flex: 1, justifyContent: "space-evenly", alignItems: "center"}}>
-        <View style={{flex: 1, justifyContent: "space-evenly", alignItems: "center"}}>
+        <View style={{flex: 1, justifyContent: "space-evenly", alignItems: "center", height: Math.round(height*.50)}}>
           <View>
             <View style={[inputStyles.inputContainer, {marginBottom: 40}]}>
               <TextInput
@@ -61,7 +62,7 @@ class EditDeck extends React.Component {
             <Text style={{color: "#dc3545", fontSize: 20}}>Delete Deck</Text>
           </TouchableOpacity>
         </View>
-        <EditCards style={{flex: 1}}/>
+        <EditCards />
       </View>
     );
   }
