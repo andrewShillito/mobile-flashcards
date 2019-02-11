@@ -61,7 +61,7 @@ class EditDeck extends React.Component {
             <Text style={{color: "#dc3545", fontSize: 20}}>Delete Deck</Text>
           </TouchableOpacity>
         </View>
-        <EditCards></EditCards>
+        <EditCards style={{flex: 1}}/>
       </View>
     );
   }

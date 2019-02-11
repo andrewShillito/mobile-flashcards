@@ -7,14 +7,15 @@ import Card from "./Card";
 class EditCards extends React.Component {
   renderItem = (item) => {
     return (
-      <Card deck={this.props.deck} question={item} />
+      <Text>WTFFFF?</Text>
     );
   }
   render() {
     const { deck } = this.props;
+    console.log(deck.questions);
 
     return (
-      <View style={{flex: 1}}>
+      <View>
         <FlatList
           data={deck.questions}
           renderItem={this.renderItem}

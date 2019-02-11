@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Animated } from 'react-native';
-import DeckHeader from "./DeckHeader";
 import { deckStyles as styles } from "../styles";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -46,14 +45,13 @@ class Card extends React.Component {
   }
 
   render() {
-    const { deck } = this.props;
+    const { question } = this.props;
     const { marginRight, buttonWidth } = this.state;
 
     return (
       <Animated.View style={{flexDirection: "row", flex: 1}}>
         <TouchableOpacity style={styles.deck} onPress={this.handleTouch}>
-          <DeckHeader>{deck.title}</DeckHeader>
-          <Text style={styles.text}>{`${deck.questions.length} card${deck.questions.length>1 || deck.questions.length === 0 ? "s" : ""}`}</Text>
+          <Text>{question.question}</Text>
         </TouchableOpacity>
         <Animated.View style={{justifyContent: "space-between", alignItems: "center", width: buttonWidth, marginRight: marginRight, marginTop: 10}}>
           <TouchableOpacity onPress={() => {
