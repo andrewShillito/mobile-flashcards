@@ -50,26 +50,10 @@ class Card extends React.Component {
 
     return (
       <Animated.View style={{flexDirection: "row", flex: 1}}>
-        <TouchableOpacity style={styles.deck} onPress={this.handleTouch}>
+        <TouchableOpacity onPress={this.handleTouch} style={styles.deck}>
           <Text>{question.question}</Text>
+          <Text>{question.answer}</Text>
         </TouchableOpacity>
-        <Animated.View style={{justifyContent: "space-between", alignItems: "center", width: buttonWidth, marginRight: marginRight, marginTop: 10}}>
-          <TouchableOpacity onPress={() => {
-              this.closeButtons();
-              }}>
-            <FontAwesome name="info" size={40} color="#17a2b8"></FontAwesome>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {
-              this.closeButtons();
-              }}>
-            <FontAwesome name="edit" size={40} color="#ffc107"></FontAwesome>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {
-              this.closeButtons();
-              }}>
-            <MaterialCommunityIcons name="delete" size={40} color="#28a745"></MaterialCommunityIcons>
-          </TouchableOpacity>
-        </Animated.View>
       </Animated.View>
     );
   }
