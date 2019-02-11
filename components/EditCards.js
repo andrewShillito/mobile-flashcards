@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import Card from "./Card";
 
 class EditCards extends React.Component {
-  renderItem = (item) => {
+  renderItem = ({ item }) => {
     return (
       <Card question={item} />
     );
