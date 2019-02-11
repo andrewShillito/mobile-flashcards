@@ -46,7 +46,7 @@ class Deck extends React.Component {
   }
 
   render() {
-    const { deck, onPress } = this.props;
+    const { deck, goToDeckDetail, goToQuiz, goToEdit } = this.props;
     const { marginRight, buttonWidth } = this.state;
 
     return (
@@ -58,17 +58,17 @@ class Deck extends React.Component {
         <Animated.View style={{justifyContent: "space-between", alignItems: "center", width: buttonWidth, marginRight: marginRight, marginTop: 10}}>
           <TouchableOpacity onPress={() => {
               this.closeButtons();
-              onPress(deck.title)}}>
+              goToDeckDetail(deck.title)}}>
             <FontAwesome name="info" size={40} color="#17a2b8"></FontAwesome>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
               this.closeButtons();
-              onPress(deck.title)}}>
+              goToQuiz(deck.title)}}>
             <MaterialCommunityIcons name="cards" size={40} color="#28a745"></MaterialCommunityIcons>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
               this.closeButtons();
-              onPress(deck.title)}}>
+              goToEdit(deck.title)}}>
             <FontAwesome name="edit" size={40} color="#ffc107"></FontAwesome>
           </TouchableOpacity>
         </Animated.View>

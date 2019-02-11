@@ -14,11 +14,22 @@ class Home extends React.Component {
     // clearLocalNotifications(); // for development
   }
   renderItem = ({ item }) => {
-    return <Deck deck={item} onPress={this.onPress} />
+    return <Deck deck={item} goToDeckDetail={this.goToDeckDetail} goToQuiz={this.goToQuiz} goToEdit={this.goToEdit} />
   }
-  onPress = (title) => {
+  goToDeckDetail = (title) => {
+    this._setActiveDeck(title);
+    this.props.navigation.navigate("DeckDetail")
+  }
+  goToQuiz = (title) => {
+    this._setActiveDeck(title);
+    this.props.navigation.navigate("Quiz");
+  }
+  goToEdit = (title) => {
+    this._setActiveDeck(title);
+    this.props.navigation.navigate("EditDeck");
+  }
+  _setActiveDeck = (title) => {
     this.props.dispatch(setActiveDeck(title));
-    this.props.navigation.navigate("DeckDetail");
   }
   askPermission = () => {
     Permissions.askAsync(Permissions.NOTIFICATIONS)
