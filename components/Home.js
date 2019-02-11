@@ -10,7 +10,7 @@ import { Permissions } from "expo";
 class Home extends React.Component {
   componentDidMount() {
     this.props.dispatch(handleReceiveDecks());
-    this.askPermission();
+    // this.askPermission(); // commented to prevent generating new notifications
     // clearLocalNotifications(); // for development
   }
   renderItem = ({ item }) => {

@@ -31,10 +31,13 @@ class EditDeck extends React.Component {
   }
   deleteDeck = () => {
     this.props.dispatch(handleRemoveDeck(this.props.activeDeck));
+    this.clearInput()
+    this.props.navigation.navigate("Home");
+  }
+  clearInput = () => {
     this.setState(() => ({
       title: "",
-    }));
-    this.props.navigation.navigate("Home");
+    }))
   }
   render() {
     const { activeDeck } = this.props;
@@ -52,6 +55,9 @@ class EditDeck extends React.Component {
           </View>
           <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
         </View>
+        <TouchableOpacity onPress={() => console.log("pressed edit cards")} style={{marginTop: 40}}>
+          <Text style={{color: "#ffc107", fontSize: 20}}>Edit Cards</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={this.deleteDeck} style={{marginTop: 40}}>
           <Text style={{color: "#dc3545", fontSize: 20}}>Delete Deck</Text>
         </TouchableOpacity>
