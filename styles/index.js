@@ -93,7 +93,17 @@ export const buttonStyles = StyleSheet.create({
   textButtonText: {
     color: "steelblue",
     fontSize: 20,
-  }
+  },
+  textDeleteButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    color: "steelblue",
+    margin: 15,
+  },
+  textDeleteButtonText: {
+    color: "#dc3545",
+    fontSize: 20,
+  },
 });
 
 export const inputStyles = StyleSheet.create({

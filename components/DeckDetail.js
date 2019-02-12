@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import Deck from "./Deck";
 import SubmitBtn from "./SubmitBtn";
@@ -26,11 +26,14 @@ class DeckDetail extends React.Component {
   }
   render() {
     return (
-      <View style={{flex: 1, justifyContent: "center"}}>
+      <View style={{flex: 4, justifyContent: "center"}}>
         <DeckInfo title={this.props.deck ? this.props.deck.title : ""} />
         <SubmitBtn onPress={this.startQuiz}>Start Quiz</SubmitBtn>
         <SubmitBtn onPress={this.addCard}>Add Card</SubmitBtn>
-        <SubmitBtn onPress={this.editDeck} type="textButton">Edit Deck</SubmitBtn>
+        <View style={{flexDirection: "row", alignItems: "flex-start", justifyContent: "space-around"}}>
+          <SubmitBtn onPress={this.editDeck} type="textButton">Edit Deck</SubmitBtn>
+          <SubmitBtn onPress={() => console.log("delete")} type="textDeleteButton">Delete Deck</SubmitBtn>
+        </View>
       </View>
     );
   }

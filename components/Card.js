@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "black",
     borderBottomWidth: StyleSheet.hairlineWidth,
     margin: 10,
-    width: Math.round((Dimensions.get("window").width)*.50),
+    width: Math.round((Dimensions.get("window").width)*.60),
   }
 });
 
