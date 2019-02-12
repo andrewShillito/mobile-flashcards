@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, Animated } from 'react-native';
-import { deckStyles as styles } from "../styles";
+import { Text, View, TouchableOpacity, Animated, StyleSheet, Dimensions, } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 
 class Card extends React.Component {
@@ -50,13 +49,43 @@ class Card extends React.Component {
 
     return (
       <Animated.View style={{flexDirection: "row", flex: 1}}>
-        <TouchableOpacity onPress={this.handleTouch} style={styles.deck}>
-          <Text>{question.question}</Text>
-          <Text>{question.answer}</Text>
+        <TouchableOpacity onPress={this.handleTouch} style={styles.card}>
+          <Text style={styles.text}>{question.question}</Text>
+          <View style={styles.line}></View>
+          <Text style={styles.text}>{question.answer}</Text>
         </TouchableOpacity>
+
       </Animated.View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  card: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    height: 150,
+    width: Dimensions.get("window").width,
+    marginTop: 10,
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2},
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  text: {
+    color: "#343a40",
+    fontSize: 25,
+    marginHorizontal: 5,
+  },
+  line: {
+    borderBottomColor: "black",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    margin: 10,
+    width: Math.round((Dimensions.get("window").width)*.50),
+  }
+});
 
 export default Card;

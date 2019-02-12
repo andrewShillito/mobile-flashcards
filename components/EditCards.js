@@ -17,13 +17,13 @@ class EditCards extends React.Component {
     const { height } = Dimensions.get("window");
     const resultingHeight = Math.round(height*.50)-40;
     console.log("height:", resultingHeight);
-    
+
     return (
-      <View style={{height: resultingHeight, marginTop: 40}}>
+      <View style={{height: resultingHeight, marginTop: 40, flex: 1}}>
         <FlatList
           data={deck.questions}
           renderItem={this.renderItem}
-          keyExtractor={(item) => item.question}
+          keyExtractor={(item) => `${item.question} ${item.answer}`}
           ListEmptyComponent={() => <Text>No questions in this deck!</Text>}
         />
       </View>
