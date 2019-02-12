@@ -44,13 +44,13 @@ class Card extends React.Component {
   }
 
   render() {
-    const { question } = this.props;
+    const { question, index } = this.props;
     const { marginRight, buttonWidth } = this.state;
 
     return (
       <Animated.View style={{flexDirection: "row", flex: 1}}>
         <TouchableOpacity onPress={this.handleTouch} style={styles.card}>
-          <Text style={styles.text}>{question.question}</Text>
+          <Text style={styles.text}>{`${index+1}. ${question.question}`}</Text>
           <View style={styles.line}></View>
           <Text style={styles.text}>{question.answer}</Text>
         </TouchableOpacity>

@@ -5,10 +5,10 @@ import { connect } from "react-redux";
 import Card from "./Card";
 
 class EditCards extends React.Component {
-  renderItem = ({ item }) => {
+  renderItem = ({ item, index }) => {
     console.log("item", item)
     return (
-      <Card question={item} />
+      <Card question={item} index={index}/>
     );
   }
   render() {
