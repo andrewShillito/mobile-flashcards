@@ -46,9 +46,9 @@ class EditDeck extends React.Component {
 
     return (
       <View style={{flex: 1, justifyContent: "space-evenly", alignItems: "center"}}>
-        <View style={{justifyContent: "space-evenly", alignItems: "center", height: Math.round(height*.50)}}>
+        <View style={{justifyContent: "space-evenly", alignItems: "center", height: Math.round(height*.30)}}>
           <View>
-            <View style={[inputStyles.inputContainer, {marginBottom: 40}]}>
+            <View style={[inputStyles.inputContainer, {marginBottom: 20, marginTop: 10}]}>
               <TextInput
                 style={inputStyles.input}
                 placeholder="New Title"
@@ -58,7 +58,7 @@ class EditDeck extends React.Component {
             </View>
             <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
           </View>
-          <TouchableOpacity onPress={this.deleteDeck} style={{marginTop: 40}}>
+          <TouchableOpacity onPress={this.deleteDeck} style={{marginTop: 20}}>
             <Text style={{color: "#dc3545", fontSize: 20}}>Delete Deck</Text>
           </TouchableOpacity>
         </View>

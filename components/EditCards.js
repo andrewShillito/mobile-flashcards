@@ -15,11 +15,11 @@ class EditCards extends React.Component {
     const { deck } = this.props;
     console.log("Questions", deck.questions);
     const { height } = Dimensions.get("window");
-    const resultingHeight = Math.round(height*.50)-40;
+    const resultingHeight = Math.round(height*.70)-30;
     console.log("height:", resultingHeight);
 
     return (
-      <View style={{height: resultingHeight, marginTop: 40, flex: 1}}>
+      <View style={{height: resultingHeight, marginTop: 30, flex: 1}}>
         <FlatList
           data={deck.questions}
           renderItem={this.renderItem}
