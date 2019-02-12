@@ -1,6 +1,10 @@
 # Mobile flashcards
 A React Native App for iOS built using expo-cli, react navigation, and redux.
 
+## Try it on the Web!
+
+https://snack.expo.io/@git/github.com/andrewShillito/mobile-flashcards
+
 ## To Install and Run App
 
 #### Using Yarn
