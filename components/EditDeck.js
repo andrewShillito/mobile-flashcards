@@ -15,9 +15,6 @@ class EditDeck extends React.Component {
   state = {
     title: '',
   }
-  addCard = () => {
-    this.props.navigation.navigate("AddCard");
-  }
   onChange = ({ title }) => {
     this.setState(() => ({
       title,
