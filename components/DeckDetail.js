@@ -27,10 +27,10 @@ class DeckDetail extends React.Component {
   }
   render() {
     return (
-      <View style={{flex: 1, justifyContent: "center"}}>
+      <View style={{flex: 2, justifyContent: "center"}}>
         <DeckInfo title={this.props.deck ? this.props.deck.title : ""} />
-        <SubmitBtn onPress={this.startQuiz}>Start Quiz</SubmitBtn>
-        <View style={{flexDirection: "row", alignItems: "flex-start", justifyContent: "space-around"}}>
+        <View style={{flexDirection: "row", alignItems: "flex-start", justifyContent: "space-between", marginHorizontal: 10}}>
+          <SubmitBtn onPress={this.startQuiz} type="textButton">Start Quiz</SubmitBtn>
           <SubmitBtn onPress={this.editDeck} type="textButton">Edit Deck</SubmitBtn>
         </View>
         <EditCards />

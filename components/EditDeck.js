@@ -56,7 +56,7 @@ class EditDeck extends React.Component {
         </View>
         <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
         <SubmitBtn onPress={() => console.log("add card btn")}>Add Card</SubmitBtn>
-        <SubmitBtn onPress={() => console.log("delete")} type="textDeleteButton">Delete Deck</SubmitBtn>
+        <SubmitBtn onPress={this.deleteDeck} type="textDeleteButton">Delete Deck</SubmitBtn>
       </View>
     );
   }
