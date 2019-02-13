@@ -19,7 +19,7 @@ class EditCards extends React.Component {
     console.log("height:", resultingHeight);
 
     return (
-      <View style={{marginTop: 30, flex: 3, justifyContent: "flex-end"}}>
+      <View style={{marginTop: 20, flex: 3, justifyContent: "flex-end"}}>
         <FlatList
           data={deck.questions}
           renderItem={this.renderItem}
