@@ -45,21 +45,18 @@ class EditDeck extends React.Component {
     const { height } = Dimensions.get("window");
 
     return (
-      <View style={{flex: 1}}>
-        <View style={{flex: 1, justifyContent: "space-evenly", alignItems: "center", marginBottom: 20}}>
-          <View style={{flex: 1}}>
-            <View style={[inputStyles.inputContainer, {marginTop: 20, marginBottom: 10}]}>
-              <TextInput
-                style={inputStyles.input}
-                placeholder="New Title"
-                onChangeText={(title) => this.onChange({title})}
-                value={this.state.title}
-                />
-            </View>
-            <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
-          </View>
+      <View style={{flex: 1, justifyContent: "space-evenly", alignItems: "center", marginBottom: 20}}>
+        <View style={[inputStyles.inputContainer, {marginTop: 20, marginBottom: 10}]}>
+          <TextInput
+            style={inputStyles.input}
+            placeholder="New Title"
+            onChangeText={(title) => this.onChange({title})}
+            value={this.state.title}
+            />
         </View>
-        <EditCards />
+        <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
+        <SubmitBtn onPress={() => console.log("add card btn")}>Add Card</SubmitBtn>
+        <SubmitBtn onPress={() => console.log("delete")} type="textDeleteButton">Delete Deck</SubmitBtn>
       </View>
     );
   }
