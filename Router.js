@@ -7,7 +7,6 @@ import New from "./components/New";
 import EditDeck from "./components/EditDeck";
 import { FontAwesome, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 import DeckDetail from "./components/DeckDetail";
-import AddCard from "./components/AddCard";
 import Quiz from "./components/Quiz";
 import ScoreDetails from "./components/ScoreDetails";
 
@@ -22,12 +21,6 @@ const HomeStack = createStackNavigator({
   DeckDetail: {
     screen: DeckDetail, //header title set dynamically to be deck title
     },
-  AddCard: {
-    screen: AddCard,
-    navigationOptions: {
-      title: "Add Card",
-    }
-  },
   EditDeck: {
     screen: EditDeck, //header title is dynamically set via nav screenProps (originate in redux store)
   },
