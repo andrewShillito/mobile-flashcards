@@ -65,7 +65,7 @@ class AddCard extends React.Component {
             />
         </View>
         <View>
-          <SubmitBtn onPress={this.onSubmit}>Submit</SubmitBtn>
+          <SubmitBtn onPress={this.onSubmit}>Add Card</SubmitBtn>
           <View style={{alignItems: "center"}}>
             <Text style={{color: color}}>{message}</Text>
           </View>

@@ -6,17 +6,14 @@ import Card from "./Card";
 
 class EditCards extends React.Component {
   renderItem = ({ item, index }) => {
-    console.log("item", item)
     return (
       <Card question={item} index={index}/>
     );
   }
   render() {
     const { deck } = this.props;
-    console.log("Questions", deck.questions);
     const { height } = Dimensions.get("window");
     const resultingHeight = Math.round(height*.70)-30;
-    console.log("height:", resultingHeight);
 
     return (
       <View style={{marginTop: 20, flex: 3, justifyContent: "flex-end"}}>
