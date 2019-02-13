@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import SubmitBtn from "./SubmitBtn";
 import { inputStyles } from "../styles";
 import { handleEditTitle, handleRemoveDeck } from "../actions/decks";
-import EditCards from "./EditCards";
+import AddCard from "./AddCard";
 
 class EditDeck extends React.Component {
   static navigationOptions = ({ screenProps }) => {
@@ -55,7 +55,7 @@ class EditDeck extends React.Component {
             />
         </View>
         <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
-        <SubmitBtn onPress={() => console.log("add card btn")}>Add Card</SubmitBtn>
+        <AddCard />
         <SubmitBtn onPress={this.deleteDeck} type="textDeleteButton">Delete Deck</SubmitBtn>
       </View>
     );

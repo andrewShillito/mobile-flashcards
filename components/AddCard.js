@@ -44,7 +44,7 @@ class AddCard extends React.Component {
   render() {
     const title = this.props.deck.title;
     const message = this.generateMessage();
-    const color = message === "Ready for submission" ? "green" : "red";
+    const color = message === "Ready for submission" ? "#28a745" : "#dc3545";
 
     return (
       <View style={{flex:1, justifyContent: "space-evenly", alignItems: "center"}}>
