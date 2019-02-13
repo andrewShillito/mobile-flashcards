@@ -22,10 +22,12 @@ class Home extends React.Component {
   }
   goToQuiz = (title) => {
     this._setActiveDeck(title);
+    this.props.navigation.push("DeckDetail");
     this.props.navigation.navigate("Quiz");
   }
   goToEdit = (title) => {
     this._setActiveDeck(title);
+    this.props.navigation.push("DeckDetail");
     this.props.navigation.navigate("EditDeck");
   }
   _setActiveDeck = (title) => {
