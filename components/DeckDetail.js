@@ -5,11 +5,13 @@ import Deck from "./Deck";
 import SubmitBtn from "./SubmitBtn";
 import DeckInfo from "./DeckInfo";
 import EditCards from "./EditCards";
+import EditCardModal from "./EditCardModal";
 
 class DeckDetail extends React.Component {
   static navigationOptions = ({ screenProps }) => {
     return {
       title: screenProps.activeDeck,
+      isModalVisible: false,
     };
   }
   startQuiz = () => {
@@ -25,13 +27,29 @@ class DeckDetail extends React.Component {
   addCard = () => {
     this.props.navigation.navigate("AddCard");
   }
+  openModal = () => {
+    this.setState(() => ({
+      isModalVisible: true,
+    }));
+  }
+  closeModal = () => {
+    this.setState(() => ({
+      isModalVisible: false,
+    }));
+  }
+  toggleModal = () => {
+    this.setState((prevState) => ({
+      isModalVisible: !prevState.isModalVisible,
+    }));
+  }
   render() {
     return (
       <View style={{flex: 1}}>
         <DeckInfo title={this.props.deck ? this.props.deck.title : ""} />
         <SubmitBtn onPress={this.startQuiz} type="submitBtn">Start Quiz</SubmitBtn>
         <SubmitBtn onPress={this.editDeck} type="textButton">Edit Deck</SubmitBtn>
-        <EditCards />
+        <EditCards toggleModal={this.toggleModal}/>
+        <EditCardModal isModalVisible={this.state.isModalVisible}/>
       </View>
 
     );

@@ -8,41 +8,9 @@ class Card extends React.Component {
     buttonWidth: new Animated.Value(0),
     pannedLeft: false,
   }
-
   handleTouch = () => {
-    if (this.state.pannedLeft) {
-      this.closeButtons();
-    } else {
-      this.openButtons();
-    }
+    this.props.toggleModal();
   }
-
-  openButtons = () => {
-    Animated.parallel([
-      Animated.timing(this.state.marginRight, {
-        toValue: 20,
-        duration: 300,
-      }),
-      Animated.timing(this.state.buttonWidth, {
-        toValue: 40,
-        duration: 300,
-      })
-    ]).start(() => this.setState((prevState) => ({ pannedLeft: !prevState.pannedLeft })));
-  }
-
-  closeButtons = () => {
-    Animated.parallel([
-      Animated.timing(this.state.marginRight, {
-        toValue: 0,
-        duration: 300,
-      }),
-      Animated.timing(this.state.buttonWidth, {
-        toValue: 0,
-        duration: 300,
-      })
-    ]).start(() => this.setState((prevState) => ({ pannedLeft: !prevState.pannedLeft })));
-  }
-
   render() {
     const { question, index } = this.props;
     const { marginRight, buttonWidth } = this.state;
@@ -87,5 +55,7 @@ const styles = StyleSheet.create({
     width: Math.round((Dimensions.get("window").width)*.60),
   }
 });
+
+
 
 export default Card;

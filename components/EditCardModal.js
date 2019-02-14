@@ -3,6 +3,9 @@ import { Modal, View, Text } from "react-native";
 import { connect } from "react-redux";
 
 class EditCardModal extends React.Component {
+  state = {
+    isModalVisible: this.props.isModalVisible,
+  }
   render() {
     return (
       <Modal>
@@ -14,9 +17,9 @@ class EditCardModal extends React.Component {
   }
 }
 
-function mapStateToProps(){
+function mapStateToProps({ }, { isModalVisible }){
   return {
-
+    isModalVisible,
   };
 }
 

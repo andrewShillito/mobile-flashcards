@@ -7,9 +7,10 @@ import Card from "./Card";
 class EditCards extends React.Component {
   renderItem = ({ item, index }) => {
     return (
-      <Card question={item} index={index}/>
+      <Card question={item} index={index} toggleModal={this.props.toggleModal}/>
     );
   }
+
   render() {
     const { deck } = this.props;
     const { height } = Dimensions.get("window");
@@ -28,7 +29,7 @@ class EditCards extends React.Component {
   }
 }
 
-function mapStateToProps({ activeDeck, decks }) {
+function mapStateToProps({ activeDeck, decks }, { toggleModal }) {
   return {
     deck: decks[activeDeck],
   }
