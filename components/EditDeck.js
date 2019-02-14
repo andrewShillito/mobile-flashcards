@@ -14,18 +14,34 @@ class EditDeck extends React.Component {
   }
   state = {
     title: '',
+    validInput: false,
+    message: "Submit to change deck name",
+    messageColor: "#28a745",
+    warningColor: "#dc3545",
+    successColor: "#28a745",
+    duplicateTitleMessage: "Deck name already taken",
+    sameAsCurrentTitleMessage: "Same as current title",
+    successMessage: "Ready for Submission",
+    emptyInputMessage: "Blank titles not allowed",
+    inputTooLongMessage: "Max title length exceeded",
   }
   onChange = ({ title }) => {
     this.setState(() => ({
       title,
-    }));
+    }), this.validateInput);
   }
   editTitle = (oldTitle, newTitle) => {
-    this.props.dispatch(handleEditTitle(oldTitle, newTitle));
-    this.setState(() => ({
-      title: "",
-    }));
-    this.props.navigation.navigate("DeckDetail");
+    if (this.validateInput()) {
+      this.props.dispatch(handleEditTitle(oldTitle, newTitle));
+      this.setState(() => ({
+        title: "",
+      }));
+      this.props.navigation.navigate("DeckDetail");
+    }
+    else {
+      alert(this.state.message);
+      return;
+    }
   }
   deleteDeck = () => {
     this.props.dispatch(handleRemoveDeck(this.props.activeDeck));
@@ -36,6 +52,33 @@ class EditDeck extends React.Component {
     this.setState(() => ({
       title: "",
     }))
+  }
+  validateInput = () => {
+    if (this.state.title.length) {
+      if (this.props.deckNames.includes(this.state.title)) {
+        if (this.state.title === this.props.activeDeck) {
+          this.setMessage(this.state.sameAsCurrentTitleMessage, this.state.warningColor);
+          return false;
+        }
+        this.setMessage(this.state.duplicateTitleMessage, this.state.warningColor);
+        return false;
+      } else if (this.state.title.length > 40) {
+        this.setMessage(this.state.inputTooLongMessage, this.state.warningColor);
+        return false;
+      } else {
+        this.setMessage(this.state.successMessage, this.state.successColor);
+        return true;
+      }
+    } else {
+      this.setMessage(this.state.emptyInputMessage, this.state.warningColor);
+      return false;
+    }
+  }
+  setMessage = (message, messageColor) => {
+    this.setState(() => ({
+      message: message,
+      messageColor: messageColor,
+    }));
   }
   render() {
     const { activeDeck } = this.props;
@@ -51,7 +94,12 @@ class EditDeck extends React.Component {
             value={this.state.title}
             />
         </View>
-        <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
+        <View>
+          <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
+          <View style={{alignItems: "center"}}>
+            <Text style={{color: this.state.messageColor}}>{this.state.message}</Text>
+          </View>
+        </View>
         <AddCard />
         <SubmitBtn onPress={this.deleteDeck} type="textDeleteButton">Delete Deck</SubmitBtn>
       </View>
@@ -59,9 +107,10 @@ class EditDeck extends React.Component {
   }
 }
 
-function mapStateToProps({ activeDeck }) {
+function mapStateToProps({ activeDeck, decks }) {
   return {
     activeDeck,
+    deckNames: Object.keys(decks),
   }
 }
 
