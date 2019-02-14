@@ -9,11 +9,20 @@ class New extends React.Component {
   static navigationOptions = (data) => {
   }
   state = {
-    title: "", // add feedback message for submission (ie: warning or let them know it is ready)
+    title: "",
+    message: "Submit to create a new deck",
+    messageColor: "#28a745",
+    warningColor: "#dc3545",
+    successColor: "#28a745",
+    duplicateTitleMessage: "Deck name already taken",
+    successMessage: "Ready for Submission",
+    emptyInputMessage: "Blank titles not allowed",
+    inputTooLongMessage: "Max title length exceeded",
+    maxInputLength: 30,
   }
   onPress = () => {
-    if (this.state.title === "") {
-      alert("Title cannot be blank");
+    if (!this.validateInput()) {
+      alert(this.message);
       return;
     }
     else {
@@ -27,6 +36,28 @@ class New extends React.Component {
   onChange = ({ title }) => {
     this.setState(() => ({
       title,
+    }), this.validateInput);
+  }
+  validateInput = () => {
+    const { deckNames } = this.props;
+    if (this.state.title.length) {
+      if (deckNames.includes(this.state.title)) {
+        this.setMessage(this.state.duplicateTitleMessage, this.state.warningColor);
+        return false;
+      } else if (this.state.title.length > this.state.maxInputLength) {
+        this.setMessage(this.state.inputTooLongMessage, this.state.warningColor);
+      } else {
+        this.setMessage(this.state.successMessage, this.state.successColor);
+        return true;
+      }
+    }
+    this.setMessage(this.state.emptyInputMessage, this.state.warningColor);
+    return false;
+  }
+  setMessage = (message, messageColor) => {
+    this.setState(() => ({
+      message,
+      messageColor,
     }));
   }
   render() {
@@ -47,4 +78,10 @@ class New extends React.Component {
   }
 }
 
-export default connect()(New);
+function mapStateToProps({ decks }) {
+  return {
+    deckNames: Object.keys(decks),
+  }
+}
+
+export default connect(mapStateToProps)(New);
