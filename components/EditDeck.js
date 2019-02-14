@@ -14,7 +14,6 @@ class EditDeck extends React.Component {
   }
   state = {
     title: '',
-    validInput: false,
     message: "Submit to change deck name",
     messageColor: "#28a745",
     warningColor: "#dc3545",
