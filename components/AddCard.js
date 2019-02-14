@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, TextInput } from "react-native";
 import { connect } from "react-redux";
-import RouteTitle from "./RouteTitle";
 import SubmitBtn from "./SubmitBtn";
 import { inputStyles } from "../styles";
 import { handleAddCard } from "../actions/cards";
@@ -64,7 +63,6 @@ class AddCard extends React.Component {
     }
   }
   render() {
-    const title = this.props.deck.title;
     const message = this.state.message;
     const color = this.state.messageColor;
 

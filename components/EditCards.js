@@ -18,7 +18,7 @@ class EditCards extends React.Component {
     return (
       <View style={{marginTop: 20, flex: 3, justifyContent: "flex-end"}}>
         <FlatList
-          data={deck.questions}
+          data={deck ? deck.questions : []}
           renderItem={this.renderItem}
           keyExtractor={(item) => `${item.question} ${item.answer}`}
           ListEmptyComponent={() => <Text style={{alignSelf: "center", fontSize: 20}}>No cards in this deck!</Text>}
