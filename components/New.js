@@ -16,7 +16,7 @@ class New extends React.Component {
     successColor: "#28a745",
     duplicateTitleMessage: "Deck name already taken",
     successMessage: "Ready for Submission",
-    emptyInputMessage: "Blank titles not allowed",
+    emptyInputMessage: "Blank titles are not allowed",
     inputTooLongMessage: "Max title length exceeded",
     maxInputLength: 30,
   }
@@ -40,12 +40,13 @@ class New extends React.Component {
   }
   validateInput = () => {
     const { deckNames } = this.props;
-    if (this.state.title.length) {
+    if (this.state.title.length > 0) {
       if (deckNames.includes(this.state.title)) {
         this.setMessage(this.state.duplicateTitleMessage, this.state.warningColor);
         return false;
       } else if (this.state.title.length > this.state.maxInputLength) {
         this.setMessage(this.state.inputTooLongMessage, this.state.warningColor);
+        return false;
       } else {
         this.setMessage(this.state.successMessage, this.state.successColor);
         return true;
@@ -72,7 +73,12 @@ class New extends React.Component {
             value={this.state.title}
             />
         </View>
-        <SubmitBtn onPress={this.onPress}>Submit</SubmitBtn>
+        <View>
+          <SubmitBtn onPress={this.onPress}>Submit</SubmitBtn>
+          <View style={{alignItems: "center"}}>
+            <Text style={{color: this.state.messageColor}}>{this.state.message}</Text>
+          </View>
+        </View>
       </View>
     );
   }
