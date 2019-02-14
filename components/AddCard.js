@@ -10,23 +10,42 @@ class AddCard extends React.Component {
   state = {
     question: "",
     answer: "",
+    message: "Submit to add a new card",
+    messageColor: "#28a745",
+    duplicateCardMessage: "Card already exists",
+    emptyInputMessage: "Must complete both fields",
+    successMessage: "Ready for submission",
+    inputTooLongMessage: "Max input length exceeded",
+    warningColor: "#dc3545",
+    successColor: "#28a745",
+    maxInputLength: 40,
   }
   onChange = ({value, name}) => {
     this.setState(() => ({
       [name]: value,
-    }));
+    }), this.validateInput);
   }
   validateInput = () => {
+    const { questions } = this.props.deck;
     if (this.state.question.length && this.state.answer.length) {
+      if (questions.some((card) => card.question === this.state.question && card.answer === this.state.answer)) {
+        this.setMessage(this.state.duplicateCardMessage, this.state.warningColor);
+        return false;
+      } else if (this.state.question.length > this.state.maxInputLength || this.state.answer.length> this.state.maxInputLength) {
+        this.setMessage(this.state.inputTooLongMessage, this.state.warningColor);
+        return false;
+      }
+      this.setMessage(this.state.successMessage, this.state.successColor);
       return true;
     }
+    this.setMessage(this.state.emptyInputMessage, this.state.warningColor);
     return false;
   }
-  generateMessage = () => {
-    if (this.validateInput()) {
-      return "Ready for submission";
-    }
-    return "Must complete both fields";
+  setMessage = (message, messageColor) => {
+    this.setState(() => ({
+      message,
+      messageColor,
+    }));
   }
   onSubmit = () => {
     if (this.validateInput()) {
@@ -35,16 +54,19 @@ class AddCard extends React.Component {
         answer: this.state.answer,
       };
       this.props.dispatch(handleAddCard(this.props.deck.title, newCard));
-      this.props.navigation.navigate("DeckDetail");
+      this.setState(() => ({
+        question: "",
+        answer: "",
+      }))
     }
     else {
-      alert("Must complete both fields");
+      alert(this.state.message);
     }
   }
   render() {
     const title = this.props.deck.title;
-    const message = this.generateMessage();
-    const color = message === "Ready for submission" ? "#28a745" : "#dc3545";
+    const message = this.state.message;
+    const color = this.state.messageColor;
 
     return (
       <View style={{flex:1, justifyContent: "space-evenly", alignItems: "center"}}>
