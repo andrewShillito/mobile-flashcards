@@ -21,7 +21,7 @@ class EditCards extends React.Component {
           data={deck.questions}
           renderItem={this.renderItem}
           keyExtractor={(item) => `${item.question} ${item.answer}`}
-          ListEmptyComponent={() => <Text>No questions in this deck!</Text>}
+          ListEmptyComponent={() => <Text style={{alignSelf: "center", fontSize: 20}}>No cards in this deck!</Text>}
         />
       </View>
     );
