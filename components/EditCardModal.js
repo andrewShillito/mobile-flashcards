@@ -2,6 +2,7 @@ import React from "react";
 import { Modal, View, Text, StyleSheet, Dimensions, TextInput, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import SubmitBtn from "./SubmitBtn";
+import { handleEditCard, handleRemoveCard } from "../actions/cards";
 
 class EditCardModal extends React.Component {
   state = {
@@ -55,6 +56,29 @@ class EditCardModal extends React.Component {
       messageColor,
     }));
   }
+  onSubmit = () => {
+    if (this.validateInput()) {
+      const newCard = {
+        question: this.state.question,
+        answer: this.state.answer,
+      };
+      this.props.toggleModal();
+      this.props.dispatch(handleEditCard(this.props.activeDeck, this.props.cardIndex, newCard));
+      this.setState(() => ({
+        question: "",
+        answer: "",
+      }));
+    }
+    alert(this.state.message);
+  }
+  deleteCard = () => {
+    this.props.toggleModal();
+    this.props.dispatch(handleRemoveCard(this.props.activeDeck, this.props.cardIndex));
+    this.setState(() => ({
+      question: "",
+      answer: "",
+    }));
+  }
   render() {
     const { activeCard, activeDeck, isModalVisible, toggleModal, cardIndex } = this.props;
     const { message, messageColor } = this.state;
@@ -99,7 +123,7 @@ class EditCardModal extends React.Component {
               <TouchableOpacity onPress={() => toggleModal(cardIndex)} style={styles.textButton}>
                 <Text style={styles.textButtonText}>Go Back</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => console.log("delete pressed")} style={styles.textButton}>
+              <TouchableOpacity onPress={this.deleteCard} style={styles.textButton}>
                 <Text style={styles.deleteButtonText}>Delete Card</Text>
               </TouchableOpacity>
             </View>
