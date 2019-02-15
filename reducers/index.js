@@ -55,6 +55,13 @@ function decks(store = {}, action) {
           "questions": store[action.deckTitle].questions.filter((question, index) => index !== action.cardIndex),
         },
       };
+    case EDIT_CARD:
+      return {
+        ...store,
+        [action.deckTitle]: {
+          ...action.deck,
+        }
+      }
     default:
       return store;
   }

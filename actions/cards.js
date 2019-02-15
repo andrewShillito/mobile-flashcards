@@ -7,7 +7,7 @@ import {
 import {
   addCardToDeck,
   deleteCard,
-  editCard,
+  editCard as _editCard,
 } from "../utils/api";
 
 export const addCard = (title, card) => {
@@ -41,7 +41,26 @@ export const handleRemoveCard = (deckTitle, cardIndex) => {
     return deleteCard(deckTitle, cardIndex)
       .then((deck) => {
         console.log("remove card deck:", deck);
-        dispatch(removeCard(deckTitle, cardIndex))
+        dispatch(removeCard(deckTitle, cardIndex));
       })
-  }
+      .catch((err) => console.log(err));
+  };
+}
+
+export const editCard = (deckTitle, deck) => {
+  return {
+    type: EDIT_CARD,
+    deckTitle,
+    deck,
+  };
+}
+
+export const handleEditCard = (deckTitle, cardIndex, newCard) => {
+  return dispatch => {
+    return _editCard(deckTitle, cardIndex, newCard)
+      .then((deck) => {
+        dispatch(editCard(deckTitle, deck));
+      })
+      .catch((err) => console.log(err));
+  };
 }
