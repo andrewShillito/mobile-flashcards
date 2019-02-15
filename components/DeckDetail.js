@@ -51,6 +51,7 @@ class DeckDetail extends React.Component {
         <SubmitBtn onPress={this.startQuiz} type="submitBtn">Start Quiz</SubmitBtn>
         <SubmitBtn onPress={this.editDeck} type="textButton">Edit Deck</SubmitBtn>
         <EditCards toggleModal={this.toggleModal}/>
+        <EditCardModal isModalVisible={this.state.isModalVisible} toggleModal={this.toggleModal}/>
       </View>
 
     );

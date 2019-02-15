@@ -13,8 +13,6 @@ class EditCards extends React.Component {
 
   render() {
     const { deck } = this.props;
-    const { height } = Dimensions.get("window");
-    const resultingHeight = Math.round(height*.70)-30;
 
     return (
       <View style={{marginTop: 20, flex: 3, justifyContent: "flex-end"}}>
