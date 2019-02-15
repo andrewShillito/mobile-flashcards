@@ -1,10 +1,13 @@
 import {
   ADD_CARD,
   REMOVE_CARD,
+  EDIT_CARD,
 } from "./types";
 
 import {
   addCardToDeck,
+  deleteCard,
+  editCard,
 } from "../utils/api";
 
 export const addCard = (title, card) => {
@@ -19,17 +22,26 @@ export const handleAddCard = (deckTitle, card) => {
   return dispatch => {
     return addCardToDeck(deckTitle, card)
       .then((deck) => {
-        console.log(deck)
         dispatch(addCard(deckTitle, card));
       })
       .catch((err) => console.log(err));
   };
 }
 
-export const removeCard = (title, card) => {
+export const removeCard = (deckTitle, cardIndex) => {
   return {
     type: REMOVE_CARD,
-    title,
-    card,
+    deckTitle,
+    cardIndex,
   };
+}
+
+export const handleRemoveCard = (deckTitle, cardIndex) => {
+  return dispatch => {
+    return deleteCard(deckTitle, cardIndex)
+      .then((deck) => {
+        console.log("remove card deck:", deck);
+        dispatch(removeCard(deckTitle, cardIndex))
+      })
+  }
 }

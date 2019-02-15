@@ -4,6 +4,7 @@ import {
   REMOVE_DECK,
   ADD_CARD,
   REMOVE_CARD,
+  EDIT_CARD,
   SET_ACTIVE_DECK,
   CLEAR_ACTIVE_DECK,
   EDIT_TITLE,
@@ -49,12 +50,10 @@ function decks(store = {}, action) {
     case REMOVE_CARD:
       return {
         ...store,
-        [action.title]: {
-          ...store[action.title],
-          "questions": store[action.title].questions.filter((question) => {
-            return (question.question !== action.card.question || question.answer !== action.card.answer);
-          })
-        }
+        [action.deckTitle]: {
+          ...store[action.deckTitle],
+          "questions": store[action.deckTitle].questions.filter((question, index) => index !== action.cardIndex),
+        },
       };
     default:
       return store;
