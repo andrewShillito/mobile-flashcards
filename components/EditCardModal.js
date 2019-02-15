@@ -28,7 +28,7 @@ class EditCardModal extends React.Component {
     const { questions, activeCard, cardIndex } = this.props;
 
     if (this.state.question.length && this.state.answer.length) {
-      if (questions[cardIndex] === activeCard) {
+      if (activeCard.question === this.state.question && activeCard.answer === this.state.answer) {
         this.setMessage(this.state.sameAsCurrentCardMessage, this.state.warningColor);
         return false;
       } else if (questions.some((card) => card.question === this.state.question && card.answer === this.state.answer)) {
