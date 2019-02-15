@@ -7,6 +7,8 @@ import {
   _setActiveDeck,
   _clearActiveDeck,
   _editDeckTitle,
+  _editCard,
+  _removeCard,
 } from "./_data";
 
 const getDecks = function() {
@@ -41,6 +43,14 @@ const editDeckTitle = function(oldTitle, newTitle) {
   return _editDeckTitle(oldTitle, newTitle);
 }
 
+const editCard = function(deckTitle, cardIndex, newCard) {
+  return _editCard(deckTitle, cardIndex, newCard);
+}
+
+const deleteCard = function(deckTitle, cardIndex) {
+  return _removeCard(deckTitle, cardIndex);
+}
+
 export {
   getDecks,
   getDeck,
@@ -50,4 +60,6 @@ export {
   setActiveDeck,
   clearActiveDeck,
   editDeckTitle,
+  editCard,
+  deleteCard,
 }
