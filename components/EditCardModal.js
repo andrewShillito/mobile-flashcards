@@ -7,29 +7,53 @@ class EditCardModal extends React.Component {
   state = {
     question: "",
     answer: "",
-    message: "Submit to change card text",
+    message: "Submit to change card content",
     messageColor: "#28a745",
-    duplicateCardMessage: "Card already exists",
-    emptyInputMessage: "Must complete both fields",
+    duplicateCardMessage: "Card already exists in deck",
+    sameAsCurrentCardMessage: "Same as current card",
+    emptyInputMessage: "Complete both fields or go back to cancel",
     successMessage: "Ready for submission",
     inputTooLongMessage: "Max input length exceeded",
     warningColor: "#dc3545",
     successColor: "#28a745",
-    maxInputLength: 80,
+    maxInputLength: 120,
   }
   componentDidMount() {
     this.setState(() => ({
       question: this.props.activeCard.question,
       answer: this.props.activeCard.answer,
-    }))
+    }), this.validateInput);
   }
   validateInput = () => {
+    const { questions, activeCard, cardIndex } = this.props;
 
+    if (this.state.question.length && this.state.answer.length) {
+      if (questions[cardIndex] === activeCard) {
+        this.setMessage(this.state.sameAsCurrentCardMessage, this.state.warningColor);
+        return false;
+      } else if (questions.some((card) => card.question === this.state.question && card.answer === this.state.answer)) {
+        this.setMessage(this.state.duplicateCardMessage, this.state.warningColor);
+        return false;
+      } else if (this.state.question.length > this.state.maxInputLength || this.state.answer.length> this.state.maxInputLength) {
+        this.setMessage(this.state.inputTooLongMessage, this.state.warningColor);
+        return false;
+      }
+      this.setMessage(this.state.successMessage, this.state.successColor);
+      return true;
+    }
+    this.setMessage(this.state.emptyInputMessage, this.state.warningColor);
+    return false;
   }
   onChange = ({value, name}) => {
     this.setState(() => ({
       [name]: value,
     }), this.validateInput);
+  }
+  setMessage = (message, messageColor) => {
+    this.setState(() => ({
+      message,
+      messageColor,
+    }));
   }
   render() {
     const { activeCard, activeDeck, isModalVisible, toggleModal, cardIndex } = this.props;
@@ -76,7 +100,7 @@ class EditCardModal extends React.Component {
                 <Text style={styles.textButtonText}>Go Back</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => console.log("delete pressed")} style={styles.textButton}>
-                <Text style={styles.deleteButtonText}>Delete Deck</Text>
+                <Text style={styles.deleteButtonText}>Delete Card</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -151,7 +175,6 @@ const inputStyles = StyleSheet.create({
     marginHorizontal: 5,
     fontSize: 20,
     paddingBottom: 5,
-    justifyContent: "space-between",
   },
   inputContainer: {
     borderStyle: "solid",
