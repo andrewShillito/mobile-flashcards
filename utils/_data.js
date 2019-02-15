@@ -125,6 +125,47 @@ const _addCardToDeck = function(deckTitle, card) { //card must be formatted on f
     .catch((error) => console.log(error));
 }
 
+const _editCard = function(deckTitle, cardIndex, newCard) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then(JSON.parse)
+    .then((data) => {
+      if (data[deckTitle] === undefined) {
+        return Error("Deck not found");
+      }
+      let newQuestions = data[deckTitle].questions.splice(cardIndex, 1, newCard);
+        //may be a future issue that this is shallow copy
+      data[deckTitle] = {
+        ...data[deckTitle],
+        "questions": newQuestions,
+      };
+      AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
+        .catch((error) => console.log(error));
+      return data[deckTitle];
+    })
+    .catch((error) => console.log(error));
+}
+
+const _removeCard = function(deckTitle, cardIndex) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then(JSON.parse)
+    .then((data) => {
+      if (data[deckTitle] === undefined) {
+        return Error("Deck not found");
+      } else if (cardIndex >= data[deckTitle].questions.length) {
+        return Error("Card Index out of range");
+      }
+      let newQuestions = data[deckTitle].questions.splice(cardIndex, 1);
+      data[deckTitle] = {
+        ...data[deckTitle],
+        "questions": newQuestions,
+      };
+      AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
+        .catch((error) => console.log(error));
+      return data[deckTitle];
+    })
+    .catch((error) => console.log(error));
+}
+
 const _removeDeck = function(title) {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY)
     .then(JSON.parse)
@@ -169,4 +210,6 @@ export {
   _addCardToDeck,
   _removeDeck,
   _editDeckTitle,
+  _editCard,
+  _removeCard,
 };
