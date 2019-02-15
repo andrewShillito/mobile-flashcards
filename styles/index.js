@@ -68,12 +68,12 @@ export const buttonStyles = StyleSheet.create({
   submitBtn: {
     backgroundColor: "steelblue",
     marginVertical: 20,
-    marginHorizontal: 60,
+    // marginHorizontal: 60,
     justifyContent: "center",
     alignItems: "center",
-    height: 80,
+    height: 50,
     borderRadius: 5,
-    paddingHorizontal: 40,
+    paddingHorizontal: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2},
     shadowOpacity: 0.25,
@@ -82,7 +82,7 @@ export const buttonStyles = StyleSheet.create({
   },
   submitBtnText: {
     color: "white",
-    fontSize: 30,
+    fontSize: 20,
   },
   textButton: {
     alignItems: "center",

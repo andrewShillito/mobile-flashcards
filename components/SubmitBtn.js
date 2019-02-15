@@ -8,13 +8,13 @@ function SubmitBtn({ onPress, children, type, additionalStyling }) {
   }
   if (additionalStyling !== undefined) {
     return (
-      <TouchableOpacity style={[styles[type], additionalStyling]} onPress={onPress}>
+      <TouchableOpacity style={[styles[type], additionalStyling, {alignSelf: "center"}]} onPress={onPress}>
         <Text style={styles[`${type}Text`]}>{children}</Text>
       </TouchableOpacity>
     );
   }
   return (
-     <TouchableOpacity style={styles[type]} onPress={onPress}>
+     <TouchableOpacity style={[styles[type], {alignSelf: "center"}]} onPress={onPress}>
        <Text style={styles[`${type}Text`]}>{children}</Text>
      </TouchableOpacity>
    );

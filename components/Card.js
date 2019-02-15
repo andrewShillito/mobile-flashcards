@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     margin: 10,
     width: Math.round((Dimensions.get("window").width)*.60),
-  }
+  },
 });
 
 
