@@ -9,7 +9,7 @@ class Card extends React.Component {
     pannedLeft: false,
   }
   handleTouch = () => {
-    this.props.toggleModal();
+    this.props.toggleModal(this.props.index);
   }
   render() {
     const { question, index } = this.props;

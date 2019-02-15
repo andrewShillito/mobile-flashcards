@@ -15,6 +15,7 @@ class DeckDetail extends React.Component {
   }
   state = {
     isModalVisible: false,
+    cardIndex: 0,
   }
   startQuiz = () => {
     if (this.props.deck.questions.length === 0) {
@@ -39,9 +40,10 @@ class DeckDetail extends React.Component {
       isModalVisible: false,
     }));
   }
-  toggleModal = () => {
+  toggleModal = (index) => {
     this.setState((prevState) => ({
       isModalVisible: !prevState.isModalVisible,
+      cardIndex: index,
     }));
   }
   render() {
@@ -51,7 +53,7 @@ class DeckDetail extends React.Component {
         <SubmitBtn onPress={this.startQuiz} type="submitBtn">Start Quiz</SubmitBtn>
         <SubmitBtn onPress={this.editDeck} type="textButton">Edit Deck</SubmitBtn>
         <EditCards toggleModal={this.toggleModal}/>
-        <EditCardModal isModalVisible={this.state.isModalVisible} toggleModal={this.toggleModal}/>
+        <EditCardModal isModalVisible={this.state.isModalVisible} toggleModal={this.toggleModal} cardIndex={this.state.cardIndex}/>
       </View>
 
     );

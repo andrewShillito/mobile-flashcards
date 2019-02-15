@@ -5,11 +5,13 @@ import SubmitBtn from "./SubmitBtn";
 
 class EditCardModal extends React.Component {
   render() {
+    const { activeCard, activeDeck, isModalVisible, toggleModal, cardIndex } = this.props;
+
     return (
       <Modal
-        visible={this.props.isModalVisible}
+        visible={isModalVisible}
         onRequestClose={() => {
-          this.props.toggleModal();
+          toggleModal(cardIndex); // cardIndex is unecessary when closing modal but prevents changing function
         }}
         animationType="slide"
         transparent={true}
@@ -17,7 +19,10 @@ class EditCardModal extends React.Component {
         <View style={styles.container}>
           <View style={styles.modalContent}>
             <Text>Modal Text</Text>
-            <SubmitBtn type="textDeleteButton" onPress={this.props.toggleModal}>Go Back</SubmitBtn>
+            <Text>{activeCard.question}</Text>
+            <Text>{activeCard.answer}</Text>
+
+            <SubmitBtn type="textDeleteButton" onPress={() => toggleModal(cardIndex)}>Go Back</SubmitBtn>
           </View>
         </View>
       </Modal>
@@ -33,7 +38,6 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   modalContent: {
-    alignItems: "center",
     height: (Dimensions.get("window").height)*.75,
     width: (Dimensions.get("window").width)*.90,
     backgroundColor: "white",
@@ -46,10 +50,13 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps({ }, { isModalVisible, toggleModal }){
+function mapStateToProps({ activeDeck, decks }, { isModalVisible, toggleModal, cardIndex }){
   return {
     isModalVisible,
-    toggleModal
+    toggleModal,
+    activeDeck,
+    activeCard: decks[activeDeck].questions[cardIndex],
+    cardIndex,
   };
 }
 
