@@ -17,7 +17,7 @@ class AddCard extends React.Component {
     inputTooLongMessage: "Max input length exceeded",
     warningColor: "#dc3545",
     successColor: "#28a745",
-    maxInputLength: 40,
+    maxInputLength: 120,
   }
   onChange = ({value, name}) => {
     this.setState(() => ({
