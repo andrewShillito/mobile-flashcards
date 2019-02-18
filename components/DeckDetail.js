@@ -6,6 +6,7 @@ import SubmitBtn from "./SubmitBtn";
 import DeckInfo from "./DeckInfo";
 import EditCards from "./EditCards";
 import EditCardModal from "./EditCardModal";
+import { setActiveCard, clearActiveCard } from "../actions/activeCard";
 
 class DeckDetail extends React.Component {
   static navigationOptions = ({ screenProps }) => {
@@ -41,6 +42,18 @@ class DeckDetail extends React.Component {
     }));
   }
   toggleModal = (index) => {
+    if (!this.state.isModalVisible) {
+      const newCard = {
+        deck: this.props.deck.title,
+        index: index,
+        question: this.props.deck.questions[index].question,
+        answer: this.props.deck.questions[index].answer,
+      };
+      this.props.dispatch(setActiveCard(newCard));
+    }
+    else {
+      this.props.dispatch(clearActiveCard());
+    }
     this.setState((prevState) => ({
       isModalVisible: !prevState.isModalVisible,
       cardIndex: index,
