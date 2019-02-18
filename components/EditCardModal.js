@@ -8,8 +8,8 @@ class EditCardModal extends React.Component {
   state = {
     question: "",
     answer: "",
-    message: "Same as current card",
-    messageColor: "#dc3545",
+    message: "Complete both fields or go back to cancel",
+    messageColor: "#28a745",
     duplicateCardMessage: "Card already exists in deck",
     sameAsCurrentCardMessage: "Same as current card",
     emptyInputMessage: "Complete both fields or go back to cancel",
@@ -18,16 +18,6 @@ class EditCardModal extends React.Component {
     warningColor: "#dc3545",
     successColor: "#28a745",
     maxInputLength: 120,
-  }
-  componentDidUpdate(prevProps) {
-    if (prevProps.activeCard === null) {
-      this.setState(() => ({
-        question: this.props.activeCard ? this.props.activeCard.question : "",
-        answer: this.props.activeCard ? this.props.activeCard.answer : "",
-      }), () => {
-        this.validateInput;
-      });
-    }
   }
   validateInput = () => {
     const { questions, activeCard, cardIndex } = this.props;
@@ -107,7 +97,7 @@ class EditCardModal extends React.Component {
             <View style={inputStyles.inputContainer}>
               <TextInput
                 style={inputStyles.input}
-                placeholder="Question"
+                placeholder={this.props.activeCard ? this.props.activeCard.question : "Question"}
                 onChangeText={(question) => this.onChange({ value: question, name: "question" })}
                 value={this.state.question}
                 />
@@ -116,7 +106,7 @@ class EditCardModal extends React.Component {
             <View style={inputStyles.inputContainer}>
               <TextInput
                 style={inputStyles.input}
-                placeholder="Answer"
+                placeholder={this.props.activeCard ? this.props.activeCard.answer : "Answer"}
                 onChangeText={(answer) => this.onChange({ value: answer, name: "answer" })}
                 value={this.state.answer}
                 />
