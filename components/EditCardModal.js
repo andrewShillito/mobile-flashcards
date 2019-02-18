@@ -28,6 +28,10 @@ class EditCardModal extends React.Component {
   validateInput = () => {
     const { questions, activeCard, cardIndex } = this.props;
 
+    if (activeCard === undefined) {
+      return false;
+    }
+    
     if (this.state.question.length && this.state.answer.length) {
       if (activeCard.question === this.state.question && activeCard.answer === this.state.answer) {
         this.setMessage(this.state.sameAsCurrentCardMessage, this.state.warningColor);
@@ -94,7 +98,7 @@ class EditCardModal extends React.Component {
         >
         <View style={styles.container}>
           <View style={styles.modalContent}>
-            <Text style={styles.header}>{`${cardIndex+1}. ${activeCard.question}`}</Text>
+            <Text style={styles.header}>{`${cardIndex+1}. ${activeCard ? activeCard.question : ""}`}</Text>
             <Text style={styles.label}>Edit Question</Text>
             <View style={inputStyles.inputContainer}>
               <TextInput
