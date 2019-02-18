@@ -6,10 +6,10 @@ import { handleEditCard, handleRemoveCard } from "../actions/cards";
 
 class EditCardModal extends React.Component {
   state = {
-    question: "" ,
+    question: "",
     answer: "",
-    message: "Submit to change card content",
-    messageColor: "#28a745",
+    message: "Same as current card",
+    messageColor: "#dc3545",
     duplicateCardMessage: "Card already exists in deck",
     sameAsCurrentCardMessage: "Same as current card",
     emptyInputMessage: "Complete both fields or go back to cancel",
@@ -19,11 +19,15 @@ class EditCardModal extends React.Component {
     successColor: "#28a745",
     maxInputLength: 120,
   }
-  componentDidMount() {
-    this.setState(() => ({
-      question: this.props.activeCard ? this.props.activeCard.question : "",
-      answer: this.props.activeCard ? this.props.activeCard.answer : "",
-    }), this.validateInput);
+  componentDidUpdate(prevProps) {
+    if (prevProps.activeCard === null) {
+      this.setState(() => ({
+        question: this.props.activeCard ? this.props.activeCard.question : "",
+        answer: this.props.activeCard ? this.props.activeCard.answer : "",
+      }), () => {
+        this.validateInput;
+      });
+    }
   }
   validateInput = () => {
     const { questions, activeCard, cardIndex } = this.props;
@@ -86,8 +90,6 @@ class EditCardModal extends React.Component {
   render() {
     const { activeCard, activeDeck, isModalVisible, toggleModal, cardIndex } = this.props;
     const { message, messageColor } = this.state;
-
-    console.log("Modal Props:", activeCard);
 
     return (
       <Modal
@@ -217,13 +219,13 @@ const inputStyles = StyleSheet.create({
 })
 
 
-function mapStateToProps({ activeDeck, decks }, { isModalVisible, toggleModal, cardIndex }){
+function mapStateToProps({ activeDeck, decks, activeCard }, { isModalVisible, toggleModal }){
   return {
     isModalVisible,
     toggleModal,
     activeDeck,
-    activeCard: decks[activeDeck].questions[cardIndex],
-    cardIndex,
+    activeCard,
+    cardIndex: activeCard ? activeCard.index : null,
     questions: decks[activeDeck].questions,
   };
 }
