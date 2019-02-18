@@ -154,7 +154,7 @@ const _removeCard = function(deckTitle, cardIndex) {
       } else if (cardIndex >= data[deckTitle].questions.length) {
         return Error("Card Index out of range");
       }
-      let newQuestions = data[deckTitle].questions.splice(cardIndex, 1);
+      let newQuestions = data[deckTitle].questions.filter((card, index) => index !== cardIndex);
       data[deckTitle] = {
         ...data[deckTitle],
         "questions": newQuestions,
