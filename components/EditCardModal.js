@@ -60,8 +60,8 @@ class EditCardModal extends React.Component {
         question: this.state.question,
         answer: this.state.answer,
       };
-      this.props.toggleModal();
       this.props.dispatch(handleEditCard(this.props.activeDeck, this.props.cardIndex, newCard));
+      this.props.toggleModal();
       this.setState(() => ({
         question: "",
         answer: "",
