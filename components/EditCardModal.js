@@ -219,9 +219,9 @@ const inputStyles = StyleSheet.create({
 })
 
 
-function mapStateToProps({ activeDeck, decks, activeCard }, { isModalVisible, toggleModal }){
+function mapStateToProps({ activeDeck, decks, activeCard }, { toggleModal }){
   return {
-    isModalVisible,
+    isModalVisible: activeCard === null ? false : true,
     toggleModal,
     activeDeck,
     activeCard,
