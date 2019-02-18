@@ -9,3 +9,6 @@ export const EDIT_CARD = "EDIT_CARD";
 
 export const SET_ACTIVE_DECK = "SET_ACTIVE_DECK";
 export const CLEAR_ACTIVE_DECK = "CLEAR_ACTIVE_DECK";
+
+export const SET_ACTIVE_CARD = "SET_ACTIVE_CARD";
+export const CLEAR_ACTIVE_CARD = "CLEAR_ACTIVE_CARD";
