@@ -27,7 +27,14 @@ let decks = {
   }
 }
 
-let activeDeck = null;
+let activeDeck = null; // for reference of redux store prop - will not be stored in AsyncStorage
+
+let activeCard = { // for reference of redux store prop - will not be stored in AsyncStorage
+  question: "",
+  answer: "",
+  deck: "",
+  index: null,
+};
 
 const formatDeck = function(title) {
   return {
