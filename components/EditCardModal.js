@@ -6,7 +6,7 @@ import { handleEditCard, handleRemoveCard } from "../actions/cards";
 
 class EditCardModal extends React.Component {
   state = {
-    question: "",
+    question: "" ,
     answer: "",
     message: "Submit to change card content",
     messageColor: "#28a745",
@@ -21,8 +21,8 @@ class EditCardModal extends React.Component {
   }
   componentDidMount() {
     this.setState(() => ({
-      question: this.props.activeCard.question,
-      answer: this.props.activeCard.answer,
+      question: this.props.activeCard ? this.props.activeCard.question : "",
+      answer: this.props.activeCard ? this.props.activeCard.answer : "",
     }), this.validateInput);
   }
   validateInput = () => {
@@ -31,7 +31,7 @@ class EditCardModal extends React.Component {
     if (activeCard === undefined) {
       return false;
     }
-    
+
     if (this.state.question.length && this.state.answer.length) {
       if (activeCard.question === this.state.question && activeCard.answer === this.state.answer) {
         this.setMessage(this.state.sameAsCurrentCardMessage, this.state.warningColor);
@@ -86,6 +86,8 @@ class EditCardModal extends React.Component {
   render() {
     const { activeCard, activeDeck, isModalVisible, toggleModal, cardIndex } = this.props;
     const { message, messageColor } = this.state;
+
+    console.log("Modal Props:", activeCard);
 
     return (
       <Modal
