@@ -71,6 +71,7 @@ class New extends React.Component {
             placeholder="Deck Title"
             onChangeText={(title) => this.onChange({title})}
             value={this.state.title}
+            maxLength={30}
             />
         </View>
         <View>

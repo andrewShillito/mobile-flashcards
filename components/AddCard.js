@@ -74,6 +74,7 @@ class AddCard extends React.Component {
             placeholder="Question"
             onChangeText={(question) => this.onChange({ value: question, name: "question" })}
             value={this.state.question}
+            maxLength={120}
             />
         </View>
         <View style={inputStyles.inputContainer}>
@@ -82,6 +83,7 @@ class AddCard extends React.Component {
             placeholder="Answer"
             onChangeText={(answer) => this.onChange({ value: answer, name: "answer" })}
             value={this.state.answer}
+            maxLength={120}
             />
         </View>
         <View>

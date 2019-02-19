@@ -91,6 +91,7 @@ class EditDeck extends React.Component {
             placeholder="New Title"
             onChangeText={(title) => this.onChange({title})}
             value={this.state.title}
+            maxLength={120}
             />
         </View>
         <View>

@@ -103,6 +103,7 @@ class EditCardModal extends React.Component {
                 placeholder={this.props.activeCard ? this.props.activeCard.question : "Question"}
                 onChangeText={(question) => this.onChange({ value: question, name: "question" })}
                 value={this.state.question}
+                maxLength={120}
                 />
             </View>
             <Text style={styles.label}>Edit Answer</Text>
@@ -112,6 +113,7 @@ class EditCardModal extends React.Component {
                 placeholder={this.props.activeCard ? this.props.activeCard.answer : "Answer"}
                 onChangeText={(answer) => this.onChange({ value: answer, name: "answer" })}
                 value={this.state.answer}
+                maxLength={120}
                 />
             </View>
             <View>
@@ -212,7 +214,7 @@ const inputStyles = StyleSheet.create({
     width: 270,
     alignSelf: "center"
   },
-})
+});
 
 
 function mapStateToProps({ activeDeck, decks, activeCard }, { toggleModal, isModalVisible, closeModal }){
