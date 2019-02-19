@@ -64,16 +64,16 @@ class EditCardModal extends React.Component {
         answer: this.state.answer,
       };
       this.props.dispatch(handleEditCard(this.props.activeDeck, this.props.cardIndex, newCard));
-      this.props.toggleModal();
+      this.props.closeModal();
       this.setState(() => ({
         question: "",
         answer: "",
       }));
     }
-    alert(this.state.message);
+    return alert(this.state.message);
   }
   deleteCard = () => {
-    this.props.toggleModal();
+    this.props.closeModal();
     this.props.dispatch(handleRemoveCard(this.props.activeDeck, this.props.cardIndex));
     this.setState(() => ({
       question: "",
@@ -83,6 +83,8 @@ class EditCardModal extends React.Component {
   render() {
     const { activeCard, activeDeck, isModalVisible, toggleModal, cardIndex } = this.props;
     const { message, messageColor } = this.state;
+
+    console.log("PROPS:", this.props)
 
     return (
       <Modal
@@ -213,10 +215,11 @@ const inputStyles = StyleSheet.create({
 })
 
 
-function mapStateToProps({ activeDeck, decks, activeCard }, { toggleModal, isModalVisible }){
+function mapStateToProps({ activeDeck, decks, activeCard }, { toggleModal, isModalVisible, closeModal }){
   return {
     isModalVisible,
     toggleModal,
+    closeModal,
     activeDeck,
     activeCard,
     cardIndex: activeCard ? activeCard.index : null,

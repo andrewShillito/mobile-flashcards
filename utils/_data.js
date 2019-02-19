@@ -139,12 +139,7 @@ const _editCard = function(deckTitle, cardIndex, newCard) {
       if (data[deckTitle] === undefined) {
         return Error("Deck not found");
       }
-      let newQuestions = data[deckTitle].questions.splice(cardIndex, 1, newCard);
-        //may be a future issue that this is shallow copy
-      data[deckTitle] = {
-        ...data[deckTitle],
-        "questions": newQuestions,
-      };
+      data[deckTitle].questions.splice(cardIndex, 1, newCard);
       AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
         .catch((error) => console.log(error));
       return data[deckTitle];
