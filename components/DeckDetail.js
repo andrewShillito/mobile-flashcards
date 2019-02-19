@@ -14,6 +14,9 @@ class DeckDetail extends React.Component {
       title: screenProps.activeDeck,
     };
   }
+  state = {
+    isModalVisible: false,
+  };
   startQuiz = () => {
     if (this.props.deck.questions.length === 0) {
       alert("Deck has no cards. Add a card first.");
@@ -28,18 +31,19 @@ class DeckDetail extends React.Component {
     this.props.navigation.navigate("AddCard");
   }
   toggleModal = (index) => {
-    if (!this.props.isModalVisible) {
-      const newCard = {
-        deck: this.props.deck.title,
-        index: index,
-        question: this.props.deck.questions[index].question,
-        answer: this.props.deck.questions[index].answer,
-      };
-      this.props.dispatch(setActiveCard(newCard));
-    }
-    else {
-      this.props.dispatch(clearActiveCard());
-    }
+    this.setState((prevState) => ({
+      isModalVisible: !prevState.isModalVisible,
+    }));
+  }
+  openModal = () => {
+    this.setState(() => ({
+      isModalVisible: true,
+    }));
+  }
+  closeModal = () => {
+    this.setState(() => ({
+      isModalVisible: false,
+    }));
   }
   render() {
     return (
@@ -47,8 +51,8 @@ class DeckDetail extends React.Component {
         <DeckInfo title={this.props.deck ? this.props.deck.title : ""} />
         <SubmitBtn onPress={this.startQuiz} type="submitBtn">Start Quiz</SubmitBtn>
         <SubmitBtn onPress={this.editDeck} type="textButton">Edit Deck</SubmitBtn>
-        <EditCards toggleModal={this.toggleModal}/>
-        <EditCardModal toggleModal={this.toggleModal} />
+        <EditCards toggleModal={this.toggleModal} />
+        <EditCardModal toggleModal={this.toggleModal} isModalVisible={this.state.isModalVisible} />
       </View>
 
     );
@@ -58,7 +62,6 @@ class DeckDetail extends React.Component {
 function mapStateToProps({ decks, activeDeck, activeCard }, { navigation }) {
   return {
     deck: decks[activeDeck],
-    isModalVisible: activeCard === null ? false : true,
   };
 }
 

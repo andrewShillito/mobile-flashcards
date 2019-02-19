@@ -3,6 +3,9 @@ import { Modal, View, Text, StyleSheet, Dimensions, TextInput, TouchableOpacity 
 import { connect } from "react-redux";
 import SubmitBtn from "./SubmitBtn";
 import { handleEditCard, handleRemoveCard } from "../actions/cards";
+import { clearActiveCard } from "../actions/activeCard";
+// the handleEditCard and handleRemoveCard funcs dispatch clearActiveCard when done updating redux
+// however, the goBack button needs to clear the active card as well so it is imported here for that use
 
 class EditCardModal extends React.Component {
   state = {
@@ -84,9 +87,7 @@ class EditCardModal extends React.Component {
     return (
       <Modal
         visible={isModalVisible}
-        onRequestClose={() => {
-          toggleModal(cardIndex); // cardIndex is unecessary when closing modal but prevents changing function
-        }}
+        onRequestClose={() => toggleModal()}
         animationType="slide"
         transparent={true}
         >
@@ -118,7 +119,10 @@ class EditCardModal extends React.Component {
               </View>
             </View>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={() => toggleModal(cardIndex)} style={styles.textButton}>
+              <TouchableOpacity onPress={() => {
+                  toggleModal();
+                  this.props.dispatch(clearActiveCard());
+                }} style={styles.textButton}>
                 <Text style={styles.textButtonText}>Go Back</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={this.deleteCard} style={styles.textButton}>
@@ -209,9 +213,9 @@ const inputStyles = StyleSheet.create({
 })
 
 
-function mapStateToProps({ activeDeck, decks, activeCard }, { toggleModal }){
+function mapStateToProps({ activeDeck, decks, activeCard }, { toggleModal, isModalVisible }){
   return {
-    isModalVisible: activeCard === null ? false : true,
+    isModalVisible,
     toggleModal,
     activeDeck,
     activeCard,

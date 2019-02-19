@@ -1,29 +1,32 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Animated, StyleSheet, Dimensions, } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import { setActiveCard } from "../actions/activeCard";
 
 class Card extends React.Component {
-  state = {
-    marginRight: new Animated.Value(0),
-    buttonWidth: new Animated.Value(0),
-    pannedLeft: false,
-  }
   handleTouch = () => {
-    this.props.toggleModal(this.props.index);
+    const index = this.props.index;
+    const newCard = {
+      deck: this.props.deck.title,
+      index: index,
+      question: this.props.deck.questions[index].question,
+      answer: this.props.deck.questions[index].answer,
+    };
+    this.props.toggleModal();
+    this.props.dispatch(setActiveCard(newCard));
   }
   render() {
     const { question, index } = this.props;
-    const { marginRight, buttonWidth } = this.state;
 
     return (
-      <Animated.View style={{flexDirection: "row", flex: 1}}>
+      <View style={{flexDirection: "row", flex: 1}}>
         <TouchableOpacity onPress={this.handleTouch} style={styles.card}>
           <Text style={styles.text}>{`${index+1}. ${question.question}`}</Text>
           <View style={styles.line}></View>
           <Text style={styles.text}>{question.answer}</Text>
         </TouchableOpacity>
-
-      </Animated.View>
+      </View>
     );
   }
 }
@@ -56,6 +59,12 @@ const styles = StyleSheet.create({
   },
 });
 
+function mapStateToProps({ decks, activeDeck }, { question, index }) {
+  return {
+    deck: decks[activeDeck],
+    question,
+    index,
+  };
+}
 
-
-export default Card;
+export default connect(mapStateToProps)(Card);

@@ -3,12 +3,12 @@ import {
   REMOVE_CARD,
   EDIT_CARD,
 } from "./types";
-
 import {
   addCardToDeck,
   deleteCard,
   editCard as _editCard,
 } from "../utils/api";
+import { clearActiveCard } from "./activeCard";
 
 export const addCard = (title, card) => {
   return {
@@ -43,6 +43,7 @@ export const handleRemoveCard = (deckTitle, cardIndex) => {
         console.log("remove card deck:", deck);
         dispatch(removeCard(deckTitle, cardIndex));
       })
+      .then(() => dispatch(clearActiveCard()))
       .catch((err) => console.log(err));
   };
 }
@@ -61,6 +62,7 @@ export const handleEditCard = (deckTitle, cardIndex, newCard) => {
       .then((deck) => {
         dispatch(editCard(deckTitle, deck));
       })
+      .then(() => dispatch(clearActiveCard()))
       .catch((err) => console.log(err));
   };
 }
