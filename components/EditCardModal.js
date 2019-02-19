@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, View, Text, StyleSheet, Dimensions, TextInput, TouchableOpacity } from "react-native";
+import { Modal, View, Text, StyleSheet, Dimensions, TextInput, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
 import { connect } from "react-redux";
 import SubmitBtn from "./SubmitBtn";
 import { handleEditCard, handleRemoveCard } from "../actions/cards";
@@ -93,48 +93,52 @@ class EditCardModal extends React.Component {
         animationType="slide"
         transparent={true}
         >
-        <View style={styles.container}>
-          <View style={styles.modalContent}>
-            <Text style={styles.header}>{`${cardIndex+1}. ${activeCard !== null ? activeCard.question : ""}`}</Text>
-            <Text style={styles.label}>Edit Question</Text>
-            <View style={inputStyles.inputContainer}>
-              <TextInput
-                style={inputStyles.input}
-                placeholder={this.props.activeCard ? this.props.activeCard.question : "Question"}
-                onChangeText={(question) => this.onChange({ value: question, name: "question" })}
-                value={this.state.question}
-                maxLength={120}
-                />
-            </View>
-            <Text style={styles.label}>Edit Answer</Text>
-            <View style={inputStyles.inputContainer}>
-              <TextInput
-                style={inputStyles.input}
-                placeholder={this.props.activeCard ? this.props.activeCard.answer : "Answer"}
-                onChangeText={(answer) => this.onChange({ value: answer, name: "answer" })}
-                value={this.state.answer}
-                maxLength={120}
-                />
-            </View>
-            <View>
-              <SubmitBtn onPress={this.onSubmit}>Submit Changes</SubmitBtn>
-              <View style={{alignItems: "center"}}>
-                <Text style={{color: messageColor}}>{message}</Text>
+        <TouchableWithoutFeedback onPress={this.props.closeModal}>
+          <View style={styles.container}>
+            <TouchableWithoutFeedback onPress={() => {}}>
+              <View style={styles.modalContent}>
+                <Text style={styles.header}>{`${cardIndex+1}. ${activeCard !== null ? activeCard.question : ""}`}</Text>
+                <Text style={styles.label}>Edit Question</Text>
+                <View style={inputStyles.inputContainer}>
+                  <TextInput
+                    style={inputStyles.input}
+                    placeholder={this.props.activeCard ? this.props.activeCard.question : "Question"}
+                    onChangeText={(question) => this.onChange({ value: question, name: "question" })}
+                    value={this.state.question}
+                    maxLength={120}
+                    />
+                </View>
+                <Text style={styles.label}>Edit Answer</Text>
+                <View style={inputStyles.inputContainer}>
+                  <TextInput
+                    style={inputStyles.input}
+                    placeholder={this.props.activeCard ? this.props.activeCard.answer : "Answer"}
+                    onChangeText={(answer) => this.onChange({ value: answer, name: "answer" })}
+                    value={this.state.answer}
+                    maxLength={120}
+                    />
+                </View>
+                <View>
+                  <SubmitBtn onPress={this.onSubmit}>Submit Changes</SubmitBtn>
+                  <View style={{alignItems: "center"}}>
+                    <Text style={{color: messageColor}}>{message}</Text>
+                  </View>
+                </View>
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity onPress={() => {
+                      toggleModal();
+                      this.props.dispatch(clearActiveCard());
+                    }} style={styles.textButton}>
+                    <Text style={styles.textButtonText}>Go Back</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={this.deleteCard} style={styles.textButton}>
+                    <Text style={styles.deleteButtonText}>Delete Card</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={() => {
-                  toggleModal();
-                  this.props.dispatch(clearActiveCard());
-                }} style={styles.textButton}>
-                <Text style={styles.textButtonText}>Go Back</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={this.deleteCard} style={styles.textButton}>
-                <Text style={styles.deleteButtonText}>Delete Card</Text>
-              </TouchableOpacity>
-            </View>
+            </TouchableWithoutFeedback>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
     );
   }

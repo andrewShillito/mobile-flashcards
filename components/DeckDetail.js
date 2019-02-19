@@ -53,7 +53,6 @@ class DeckDetail extends React.Component {
         <EditCards toggleModal={this.toggleModal} />
         <EditCardModal toggleModal={this.toggleModal} isModalVisible={this.state.isModalVisible} closeModal={this.closeModal}/>
       </View>
-
     );
   }
 }
