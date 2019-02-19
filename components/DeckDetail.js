@@ -6,7 +6,6 @@ import SubmitBtn from "./SubmitBtn";
 import DeckInfo from "./DeckInfo";
 import EditCards from "./EditCards";
 import EditCardModal from "./EditCardModal";
-import { setActiveCard, clearActiveCard } from "../actions/activeCard";
 
 class DeckDetail extends React.Component {
   static navigationOptions = ({ screenProps }) => {
@@ -59,7 +58,7 @@ class DeckDetail extends React.Component {
   }
 }
 
-function mapStateToProps({ decks, activeDeck, activeCard }, { navigation }) {
+function mapStateToProps({ decks, activeDeck }, { navigation }) {
   return {
     deck: decks[activeDeck],
   };

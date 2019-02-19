@@ -25,7 +25,7 @@ class EditCardModal extends React.Component {
   validateInput = () => {
     const { questions, activeCard, cardIndex } = this.props;
 
-    if (activeCard === undefined) {
+    if (activeCard === null) {
       return false;
     }
 
@@ -95,7 +95,7 @@ class EditCardModal extends React.Component {
         >
         <View style={styles.container}>
           <View style={styles.modalContent}>
-            <Text style={styles.header}>{`${cardIndex+1}. ${activeCard ? activeCard.question : ""}`}</Text>
+            <Text style={styles.header}>{`${cardIndex+1}. ${activeCard !== null ? activeCard.question : ""}`}</Text>
             <Text style={styles.label}>Edit Question</Text>
             <View style={inputStyles.inputContainer}>
               <TextInput
@@ -222,7 +222,7 @@ function mapStateToProps({ activeDeck, decks, activeCard }, { toggleModal, isMod
     closeModal,
     activeDeck,
     activeCard,
-    cardIndex: activeCard ? activeCard.index : null,
+    cardIndex: activeCard !== null ? activeCard.index : null,
     questions: decks[activeDeck].questions,
   };
 }
