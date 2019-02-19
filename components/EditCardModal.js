@@ -59,18 +59,20 @@ class EditCardModal extends React.Component {
   }
   onSubmit = () => {
     if (this.validateInput()) {
+      this.props.closeModal();
       const newCard = {
         question: this.state.question,
         answer: this.state.answer,
       };
       this.props.dispatch(handleEditCard(this.props.activeDeck, this.props.cardIndex, newCard));
-      this.props.closeModal();
       this.setState(() => ({
         question: "",
         answer: "",
       }));
     }
-    return alert(this.state.message);
+    else {
+      alert(this.state.message);
+    }
   }
   deleteCard = () => {
     this.props.closeModal();
@@ -83,8 +85,6 @@ class EditCardModal extends React.Component {
   render() {
     const { activeCard, activeDeck, isModalVisible, toggleModal, cardIndex } = this.props;
     const { message, messageColor } = this.state;
-
-    console.log("PROPS:", this.props)
 
     return (
       <Modal
