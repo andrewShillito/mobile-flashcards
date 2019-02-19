@@ -26,13 +26,10 @@ Will start an expo server in a new browser tab.  You can then connect to expo vi
 
 ## Features
 
-1. Create flashcard decks
-2. Access your decks on the home screen
-3. Add new cards to your decks
-4. Edit your decks' titles
-5. Delete decks
-6. Quiz yourself with your flashcard decks
-7. View a short score report at the end of your quiz
+1. Access your decks on the home scree
+2. Create, update, view, and destroy decks and flashcards within those decks
+3. Quiz yourself with your flashcard decks
+4. View a short score report at the end of your quiz
 
 ## Tab Navigator Routes
 
@@ -44,6 +41,5 @@ Will start an expo server in a new browser tab.  You can then connect to expo vi
 1. DeckDetail - View options and basic info (number of cards and title) of selected deck.
 2. Quiz - Quiz yourself on your deck choosing correct or incorrect to track your score. Displays a score report when quiz is completed.
 3. EditDeck - Change deck title or delete the deck.
-4. AddCard - Add a card to the deck.
 
-*Coming soon - ScoreDetails and EditCards*
+*Coming soon - more in-depth score reports*
