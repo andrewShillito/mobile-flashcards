@@ -109,7 +109,7 @@ class Quiz extends React.Component {
       );
     }
     clearLocalNotifications(); // quiz completed so clear existing notification(s)
-    setLocalNotification(); // set new notification for tomorrow
+    // setLocalNotification(); // set new notification for tomorrow - commented to prevent dev notifications
 
     return (
       <View style={{flex: 1, justifyContent: "space-between"}}>

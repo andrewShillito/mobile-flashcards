@@ -62,9 +62,14 @@ class Deck extends React.Component {
             <FontAwesome name="info" size={40} color="#17a2b8"></FontAwesome>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
-              this.closeButtons();
-              goToQuiz(deck.title)}}>
-            <MaterialCommunityIcons name="cards" size={40} color="#28a745"></MaterialCommunityIcons>
+              if (deck.questions.length) {
+                this.closeButtons();
+                goToQuiz(deck.title);
+              } else {
+                alert("No questions in deck!");
+              }
+              }}>
+            <MaterialCommunityIcons name="cards" size={40} color={deck.questions.length ? "#28a745" : "#868e96"}></MaterialCommunityIcons>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
               this.closeButtons();
