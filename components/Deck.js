@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, Animated } from 'react-native';
 import DeckHeader from "./DeckHeader";
 import styles from "../styles/deck";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
+import InfoIcon from "./InfoIcon";
 
 class Deck extends React.Component {
   state = {
