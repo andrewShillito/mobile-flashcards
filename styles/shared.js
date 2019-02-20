@@ -6,3 +6,5 @@ export const PINK = "#ff8484"
 
 export const FONT_HEADER = "Lato";
 export const FONT_PRIMARY = "Roboto";
+
+export const NAV_ICON_SIZE = 40;

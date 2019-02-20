@@ -50,12 +50,12 @@ class Deck extends React.Component {
     const { marginRight, buttonWidth } = this.state;
 
     return (
-      <Animated.View style={{flexDirection: "row", flex: 1}}>
+      <Animated.View style={styles.container}>
         <TouchableOpacity style={styles.deck} onPress={this.handleTouch}>
           <DeckHeader>{deck.title}</DeckHeader>
           <Text style={styles.text}>{`${deck.questions.length} card${deck.questions.length>1 || deck.questions.length === 0 ? "s" : ""}`}</Text>
         </TouchableOpacity>
-        <Animated.View style={{justifyContent: "space-between", alignItems: "center", width: buttonWidth, marginRight: marginRight, marginTop: 10}}>
+        <Animated.View style={[styles.buttonContainer, {width: buttonWidth, marginRight: marginRight}]}>
           <TouchableOpacity onPress={() => {
               this.closeButtons();
               goToDeckDetail(deck.title)}}>

@@ -26,4 +26,13 @@ export default  StyleSheet.create({
     color: BLUE,
     fontSize: 25,
   },
+  container: {
+    flexDirection: "row",
+    flex: 1,
+  },
+  buttonContainer: {
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 10,
+  },
 });
