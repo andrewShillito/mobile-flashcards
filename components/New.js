@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text, View, TextInput } from 'react-native';
+import { Text, View, TouchableWithoutFeedback } from 'react-native';
 import SubmitBtn from "./SubmitBtn";
-import { newStyles as styles } from "../styles";
+import styles from "../styles/newDeck";
 import { connect } from "react-redux";
 import { handleAddDeck } from "../actions/decks";
 import ButtonPrimary from "./ButtonPrimary";
@@ -66,7 +66,7 @@ class New extends React.Component {
   }
   render() {
     return (
-      <View style={styles.new}>
+      <View style={styles.container}>
         <Text style={styles.header}>Create a new deck</Text>
         <TextInputPrimary
           placeholder="Deck Title"
