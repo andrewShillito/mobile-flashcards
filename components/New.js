@@ -4,6 +4,7 @@ import SubmitBtn from "./SubmitBtn";
 import { newStyles as styles } from "../styles";
 import { connect } from "react-redux";
 import { handleAddDeck } from "../actions/decks";
+import ButtonPrimary from "./ButtonPrimary";
 
 class New extends React.Component {
   static navigationOptions = (data) => {
@@ -75,7 +76,7 @@ class New extends React.Component {
             />
         </View>
         <View>
-          <SubmitBtn onPress={this.onPress}>Submit</SubmitBtn>
+          <ButtonPrimary onPress={this.onPress}>Submit</ButtonPrimary>
           <View style={{alignItems: "center"}}>
             <Text style={{color: this.state.messageColor}}>{this.state.message}</Text>
           </View>
