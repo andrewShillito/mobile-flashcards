@@ -4,6 +4,8 @@ import DeckHeader from "./DeckHeader";
 import styles from "../styles/deck";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import InfoIcon from "./InfoIcon";
+import QuizIcon from "./QuizIcon";
+import EditIcon from "./EditIcon";
 
 class Deck extends React.Component {
   state = {
@@ -50,8 +52,24 @@ class Deck extends React.Component {
     this.closeButtons();
     this.props.goToDeckDetail(this.props.deck.title);
   }
+
+  handleQuizPress = () => {
+    if (this.props.deck.questions.length) {
+      this.closeButtons();
+      this.props.goToQuiz(this.props.deck.title);
+    }
+    else {
+      alert("No questions in deck!");
+    }
+  }
+
+  handleEditPress = () => {
+    this.closeButtons();
+    this.props.goToEdit(this.props.deck.title);
+  }
+
   render() {
-    const { deck, goToDeckDetail, goToQuiz, goToEdit } = this.props;
+    const { deck } = this.props;
     const { marginRight, buttonWidth } = this.state;
 
     return (
@@ -62,21 +80,8 @@ class Deck extends React.Component {
         </TouchableOpacity>
         <Animated.View style={[styles.buttonContainer, {width: buttonWidth, marginRight: marginRight}]}>
           <InfoIcon onPress={this.handleInfoPress}/>
-          <TouchableOpacity onPress={() => {
-              if (deck.questions.length) {
-                this.closeButtons();
-                goToQuiz(deck.title);
-              } else {
-                alert("No questions in deck!");
-              }
-              }}>
-            <MaterialCommunityIcons name="cards" size={40} color={deck.questions.length ? "#28a745" : "#868e96"}></MaterialCommunityIcons>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {
-              this.closeButtons();
-              goToEdit(deck.title)}}>
-            <FontAwesome name="edit" size={40} color="#ffc107"></FontAwesome>
-          </TouchableOpacity>
+          <QuizIcon onPress={this.handleQuizPress} active={deck.questions.length > 0} />
+          <EditIcon onPress={this.handleEditPress}/>
         </Animated.View>
       </Animated.View>
     );
