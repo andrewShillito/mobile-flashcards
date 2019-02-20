@@ -46,6 +46,10 @@ class Deck extends React.Component {
     ]).start(() => this.setState((prevState) => ({ pannedLeft: !prevState.pannedLeft })));
   }
 
+  handleInfoPress = () => {
+    this.closeButtons();
+    this.props.goToDeckDetail(this.props.deck.title);
+  }
   render() {
     const { deck, goToDeckDetail, goToQuiz, goToEdit } = this.props;
     const { marginRight, buttonWidth } = this.state;
@@ -57,11 +61,7 @@ class Deck extends React.Component {
           <Text style={styles.text}>{`${deck.questions.length} card${deck.questions.length>1 || deck.questions.length === 0 ? "s" : ""}`}</Text>
         </TouchableOpacity>
         <Animated.View style={[styles.buttonContainer, {width: buttonWidth, marginRight: marginRight}]}>
-          <TouchableOpacity onPress={() => {
-              this.closeButtons();
-              goToDeckDetail(deck.title)}}>
-            <FontAwesome name="info" size={40} color="#17a2b8"></FontAwesome>
-          </TouchableOpacity>
+          <InfoIcon onPress={this.handleInfoPress}/>
           <TouchableOpacity onPress={() => {
               if (deck.questions.length) {
                 this.closeButtons();
