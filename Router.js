@@ -9,7 +9,7 @@ import { FontAwesome, MaterialCommunityIcons, Entypo } from "@expo/vector-icons"
 import DeckDetail from "./components/DeckDetail";
 import Quiz from "./components/Quiz";
 import ScoreDetails from "./components/ScoreDetails";
-import { BLUE } from "./styles/shared";
+import { BLUE, BACKGROUND_PRIMARY } from "./styles/shared";
 
 const HomeStack = createStackNavigator(
   {
@@ -42,6 +42,9 @@ const HomeStack = createStackNavigator(
   {
     defaultNavigationOptions: {
       headerTintColor: BLUE,
+    },
+    cardStyle: {
+      backgroundColor: BACKGROUND_PRIMARY,
     },
   }
 );
