@@ -9,34 +9,45 @@ import { FontAwesome, MaterialCommunityIcons, Entypo } from "@expo/vector-icons"
 import DeckDetail from "./components/DeckDetail";
 import Quiz from "./components/Quiz";
 import ScoreDetails from "./components/ScoreDetails";
+import { LIGHT_BLUE, BLUE } from "./styles/shared";
 
-const HomeStack = createStackNavigator({
-  Home: {
-    screen: Home,
-    navigationOptions: {
-      header: null,
-      title: "Home",
-    }
-  },
-  DeckDetail: {
-    screen: DeckDetail, //header title set dynamically to be deck title
+const HomeStack = createStackNavigator(
+  {
+    Home: {
+      screen: Home,
+      navigationOptions: {
+        header: null,
+        title: "Home",
+      }
     },
-  EditDeck: {
-    screen: EditDeck, //header title is dynamically set via nav screenProps (originate in redux store)
-  },
-  Quiz: {
-    screen: Quiz,
-    navigationOptions: {
-      title: "Quiz" //maybe dynamically show progress ie: Question 1 of 2 , Q 3 of 10
+    DeckDetail: {
+      screen: DeckDetail, //header title set dynamically to be deck title
+      },
+    EditDeck: {
+      screen: EditDeck, //header title is dynamically set via nav screenProps (originate in redux store)
+    },
+    Quiz: {
+      screen: Quiz,
+      navigationOptions: {
+        title: "Quiz" //maybe dynamically show progress ie: Question 1 of 2 , Q 3 of 10
+      }
+    },
+    ScoreDetails: {
+      screen: ScoreDetails,
+      navigationOptions: {
+        title: "Score Details"
+      }
     }
   },
-  ScoreDetails: {
-    screen: ScoreDetails,
-    navigationOptions: {
-      title: "Score Details"
-    }
+  {
+    defaultNavigationOptions: {
+      headerTintColor: BLUE,
+    },
+    cardStyle: {
+      backgroundColor: LIGHT_BLUE,
+    },
   }
-});
+);
 
 HomeStack.navigationOptions = ({navigation}) => {
   let tabBarVisible = true;
@@ -63,7 +74,13 @@ const Tabs = createBottomTabNavigator({
        tabBarIcon: ({tintColor}) => <FontAwesome name="plus-square" size={30} color={tintColor} />
      }
    },
-});
+ },
+ {
+   tabBarOptions: {
+     activeTintColor: BLUE,
+   },
+ }
+);
 
 const AppContainer = createAppContainer(Tabs);
 
