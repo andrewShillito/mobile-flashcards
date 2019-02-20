@@ -1,11 +1,11 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { deckStyles } from "../styles"
+import styles from "../styles/deckHeader";
 
 export default function DeckHeader({ children }) {
   return (
     <View>
-      <Text style={deckStyles.deckHeader}>{children}</Text>
+      <Text style={styles.deckHeader}>{children}</Text>
     </View>
   );
 }

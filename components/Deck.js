@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Animated } from 'react-native';
 import DeckHeader from "./DeckHeader";
-import { deckStyles as styles } from "../styles";
+import styles from "../styles/deck";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 
 class Deck extends React.Component {
