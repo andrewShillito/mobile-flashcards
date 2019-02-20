@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { handleAddDeck } from "../actions/decks";
 import ButtonPrimary from "./ButtonPrimary";
 import InputFeedbackText from "./InputFeedbackText";
+import TextInputPrimary from "./TextInputPrimary";
 
 class New extends React.Component {
   static navigationOptions = (data) => {
@@ -67,15 +68,11 @@ class New extends React.Component {
     return (
       <View style={styles.new}>
         <Text style={styles.header}>Create a new deck</Text>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Deck Title"
-            onChangeText={(title) => this.onChange({title})}
-            value={this.state.title}
-            maxLength={30}
-            />
-        </View>
+        <TextInputPrimary
+          placeholder="Deck Title"
+          onChangeText={(title) => this.onChange(title)}
+          value={this.state.title}
+          />
         <View>
           <ButtonPrimary onPress={this.onPress}>Submit</ButtonPrimary>
           <InputFeedbackText color={this.state.messageColor}>{this.state.message}</InputFeedbackText>

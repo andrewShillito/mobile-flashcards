@@ -11,3 +11,5 @@ export const FONT_HEADER = "Lato";
 export const FONT_PRIMARY = "Roboto";
 
 export const NAV_ICON_SIZE = 40;
+export const MAX_SHORT_INPUT_LENGTH = 30;
+export const MAX_LONG_INPUT_LENGTH = 120;
