@@ -34,14 +34,14 @@ Will start an expo server in a new browser tab.  You can then connect to expo vi
 ## Tab Navigator Routes
 
 1. Home - view a list of your flashcard decks.
-  - Touch to open a side bar with buttons for viewing the deck, editing the deck,
-    and starting a quiz.
+    - *Touch to open a side bar with buttons for viewing the deck, editing the deck,
+  and starting a quiz.*
 2. New - create new decks by inputting an un-used title
 
 ## Stack Navigator Routes
 
 1. DeckDetail - View options and scroll through the cards of selected deck.
-  - Touch a card to edit its content
+    - *Touch a card to edit its content*
 2. Quiz - Quiz yourself on your deck choosing correct or incorrect to track your score. Displays a score report when quiz is completed.
 3. EditDeck - Change deck title, add cards, or delete the deck.
 
