@@ -93,7 +93,7 @@ class EditCardModal extends React.Component {
         animationType="slide"
         transparent={true}
         >
-        <TouchableWithoutFeedback onPress=onPress={() => {
+        <TouchableWithoutFeedback onPress={() => {
             this.props.closeModal();
             this.props.dispatch(clearActiveCard());
           }}>
