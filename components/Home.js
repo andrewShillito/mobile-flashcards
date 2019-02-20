@@ -6,6 +6,7 @@ import { handleReceiveDecks } from "../actions/decks";
 import { setActiveDeck } from "../actions/activeDeck";
 import { setLocalNotification, clearLocalNotifications } from "../utils/notifications";
 import { Permissions } from "expo";
+import { BACKGROUND_PRIMARY } from "../styles/shared";
 
 class Home extends React.Component {
   componentDidMount() {
@@ -44,7 +45,7 @@ class Home extends React.Component {
   render() {
     const { decks } = this.props; //array instead of obj because of mapStateToProps below
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: BACKGROUND_PRIMARY}}>
         <FlatList
           data={decks}
           renderItem={this.renderItem}

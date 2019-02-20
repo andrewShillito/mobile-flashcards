@@ -80,8 +80,8 @@ class Deck extends React.Component {
         </TouchableOpacity>
         <Animated.View style={[styles.buttonContainer, {width: buttonWidth, marginRight: marginRight}]}>
           <InfoIcon onPress={this.handleInfoPress}/>
-          <QuizIcon onPress={this.handleQuizPress} active={deck.questions.length > 0} />
           <EditIcon onPress={this.handleEditPress}/>
+          <QuizIcon onPress={this.handleQuizPress} active={deck.questions.length > 0} />
         </Animated.View>
       </Animated.View>
     );
