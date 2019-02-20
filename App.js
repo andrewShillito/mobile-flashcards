@@ -7,13 +7,14 @@ import middleware from "./middleware";
 import { Provider } from "react-redux";
 import CustomStatusBar from "./components/CustomStatusBar";
 import Router from "./Router";
+import { PURPLE } from "./styles/shared";
 
 export default class App extends React.Component {
   render() {
     return (
       <Provider store={createStore(reducer, middleware)}>
         <View style={styles.appContainer}>
-          <CustomStatusBar backgroundColor="steelblue" barStyle="light-content" />
+          <CustomStatusBar backgroundColor={PURPLE} barStyle="light-content" />
           <Router />
         </View>
       </Provider>
