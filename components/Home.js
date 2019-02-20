@@ -50,6 +50,7 @@ class Home extends React.Component {
           data={decks}
           renderItem={this.renderItem}
           keyExtractor={(item) => item.title}
+          ListEmptyComponent={() => <Text style={{alignSelf: "center", fontSize: 20}}>No decks! Create a new one to view here.</Text>}
           />
       </View>
     );
