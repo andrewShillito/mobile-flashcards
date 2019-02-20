@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import SubmitBtn from "./SubmitBtn";
 import styles from "../styles/newDeck";
 import { connect } from "react-redux";
@@ -9,8 +9,6 @@ import InputFeedbackText from "./InputFeedbackText";
 import TextInputPrimary from "./TextInputPrimary";
 
 class New extends React.Component {
-  static navigationOptions = (data) => {
-  }
   state = {
     title: "",
     message: "Submit to create a new deck",
@@ -36,7 +34,7 @@ class New extends React.Component {
       this.props.navigation.navigate("DeckDetail");
     }
   }
-  onChange = ({ title }) => {
+  onChange = (title) => {
     this.setState(() => ({
       title,
     }), this.validateInput);
@@ -64,20 +62,25 @@ class New extends React.Component {
       messageColor,
     }));
   }
+  hideKeyboard = () => {
+    Keyboard.dismiss();
+  }
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.header}>Create a new deck</Text>
-        <TextInputPrimary
-          placeholder="Deck Title"
-          onChangeText={(title) => this.onChange(title)}
-          value={this.state.title}
-          />
-        <View>
-          <ButtonPrimary onPress={this.onPress}>Submit</ButtonPrimary>
-          <InputFeedbackText color={this.state.messageColor}>{this.state.message}</InputFeedbackText>
+      <TouchableWithoutFeedback style={styles.container} onPress={this.hideKeyboard}>
+        <View style={styles.container}>
+          <Text style={styles.header}>Create a new deck</Text>
+          <TextInputPrimary
+            placeholder="Deck Title"
+            onChangeText={this.onChange}
+            value={this.state.title}
+            />
+          <View>
+            <ButtonPrimary onPress={this.onPress}>Submit</ButtonPrimary>
+            <InputFeedbackText color={this.state.messageColor}>{this.state.message}</InputFeedbackText>
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }

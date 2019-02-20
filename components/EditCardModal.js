@@ -232,7 +232,7 @@ function mapStateToProps({ activeDeck, decks, activeCard }, { toggleModal, isMod
     activeDeck,
     activeCard,
     cardIndex: activeCard !== null ? activeCard.index : null,
-    questions: decks[activeDeck].questions,
+    questions: decks[activeDeck] ? decks[activeDeck].questions : [],
   };
 }
 
