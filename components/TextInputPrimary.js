@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TextInput } from 'react-native';
 import styles from "../styles/textInputPrimary";
-import { MAX_SHORT_INPUT_LENGTH } from "../styles/shared";
+import { MAX_SHORT_INPUT_LENGTH, BLUE, GREEN } from "../styles/shared";
 
 export default function TextInputPrimary ({ onChangeText, value, placeholder }) {
   return (
@@ -12,6 +12,7 @@ export default function TextInputPrimary ({ onChangeText, value, placeholder }) 
         onChangeText={(title) => onChangeText(title)}
         value={value}
         maxLength={MAX_SHORT_INPUT_LENGTH}
+        selectionColor={BLUE}
         />
     </View>
   );
