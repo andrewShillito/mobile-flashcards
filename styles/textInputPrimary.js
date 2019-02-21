@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
+import { BACKGROUND_PRIMARY, BLACK } from "./shared";
 
 export default StyleSheet.create({
   container: {
     borderStyle: "solid",
-    borderColor: "white",
-    borderBottomColor: "black",
+    borderColor: BACKGROUND_PRIMARY,
+    borderBottomColor: BLACK,
     borderWidth: 1,
     width: 270,
   },
