@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text, TextInput, TouchableOpacity, Dimensions } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { connect } from "react-redux";
 import SubmitBtn from "./SubmitBtn";
-import { inputStyles } from "../styles";
 import { handleEditTitle, handleRemoveDeck } from "../actions/decks";
 import AddCard from "./AddCard";
+import styles from "../styles/editDeck";
+import { inputStyles } from "../styles";
 
 class EditDeck extends React.Component {
   static navigationOptions = ({ screenProps }) => {
@@ -81,28 +82,29 @@ class EditDeck extends React.Component {
   }
   render() {
     const { activeDeck } = this.props;
-    const { height } = Dimensions.get("window");
 
     return (
-      <View style={{flex: 1, justifyContent: "space-evenly", alignItems: "center", marginBottom: 20}}>
-        <View style={[inputStyles.inputContainer, {marginTop: 20, marginBottom: 10}]}>
-          <TextInput
-            style={inputStyles.input}
-            placeholder="New Title"
-            onChangeText={(title) => this.onChange({title})}
-            value={this.state.title}
-            maxLength={120}
-            />
-        </View>
-        <View>
-          <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
-          <View style={{alignItems: "center"}}>
-            <Text style={{color: this.state.messageColor}}>{this.state.message}</Text>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <View style={[inputStyles.inputContainer, {marginTop: 20, marginBottom: 10}]}>
+            <TextInput
+              style={inputStyles.input}
+              placeholder="New Title"
+              onChangeText={(title) => this.onChange({title})}
+              value={this.state.title}
+              maxLength={120}
+              />
           </View>
+          <View>
+            <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
+            <View style={{alignItems: "center"}}>
+              <Text style={{color: this.state.messageColor}}>{this.state.message}</Text>
+            </View>
+          </View>
+          <AddCard />
+          <SubmitBtn onPress={this.deleteDeck} type="textDeleteButton">Delete Deck</SubmitBtn>
         </View>
-        <AddCard />
-        <SubmitBtn onPress={this.deleteDeck} type="textDeleteButton">Delete Deck</SubmitBtn>
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
