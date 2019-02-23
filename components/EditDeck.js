@@ -6,6 +6,10 @@ import { handleEditTitle, handleRemoveDeck } from "../actions/decks";
 import AddCard from "./AddCard";
 import styles from "../styles/editDeck";
 import { inputStyles } from "../styles";
+import TextInputPrimary from "./TextInputPrimary";
+import InputFeedbackText from "./InputFeedbackText";
+import ButtonPrimary from "./ButtonPrimary";
+import ButtonWarning from "./ButtonWarning";
 
 class EditDeck extends React.Component {
   static navigationOptions = ({ screenProps }) => {
@@ -86,23 +90,18 @@ class EditDeck extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <View style={[inputStyles.inputContainer, {marginTop: 20, marginBottom: 10}]}>
-            <TextInput
-              style={inputStyles.input}
-              placeholder="New Title"
-              onChangeText={(title) => this.onChange({title})}
-              value={this.state.title}
-              maxLength={120}
-              />
-          </View>
+          <TextInputPrimary
+            onChangeText={(title) => this.onChange({ title })}
+            placeholder="New Title"
+            value={this.state.title}
+            maxLength={120}
+            />
           <View>
-            <SubmitBtn onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</SubmitBtn>
-            <View style={{alignItems: "center"}}>
-              <Text style={{color: this.state.messageColor}}>{this.state.message}</Text>
-            </View>
+            <ButtonPrimary onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</ButtonPrimary>
+            <InputFeedbackText color={this.state.messageColor}>{this.state.message}</InputFeedbackText>
           </View>
           <AddCard />
-          <SubmitBtn onPress={this.deleteDeck} type="textDeleteButton">Delete Deck</SubmitBtn>
+          <ButtonWarning onPress={this.deleteDeck}>Delete Deck</ButtonWarning>
         </View>
       </TouchableWithoutFeedback>
     );
