@@ -7,6 +7,7 @@ import { handleAddDeck } from "../actions/decks";
 import ButtonPrimary from "./ButtonPrimary";
 import InputFeedbackText from "./InputFeedbackText";
 import TextInputPrimary from "./TextInputPrimary";
+import CloseKeyboardWrapper from "./CloseKeyboardWrapper";
 
 class New extends React.Component {
   state = {
