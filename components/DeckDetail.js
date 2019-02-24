@@ -2,10 +2,11 @@ import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import Deck from "./Deck";
-import SubmitBtn from "./SubmitBtn";
 import DeckInfo from "./DeckInfo";
 import EditCards from "./EditCards";
 import EditCardModal from "./EditCardModal";
+import ButtonPrimary from "./ButtonPrimary";
+import ButtonSecondary from "./ButtonSecondary";
 
 class DeckDetail extends React.Component {
   static navigationOptions = ({ screenProps }) => {
@@ -48,8 +49,8 @@ class DeckDetail extends React.Component {
     return (
       <View style={{flex: 1}}>
         <DeckInfo title={this.props.deck ? this.props.deck.title : ""} />
-        <SubmitBtn onPress={this.startQuiz} type="submitBtn">Start Quiz</SubmitBtn>
-        <SubmitBtn onPress={this.editDeck} type="textButton">Edit Deck</SubmitBtn>
+        <ButtonPrimary onPress={this.startQuiz}>Start Quiz</ButtonPrimary>
+        <ButtonSecondary onPress={this.editDeck}>Edit Deck</ButtonSecondary>
         <EditCards toggleModal={this.toggleModal} />
         <EditCardModal toggleModal={this.toggleModal} isModalVisible={this.state.isModalVisible} closeModal={this.closeModal}/>
       </View>
