@@ -47,7 +47,7 @@ class DeckDetail extends React.Component {
   }
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, alignItems: "center"}}>
         <DeckInfo title={this.props.deck ? this.props.deck.title : ""} />
         <ButtonPrimary onPress={this.startQuiz}>Start Quiz</ButtonPrimary>
         <ButtonSecondary onPress={this.editDeck}>Edit Deck</ButtonSecondary>

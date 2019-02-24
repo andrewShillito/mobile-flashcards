@@ -6,6 +6,8 @@ import { handleEditCard, handleRemoveCard } from "../actions/cards";
 import { clearActiveCard } from "../actions/activeCard";
 // the handleEditCard and handleRemoveCard funcs dispatch clearActiveCard when done updating redux
 // however, the goBack button needs to clear the active card as well so it is imported here for that use
+import FormGroupSecondary from "./FormGroupSecondary";
+
 
 class EditCardModal extends React.Component {
   state = {
@@ -85,6 +87,28 @@ class EditCardModal extends React.Component {
   render() {
     const { activeCard, activeDeck, isModalVisible, toggleModal, cardIndex } = this.props;
     const { message, messageColor } = this.state;
+    const inputProps = [
+      {
+        placeholder: this.props.activeCard ? this.props.activeCard.question : "Question",
+        onChangeText: (question) => this.onChange({ value: question, name: "question" }),
+        value: this.state.question,
+        label: "Edit Question",
+      },
+      {
+        placeholder: this.props.activeCard ? this.props.activeCard.answer : "Answer",
+        onChangeText: (answer) => this.onChange({ value: answer, name: "answer" }),
+        value: this.state.answer,
+        label: "Edit Answer",
+      },
+    ];
+    const textProps = {
+        color: messageColor,
+        message,
+    };
+    const buttonProps = {
+      onPress: this.onSubmit,
+      text: "Submit Changes",
+    };
 
     return (
       <Modal
@@ -101,32 +125,11 @@ class EditCardModal extends React.Component {
             <TouchableWithoutFeedback onPress={() => {}}>
               <View style={styles.modalContent}>
                 <Text style={styles.header}>{`${cardIndex+1}. ${activeCard !== null ? activeCard.question : ""}`}</Text>
-                <Text style={styles.label}>Edit Question</Text>
-                <View style={inputStyles.inputContainer}>
-                  <TextInput
-                    style={inputStyles.input}
-                    placeholder={this.props.activeCard ? this.props.activeCard.question : "Question"}
-                    onChangeText={(question) => this.onChange({ value: question, name: "question" })}
-                    value={this.state.question}
-                    maxLength={120}
-                    />
-                </View>
-                <Text style={styles.label}>Edit Answer</Text>
-                <View style={inputStyles.inputContainer}>
-                  <TextInput
-                    style={inputStyles.input}
-                    placeholder={this.props.activeCard ? this.props.activeCard.answer : "Answer"}
-                    onChangeText={(answer) => this.onChange({ value: answer, name: "answer" })}
-                    value={this.state.answer}
-                    maxLength={120}
-                    />
-                </View>
-                <View>
-                  <SubmitBtn onPress={this.onSubmit}>Submit Changes</SubmitBtn>
-                  <View style={{alignItems: "center"}}>
-                    <Text style={{color: messageColor}}>{message}</Text>
-                  </View>
-                </View>
+                <FormGroupSecondary
+                  inputProps={inputProps}
+                  buttonProps={buttonProps}
+                  textProps={textProps}
+                  />
                 <View style={styles.buttonContainer}>
                   <TouchableOpacity onPress={() => {
                       toggleModal();
@@ -152,7 +155,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 20,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   modalContent: {
     height: (Dimensions.get("window").height)*.75,
@@ -164,7 +167,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   line: {
     borderBottomColor: "black",
