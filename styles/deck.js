@@ -1,12 +1,12 @@
 import { StyleSheet } from "react-native";
-import { BLUE, PURPLE } from "./shared";
+import { BLUE, PURPLE, WHITE } from "./shared";
 
 export default  StyleSheet.create({
   deck: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: WHITE,
     height: 150,
     marginLeft: 20,
     marginRight: 20,

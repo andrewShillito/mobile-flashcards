@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { WHITE } from "./shared";
 
 export default StyleSheet.create({
   container: {
@@ -10,7 +11,7 @@ export default StyleSheet.create({
   content: {
     height: (Dimensions.get("window").height)*.75,
     width: (Dimensions.get("window").width)*.90,
-    backgroundColor: "white",
+    backgroundColor: WHITE,
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2},
