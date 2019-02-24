@@ -1,7 +1,5 @@
 import React from "react";
-import { View } from "react-native";
 import { connect } from "react-redux";
-import { inputStyles } from "../styles";
 import { handleAddCard } from "../actions/cards";
 import FormGroupPrimary from "./FormGroupPrimary";
 
@@ -86,13 +84,11 @@ class AddCard extends React.Component {
       text: "Add Card",
     };
     return (
-      <View style={{flex:1, justifyContent: "space-evenly", alignItems: "center"}}>
-        <FormGroupPrimary
-          inputProps={inputProps}
-          buttonProps={buttonProps}
-          textProps={textProps}
-          />
-      </View>
+      <FormGroupPrimary
+        inputProps={inputProps}
+        buttonProps={buttonProps}
+        textProps={textProps}
+        />
     );
   }
 }
