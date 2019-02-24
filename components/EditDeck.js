@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import SubmitBtn from "./SubmitBtn";
 import { handleEditTitle, handleRemoveDeck } from "../actions/decks";
@@ -10,6 +10,7 @@ import TextInputPrimary from "./TextInputPrimary";
 import InputFeedbackText from "./InputFeedbackText";
 import ButtonPrimary from "./ButtonPrimary";
 import ButtonWarning from "./ButtonWarning";
+import CloseKeyboardWrapper from "./CloseKeyboardWrapper";
 
 class EditDeck extends React.Component {
   static navigationOptions = ({ screenProps }) => {
@@ -88,22 +89,20 @@ class EditDeck extends React.Component {
     const { activeDeck } = this.props;
 
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
-          <TextInputPrimary
-            onChangeText={(title) => this.onChange({ title })}
-            placeholder="New Title"
-            value={this.state.title}
-            maxLength={120}
-            />
-          <View>
-            <ButtonPrimary onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</ButtonPrimary>
-            <InputFeedbackText color={this.state.messageColor}>{this.state.message}</InputFeedbackText>
-          </View>
-          <AddCard />
-          <ButtonWarning onPress={this.deleteDeck}>Delete Deck</ButtonWarning>
+      <CloseKeyboardWrapper containerStyle={styles.container}>
+        <TextInputPrimary
+          onChangeText={(title) => this.onChange({ title })}
+          placeholder="New Title"
+          value={this.state.title}
+          maxLength={120}
+          />
+        <View>
+          <ButtonPrimary onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</ButtonPrimary>
+          <InputFeedbackText color={this.state.messageColor}>{this.state.message}</InputFeedbackText>
         </View>
-      </TouchableWithoutFeedback>
+        <AddCard />
+        <ButtonWarning onPress={this.deleteDeck}>Delete Deck</ButtonWarning>
+      </CloseKeyboardWrapper>
     );
   }
 }
