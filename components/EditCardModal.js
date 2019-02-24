@@ -1,13 +1,14 @@
 import React from "react";
-import { Modal, View, Text, StyleSheet, Dimensions, TextInput, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
+import { Text } from "react-native";
 import { connect } from "react-redux";
-import SubmitBtn from "./SubmitBtn";
 import { handleEditCard, handleRemoveCard } from "../actions/cards";
 import { clearActiveCard } from "../actions/activeCard";
 // the handleEditCard and handleRemoveCard funcs dispatch clearActiveCard when done updating redux
 // however, the goBack button needs to clear the active card as well so it is imported here for that use
 import FormGroupSecondary from "./FormGroupSecondary";
-
+import ModalWrapperPrimary from "./ModalWrapperPrimary";
+import ButtonBarBottomPrimary from "./ButtonBarBottomPrimary";
+import styles from "../styles/editCardModal";
 
 class EditCardModal extends React.Component {
   state = {
@@ -111,122 +112,35 @@ class EditCardModal extends React.Component {
     };
 
     return (
-      <Modal
+      <ModalWrapperPrimary
         visible={isModalVisible}
-        onRequestClose={() => toggleModal()}
-        animationType="slide"
-        transparent={true}
+        onRequestClose={toggleModal}
+        onPressOutside={() => {
+          this.props.closeModal;
+          this.props.dispatch(clearActiveCard());
+        }}
         >
-        <TouchableWithoutFeedback onPress={() => {
-            this.props.closeModal();
-            this.props.dispatch(clearActiveCard());
-          }}>
-          <View style={styles.container}>
-            <TouchableWithoutFeedback onPress={() => {}}>
-              <View style={styles.modalContent}>
-                <Text style={styles.header}>{`${cardIndex+1}. ${activeCard !== null ? activeCard.question : ""}`}</Text>
-                <FormGroupSecondary
-                  inputProps={inputProps}
-                  buttonProps={buttonProps}
-                  textProps={textProps}
-                  />
-                <View style={styles.buttonContainer}>
-                  <TouchableOpacity onPress={() => {
-                      toggleModal();
-                      this.props.dispatch(clearActiveCard());
-                    }} style={styles.textButton}>
-                    <Text style={styles.textButtonText}>Go Back</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={this.deleteCard} style={styles.textButton}>
-                    <Text style={styles.deleteButtonText}>Delete Card</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+        <Text style={styles.header}>
+          {`${cardIndex+1}. ${activeCard !== null ? activeCard.question : ""}`}
+        </Text>
+        <FormGroupSecondary
+          inputProps={inputProps}
+          buttonProps={buttonProps}
+          textProps={textProps}
+          />
+        <ButtonBarBottomPrimary
+          leftText="Go Back"
+          onPressLeft={() => {
+              toggleModal();
+              this.props.dispatch(clearActiveCard());
+            }}
+          rightText="Delete Card"
+          onPressRight={this.deleteCard}
+          />
+      </ModalWrapperPrimary>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContent: {
-    height: (Dimensions.get("window").height)*.75,
-    width: (Dimensions.get("window").width)*.90,
-    backgroundColor: "white",
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2},
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  line: {
-    borderBottomColor: "black",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    margin: 10,
-    width: (Dimensions.get("window").width)*.70,
-    alignSelf: "center"
-  },
-  text: {
-    fontSize: 20,
-  },
-  label: {
-    fontSize: 20,
-    fontStyle: "italic",
-    marginLeft: 5,
-  },
-  header: {
-    fontSize: 25,
-    alignSelf: "center",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignSelf: "flex-end",
-    width: (Dimensions.get("window").width)*.90,
-    paddingHorizontal: 5,
-    paddingBottom: 5,
-  },
-  textButton: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textButtonText: {
-    fontSize: 20,
-    color: "steelblue",
-  },
-  deleteButtonText: {
-    fontSize: 20,
-    color: "#dc3545",
-  }
-});
-
-const inputStyles = StyleSheet.create({
-  input: {
-    marginHorizontal: 5,
-    fontSize: 20,
-    paddingBottom: 5,
-  },
-  inputContainer: {
-    borderStyle: "solid",
-    borderColor: "white",
-    borderBottomColor: "black",
-    borderWidth: 1,
-    width: 270,
-    alignSelf: "center"
-  },
-});
-
 
 function mapStateToProps({ activeDeck, decks, activeCard }, { toggleModal, isModalVisible, closeModal }){
   return {
