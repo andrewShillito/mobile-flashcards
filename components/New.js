@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { Text, View } from 'react-native';
 import SubmitBtn from "./SubmitBtn";
 import styles from "../styles/newDeck";
 import { connect } from "react-redux";
@@ -63,25 +63,20 @@ class New extends React.Component {
       messageColor,
     }));
   }
-  hideKeyboard = () => {
-    Keyboard.dismiss();
-  }
   render() {
     return (
-      <TouchableWithoutFeedback style={styles.container} onPress={this.hideKeyboard}>
-        <View style={styles.container}>
-          <Text style={styles.header}>Create a new deck</Text>
-          <TextInputPrimary
-            placeholder="Deck Title"
-            onChangeText={this.onChange}
-            value={this.state.title}
-            />
-          <View>
-            <ButtonPrimary onPress={this.onPress}>Submit</ButtonPrimary>
-            <InputFeedbackText color={this.state.messageColor}>{this.state.message}</InputFeedbackText>
-          </View>
+      <CloseKeyboardWrapper containerStyle={styles.container}>
+        <Text style={styles.header}>Create a new deck</Text>
+        <TextInputPrimary
+          placeholder="Deck Title"
+          onChangeText={this.onChange}
+          value={this.state.title}
+          />
+        <View>
+          <ButtonPrimary onPress={this.onPress}>Submit</ButtonPrimary>
+          <InputFeedbackText color={this.state.messageColor}>{this.state.message}</InputFeedbackText>
         </View>
-      </TouchableWithoutFeedback>
+      </CloseKeyboardWrapper>
     );
   }
 }

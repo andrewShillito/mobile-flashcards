@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableWithoutFeedback, View, KeyBoard } from "react-native";
+import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
 
 export default function CloseKeyboardWrapper({ containerStyle, children }) {
   return (
