@@ -6,6 +6,10 @@ import SubmitBtn from "./SubmitBtn";
 import { FontAwesome } from "@expo/vector-icons";
 import ScoreDetails from "./ScoreDetails";
 import { clearLocalNotifications, setLocalNotification } from "../utils/notifications";
+import ButtonSecondary from "./ButtonSecondary";
+import IncorrectIcon from "./IncorrectIcon";
+import SuccessIcon from "./SuccessIcon";
+import QuizItem from "./QuizItem";
 
 class Quiz extends React.Component {
   state = {
@@ -85,27 +89,28 @@ class Quiz extends React.Component {
   getScoreDetails = () => {
     this.props.navigation.navigate("ScoreDetails");
   }
+  onPressCorrect = () => {
+    this.markCorrect();
+    this.increment();
+  }
+  onPressIncorrect = () => {
+    this.markIncorrect();
+    this.increment();
+  }
   render() {
     const deck = this.props.deck;
     if (this.state.index < deck.questions.length) {
       const card = deck.questions[this.state.index];
       const { question, answer } = card;
       return (
-        <View style={{justifyContent: "space-around", flex: 1}}>
-          <Text style={{alignSelf: "center", justifyContent: "flex-start", fontSize: 20}}>{`${this.state.index + 1} of ${deck.questions.length}`}</Text>
-          <Question question={question} answer={answer} showAnswer={this.state.showAnswer} />
-          <SubmitBtn onPress={this.toggleShowAnswer} type="textButton">{this.state.message}</SubmitBtn>
-          <View style={{flexDirection: "row", justifyContent: "space-around"}}>
-            <TouchableOpacity onPress={() => {this.markIncorrect(); this.increment()}} style={{justifyContent: "center", alignItems: "center"}}>
-              <Text style={{fontSize: 20, marginBottom: 5}}>Incorrect</Text>
-              <FontAwesome name="window-close" size={50} color="#dc3545" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {this.markCorrect(); this.increment()}} style={{justifyContent: "center", alignItems: "center"}}>
-              <Text style={{fontSize: 20, marginBottom: 5}}>Correct</Text>
-              <FontAwesome name="check-square-o" size={50} color="#28a745" />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <QuizItem
+          message={this.state.message}
+          toggleShowAnswer={this.toggleShowAnswer}
+          showAnswer={this.state.showAnswer}
+          progress={`${this.state.index + 1} of ${deck.questions.length}`}
+          onPressIncorrect={this.onPressIncorrect}
+          onPressCorrect={this.onPressCorrect}
+          />
       );
     }
     clearLocalNotifications(); // quiz completed so clear existing notification(s)
