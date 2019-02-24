@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Text, TextInput } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
-import SubmitBtn from "./SubmitBtn";
 import { inputStyles } from "../styles";
 import { handleAddCard } from "../actions/cards";
+import FormGroupPrimary from "./FormGroupPrimary";
 
 class AddCard extends React.Component {
   state = {
@@ -65,33 +65,33 @@ class AddCard extends React.Component {
   render() {
     const message = this.state.message;
     const color = this.state.messageColor;
-
+    const inputProps = [
+      {
+        placeholder: "Question",
+        onChangeText: (question) => this.onChange({ value: question, name: "question"}),
+        value: this.state.question,
+      },
+      {
+        placeholder: "Answer",
+        onChangeText: (answer) => this.onChange({ value: answer, name: "answer" }),
+        value: this.state.answer,
+      },
+    ];
+    const textProps = {
+      message,
+      color,
+    };
+    const buttonProps = {
+      onPress: this.onSubmit,
+      text: "Add Card",
+    };
     return (
       <View style={{flex:1, justifyContent: "space-evenly", alignItems: "center"}}>
-        <View style={inputStyles.inputContainer}>
-          <TextInput
-            style={inputStyles.input}
-            placeholder="Question"
-            onChangeText={(question) => this.onChange({ value: question, name: "question" })}
-            value={this.state.question}
-            maxLength={120}
-            />
-        </View>
-        <View style={inputStyles.inputContainer}>
-          <TextInput
-            style={inputStyles.input}
-            placeholder="Answer"
-            onChangeText={(answer) => this.onChange({ value: answer, name: "answer" })}
-            value={this.state.answer}
-            maxLength={120}
-            />
-        </View>
-        <View>
-          <SubmitBtn onPress={this.onSubmit}>Add Card</SubmitBtn>
-          <View style={{alignItems: "center"}}>
-            <Text style={{color: color}}>{message}</Text>
-          </View>
-        </View>
+        <FormGroupPrimary
+          inputProps={inputProps}
+          buttonProps={buttonProps}
+          textProps={textProps}
+          />
       </View>
     );
   }

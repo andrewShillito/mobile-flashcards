@@ -8,6 +8,7 @@ import ButtonPrimary from "./ButtonPrimary";
 import InputFeedbackText from "./InputFeedbackText";
 import TextInputPrimary from "./TextInputPrimary";
 import CloseKeyboardWrapper from "./CloseKeyboardWrapper";
+import FormGroupPrimary from "./FormGroupPrimary";
 
 class New extends React.Component {
   state = {
@@ -64,18 +65,29 @@ class New extends React.Component {
     }));
   }
   render() {
+    const inputProps = [
+      {
+        placeholder: "Deck Title",
+        onChangeText: this.onChange,
+        value: this.state.title,
+      },
+    ];
+    const buttonProps = {
+      text: "Submit",
+      onPress: this.onPress,
+    };
+    const textProps = {
+      color: this.state.messageColor,
+      message: this.state.message,
+    };
     return (
       <CloseKeyboardWrapper containerStyle={styles.container}>
         <Text style={styles.header}>Create a new deck</Text>
-        <TextInputPrimary
-          placeholder="Deck Title"
-          onChangeText={this.onChange}
-          value={this.state.title}
+        <FormGroupPrimary
+          inputProps={inputProps}
+          textProps={textProps}
+          buttonProps={buttonProps}
           />
-        <View>
-          <ButtonPrimary onPress={this.onPress}>Submit</ButtonPrimary>
-          <InputFeedbackText color={this.state.messageColor}>{this.state.message}</InputFeedbackText>
-        </View>
       </CloseKeyboardWrapper>
     );
   }

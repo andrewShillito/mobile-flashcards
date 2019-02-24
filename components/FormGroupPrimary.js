@@ -1,23 +1,25 @@
-import React from "./react";
-import { View } from "react-native";
+import React from "react";
 import TextInputPrimary from "./TextInputPrimary";
 import SubmitGroupPrimary from "./SubmitGroupPrimary";
 
-export default function FormGroupPrimary({ inputProps, onPress, color }) { // input props is array of obj
+export default function FormGroupPrimary({ inputProps, buttonProps, textProps }) {
+  // input props is array of obj
   return (
-    <View>
-      {inputProps.map((obj) => {
+    <>
+      {inputProps.map((obj) => (
         <TextInputPrimary
           placeholder={obj.placeholder}
           onChangeText={obj.onChangeText}
           value={obj.value}
+          key={obj.placeholder}
         />
-      })}
+      ))}
       <SubmitGroupPrimary
-        onPress={onPress}
-        color={color}
-        message={message}
+        onPress={buttonProps.onPress}
+        color={textProps.color}
+        message={textProps.message}
+        buttonText={buttonProps.text}
         />
-    </View>
+    </ >
   );
 }
