@@ -1,16 +1,11 @@
 import React from "react";
-import { View } from "react-native";
 import { connect } from "react-redux";
-import SubmitBtn from "./SubmitBtn";
 import { handleEditTitle, handleRemoveDeck } from "../actions/decks";
-import AddCard from "./AddCard";
 import styles from "../styles/editDeck";
-import { inputStyles } from "../styles";
-import TextInputPrimary from "./TextInputPrimary";
-import InputFeedbackText from "./InputFeedbackText";
-import ButtonPrimary from "./ButtonPrimary";
+import AddCard from "./AddCard";
 import ButtonWarning from "./ButtonWarning";
 import CloseKeyboardWrapper from "./CloseKeyboardWrapper";
+import FormGroupPrimary from "./FormGroupPrimary";
 
 class EditDeck extends React.Component {
   static navigationOptions = ({ screenProps }) => {
@@ -87,19 +82,29 @@ class EditDeck extends React.Component {
   }
   render() {
     const { activeDeck } = this.props;
+    const inputProps = [
+      {
+        placeholder: "New Title",
+        value: this.state.title,
+        onChangeText: (title) => this.onChange({ title }),
+      },
+    ];
+    const buttonProps = {
+      onPress: () => this.editTitle(this.props.activeDeck, this.state.title),
+      text: "Submit",
+    };
+    const textProps = {
+      color: this.state.messageColor,
+      message: this.state.message,
+    };
 
     return (
       <CloseKeyboardWrapper containerStyle={styles.container}>
-        <TextInputPrimary
-          onChangeText={(title) => this.onChange({ title })}
-          placeholder="New Title"
-          value={this.state.title}
-          maxLength={120}
+        <FormGroupPrimary
+          inputProps={inputProps}
+          buttonProps={buttonProps}
+          textProps={textProps}
           />
-        <View>
-          <ButtonPrimary onPress={() => this.editTitle(this.props.activeDeck, this.state.title)}>Submit</ButtonPrimary>
-          <InputFeedbackText color={this.state.messageColor}>{this.state.message}</InputFeedbackText>
-        </View>
         <AddCard />
         <ButtonWarning onPress={this.deleteDeck}>Delete Deck</ButtonWarning>
       </CloseKeyboardWrapper>
