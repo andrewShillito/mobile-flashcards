@@ -1,15 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
 import { connect } from "react-redux";
-import Question from "./Question";
-import SubmitBtn from "./SubmitBtn";
 import { FontAwesome } from "@expo/vector-icons";
 import ScoreDetails from "./ScoreDetails";
 import { clearLocalNotifications, setLocalNotification } from "../utils/notifications";
-import ButtonSecondary from "./ButtonSecondary";
-import IncorrectIcon from "./IncorrectIcon";
-import SuccessIcon from "./SuccessIcon";
 import QuizItem from "./QuizItem";
+import QuizScore from "./QuizScore";
 
 class Quiz extends React.Component {
   state = {
@@ -110,6 +106,8 @@ class Quiz extends React.Component {
           progress={`${this.state.index + 1} of ${deck.questions.length}`}
           onPressIncorrect={this.onPressIncorrect}
           onPressCorrect={this.onPressCorrect}
+          answer={answer}
+          question={question}
           />
       );
     }
@@ -117,18 +115,13 @@ class Quiz extends React.Component {
     // setLocalNotification(); // set new notification for tomorrow - commented to prevent dev notifications
 
     return (
-      <View style={{flex: 1, justifyContent: "space-between"}}>
-        <Text style={{fontSize: 40, alignSelf: "center", marginTop: 20}}>Score</Text>
-        <View style={{alignItems: "center", justifyContent: "space-between"}}>
-          <Text style={{fontSize: 30}}>{`${this.state.numCorrect} out of ${deck.questions.length} correct`}</Text>
-          <Text style={{fontSize: 30, marginTop: 30}}>{`${Number(Math.round((this.state.numCorrect/deck.questions.length)+'e2')+"e-2")*100}%`}</Text>
-        </View>
-        <SubmitBtn onPress={this.getScoreDetails}>Details</SubmitBtn>
-        <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end"}}>
-          <SubmitBtn onPress={this.startOver} type="textButton">Retake Quiz</SubmitBtn>
-          <SubmitBtn onPress={this.goToDeckDetail} type="textButton">Go to Deck Home</SubmitBtn>
-        </View>
-      </View>
+      <QuizScore
+        numCorrect={`${this.state.numCorrect} out of ${deck.questions.length} correct`}
+        percentCorrect={`${Number(Math.round((this.state.numCorrect/deck.questions.length)+'e2')+"e-2")*100}%`}
+        startOver={this.startOver}
+        getScoreDetails={this.getScoreDetails}
+        goToDeckDetail={this.goToDeckDetail}
+        />
     );
   }
 }
