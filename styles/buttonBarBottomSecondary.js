@@ -4,8 +4,8 @@ export default StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignSelf: "flex-end",
-    width: (Dimensions.get("window").width)*.90,
+    alignItems: "flex-end",
+    width: (Dimensions.get("window").width),
     paddingHorizontal: 5,
     paddingBottom: 5,
   },

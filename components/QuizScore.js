@@ -17,7 +17,7 @@ export default function QuizScore({ startOver, goToDeckDetail, getScoreDetails, 
       <ButtonPrimary onPress={getScoreDetails}>Details</ButtonPrimary>
       <ButtonBarBottomSecondary
         leftText="Retake Quiz"
-        rightText="Go To Deck Home"
+        rightText="Deck Home"
         onPressLeft={startOver}
         onPressRight={goToDeckDetail}
       />

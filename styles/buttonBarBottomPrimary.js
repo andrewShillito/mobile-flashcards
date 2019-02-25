@@ -7,6 +7,6 @@ export default StyleSheet.create({
     alignSelf: "flex-end",
     width: (Dimensions.get("window").width)*.90,
     paddingHorizontal: 5,
-    paddingBottom: 5,
+    paddingBottom: 2,
   },
 });
