@@ -116,7 +116,7 @@ class EditCardModal extends React.Component {
         visible={isModalVisible}
         onRequestClose={toggleModal}
         onPressOutside={() => {
-          this.props.closeModal;
+          this.props.closeModal();
           this.props.dispatch(clearActiveCard());
         }}
         >
