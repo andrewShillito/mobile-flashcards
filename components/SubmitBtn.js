@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { buttonStyles as styles } from "../styles";
+import styles from "../styles/submitBtn";
 
 function SubmitBtn({ onPress, children, type, additionalStyling }) {
   if (type === undefined) {
