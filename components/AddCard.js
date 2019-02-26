@@ -2,20 +2,20 @@ import React from "react";
 import { connect } from "react-redux";
 import { handleAddCard } from "../actions/cards";
 import FormGroupPrimary from "./FormGroupPrimary";
+import { validateInputLength, validateUniqueCard } from "../utils/helpers";
+import { RED, SUCCESS } from "../styles/shared";
 
 class AddCard extends React.Component {
   state = {
     question: "",
     answer: "",
     message: "Submit to add a new card",
-    messageColor: "#28a745",
+    messageColor: SUCCESS,
     duplicateCardMessage: "Card already exists",
     emptyInputMessage: "Must complete both fields",
     successMessage: "Ready for submission",
-    inputTooLongMessage: "Max input length exceeded",
-    warningColor: "#dc3545",
-    successColor: "#28a745",
-    maxInputLength: 120,
+    warningColor: RED,
+    successColor: SUCCESS,
   }
   onChange = ({value, name}) => {
     this.setState(() => ({
@@ -24,18 +24,16 @@ class AddCard extends React.Component {
   }
   validateInput = () => {
     const { questions } = this.props.deck;
-    if (this.state.question.length && this.state.answer.length) {
-      if (questions.some((card) => card.question === this.state.question && card.answer === this.state.answer)) {
-        this.setMessage(this.state.duplicateCardMessage, this.state.warningColor);
+    if (validateInputLength(this.state.question) && validateInputLength(this.state.answer)) {
+      if (validateUniqueCard(this.state.question, this.state.answer, questions)) {
+        this.setDuplicateCardMessage();
         return false;
-      } else if (this.state.question.length > this.state.maxInputLength || this.state.answer.length> this.state.maxInputLength) {
-        this.setMessage(this.state.inputTooLongMessage, this.state.warningColor);
-        return false;
+      } else {
+        this.setSuccessMessage();
+        return true;
       }
-      this.setMessage(this.state.successMessage, this.state.successColor);
-      return true;
     }
-    this.setMessage(this.state.emptyInputMessage, this.state.warningColor);
+    this.setEmpyInputMessage();
     return false;
   }
   setMessage = (message, messageColor) => {
@@ -59,6 +57,15 @@ class AddCard extends React.Component {
     else {
       alert(this.state.message);
     }
+  }
+  setDuplicateCardMessage = () => {
+    this.setMessage(this.state.duplicateCardMessage, this.state.warningColor);
+  }
+  setEmpyInputMessage = () => {
+    this.setMessage(this.state.emptyInputMessage, this.state.warningColor);
+  }
+  setSuccessMessage = () => {
+    this.setMessage(this.state.successMessage, this.state.successColor);
   }
   render() {
     const message = this.state.message;

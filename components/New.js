@@ -9,19 +9,19 @@ import InputFeedbackText from "./InputFeedbackText";
 import TextInputPrimary from "./TextInputPrimary";
 import CloseKeyboardWrapper from "./CloseKeyboardWrapper";
 import FormGroupPrimary from "./FormGroupPrimary";
+import { validateUniqueDeckName, validateInputLength } from "../utils/helpers";
+import { RED, SUCCESS } from "../styles/shared";
 
 class New extends React.Component {
   state = {
     title: "",
     message: "Submit to create a new deck",
-    messageColor: "#28a745",
-    warningColor: "#dc3545",
-    successColor: "#28a745",
+    messageColor: SUCCESS,
+    warningColor: RED,
+    successColor: SUCCESS,
     duplicateTitleMessage: "Deck name already taken",
     successMessage: "Ready for Submission",
     emptyInputMessage: "Blank titles are not allowed",
-    inputTooLongMessage: "Max title length exceeded",
-    maxInputLength: 30,
   }
   onPress = () => {
     if (!this.validateInput()) {
@@ -43,19 +43,16 @@ class New extends React.Component {
   }
   validateInput = () => {
     const { deckNames } = this.props;
-    if (this.state.title.length > 0) {
-      if (deckNames.includes(this.state.title)) {
-        this.setMessage(this.state.duplicateTitleMessage, this.state.warningColor);
-        return false;
-      } else if (this.state.title.length > this.state.maxInputLength) {
-        this.setMessage(this.state.inputTooLongMessage, this.state.warningColor);
+    if (validateInputLength(this.state.title)) {
+      if (validateUniqueDeckName(this.state.title, deckNames)){
+        this.setDuplicateTitleMessage();
         return false;
       } else {
-        this.setMessage(this.state.successMessage, this.state.successColor);
+        this.setSuccessMessage();
         return true;
       }
     }
-    this.setMessage(this.state.emptyInputMessage, this.state.warningColor);
+    this.setEmpyInputMessage();
     return false;
   }
   setMessage = (message, messageColor) => {
@@ -63,6 +60,15 @@ class New extends React.Component {
       message,
       messageColor,
     }));
+  }
+  setDuplicateTitleMessage = () => {
+    this.setMessage(this.state.duplicateTitleMessage, this.state.warningColor);
+  }
+  setEmpyInputMessage = () => {
+    this.setMessage(this.state.emptyInputMessage, this.state.warningColor);
+  }
+  setSuccessMessage = () => {
+    this.setMessage(this.state.successMessage, this.state.successColor);
   }
   render() {
     const inputProps = [
