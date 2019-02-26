@@ -11,6 +11,8 @@ import Quiz from "./components/Quiz";
 import ScoreDetails from "./components/ScoreDetails";
 import { BLUE, BACKGROUND_PRIMARY } from "./styles/shared";
 
+import LoadingCircle from "./components/LoadingCircle"; // temporary import for testing
+
 const HomeStack = createStackNavigator(
   {
     Home: {
@@ -74,6 +76,12 @@ const Tabs = createBottomTabNavigator({
        tabBarIcon: ({tintColor}) => <FontAwesome name="plus-square" size={30} color={tintColor} />
      }
    },
+  Loading: { // temporary code!
+    screen: LoadingCircle,
+    navigationOptions: {
+      tabBarLabel: "Loading",
+    },
+  },
  },
  {
    tabBarOptions: {
