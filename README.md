@@ -26,7 +26,7 @@ Will start an expo server in a new browser tab.  You can then connect to expo vi
 
 ## Features
 
-1. Access your decks on the home scree
+1. Access your decks on the home screen
 2. Create, update, view, and destroy decks and flashcards within those decks
 3. Quiz yourself with your flashcard decks
 4. View a short score report at the end of your quiz
