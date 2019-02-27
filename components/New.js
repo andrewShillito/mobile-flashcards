@@ -11,6 +11,7 @@ import CloseKeyboardWrapper from "./CloseKeyboardWrapper";
 import FormGroupPrimary from "./FormGroupPrimary";
 import { validateUniqueDeckName, validateInputLength } from "../utils/helpers";
 import { RED, SUCCESS } from "../styles/shared";
+import { clearActiveDeck } from "../actions/activeDeck";
 
 class New extends React.Component {
   state = {
@@ -22,6 +23,11 @@ class New extends React.Component {
     duplicateTitleMessage: "Deck name already taken",
     successMessage: "Ready for Submission",
     emptyInputMessage: "Blank titles are not allowed",
+  }
+  componentDidMount() {
+    if (this.props.activeDeck !== null) {
+      this.props.dispatch(clearActiveDeck());
+    }
   }
   onPress = () => {
     if (!this.validateInput()) {
@@ -99,9 +105,10 @@ class New extends React.Component {
   }
 }
 
-function mapStateToProps({ decks }) {
+function mapStateToProps({ decks, activeDeck }) {
   return {
     deckNames: Object.keys(decks),
+    activeDeck,
   }
 }
 

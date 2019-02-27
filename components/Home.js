@@ -3,32 +3,40 @@ import { Text, View, FlatList } from 'react-native';
 import Deck from "./Deck";
 import { connect } from "react-redux";
 import { handleReceiveDecks } from "../actions/decks";
-import { setActiveDeck } from "../actions/activeDeck";
+import { setActiveDeck, clearActiveDeck } from "../actions/activeDeck";
 import { setLocalNotification, clearLocalNotifications } from "../utils/notifications";
 import { Permissions } from "expo";
 import styles from "../styles/home";
-import LoadingCircle from "./LoadingCircle";
 
 class Home extends React.Component {
   componentDidMount() {
     this.props.dispatch(handleReceiveDecks());
     // this.askPermission(); // commented to prevent generating new notifications
     clearLocalNotifications(); // for development
+    if (this.props.activeDeck !== null) {
+      this.props.dispatch(clearActiveDeck());
+    }
   }
   renderItem = ({ item }) => {
-    return <Deck deck={item} goToDeckDetail={this.goToDeckDetail} goToQuiz={this.goToQuiz} goToEdit={this.goToEdit} />
+    return <Deck deck={item} goToDeckDetail={this.goToDeckDetail} goToQuiz={this.goToQuiz} goToEdit={this.goToEdit} active={this.props.activeDeck === item.title} />
   }
   goToDeckDetail = (title) => {
-    this._setActiveDeck(title);
+    if (this.props.activeDeck !== title) {
+      this._setActiveDeck(title);
+    }
     this.props.navigation.navigate("DeckDetail")
   }
   goToQuiz = (title) => {
-    this._setActiveDeck(title);
+    if (this.props.activeDeck !== title) {
+      this._setActiveDeck(title);
+    }
     this.props.navigation.push("DeckDetail");
     this.props.navigation.push("Quiz");
   }
   goToEdit = (title) => {
-    this._setActiveDeck(title);
+    if (this.props.activeDeck !== title) {
+      this._setActiveDeck(title);
+    }
     this.props.navigation.push("DeckDetail");
     this.props.navigation.push("EditDeck");
   }
@@ -58,12 +66,13 @@ class Home extends React.Component {
   }
 }
 
-function mapStateToProps({ decks, loading }) {
+function mapStateToProps({ decks, activeDeck }) {
   // mapping decks object to an array
   return {
     decks: Object.keys(decks).map(title => {
       return decks[title];
     }),
+    activeDeck,
   }
 }
 

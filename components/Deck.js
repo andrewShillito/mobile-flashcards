@@ -6,22 +6,32 @@ import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import InfoIcon from "./InfoIcon";
 import QuizIcon from "./QuizIcon";
 import EditIcon from "./EditIcon";
+import { setActiveDeck, clearActiveDeck } from "../actions/activeDeck";
+import { connect } from "react-redux";
 
 class Deck extends React.Component {
   state = {
-    marginRight: new Animated.Value(0),
-    buttonWidth: new Animated.Value(0),
-    pannedLeft: false,
+      marginRight: new Animated.Value(0),
+      buttonWidth: new Animated.Value(0),
   }
-
-  handleTouch = () => {
-    if (this.state.pannedLeft) {
-      this.closeButtons();
-    } else {
-      this.openButtons();
+  componentDidUpdate(prevProps) {
+    if (this.props.active !== prevProps.active) {
+      if (this.props.active) {
+        this.openButtons();
+      } else {
+        this.closeButtons();
+      }
     }
   }
-
+  handleTouch = () => {
+    if (this.props.active) {
+      this.props.dispatch(clearActiveDeck());
+      // this.closeButtons();
+    } else {
+      this.props.dispatch(setActiveDeck(this.props.deck.title));
+      // this.openButtons();
+    }
+  }
   openButtons = () => {
     Animated.parallel([
       Animated.timing(this.state.marginRight, {
@@ -32,7 +42,7 @@ class Deck extends React.Component {
         toValue: 40,
         duration: 300,
       })
-    ]).start(() => this.setState((prevState) => ({ pannedLeft: !prevState.pannedLeft })));
+    ]).start();
   }
 
   closeButtons = () => {
@@ -45,7 +55,7 @@ class Deck extends React.Component {
         toValue: 0,
         duration: 300,
       })
-    ]).start(() => this.setState((prevState) => ({ pannedLeft: !prevState.pannedLeft })));
+    ]).start();
   }
 
   handleInfoPress = () => {
@@ -88,4 +98,11 @@ class Deck extends React.Component {
   }
 }
 
-export default Deck;
+function mapStateToProps({}, { deck, activeDeck }) {
+  return {
+    deck,
+    activeDeck,
+  };
+}
+
+export default connect(mapStateToProps)(Deck);
