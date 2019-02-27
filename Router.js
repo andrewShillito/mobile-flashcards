@@ -9,9 +9,7 @@ import { FontAwesome, MaterialCommunityIcons, Entypo } from "@expo/vector-icons"
 import DeckDetail from "./components/DeckDetail";
 import Quiz from "./components/Quiz";
 import ScoreDetails from "./components/ScoreDetails";
-import { BLUE, BACKGROUND_PRIMARY } from "./styles/shared";
-
-import LoadingCircle from "./components/LoadingCircle"; // temporary import for testing
+import { BLUE, BACKGROUND_PRIMARY, LIGHT_PURPLE } from "./styles/shared";
 
 const HomeStack = createStackNavigator(
   {
@@ -76,16 +74,10 @@ const Tabs = createBottomTabNavigator({
        tabBarIcon: ({tintColor}) => <FontAwesome name="plus-square" size={30} color={tintColor} />
      }
    },
-  Loading: { // temporary code!
-    screen: LoadingCircle,
-    navigationOptions: {
-      tabBarLabel: "Loading",
-    },
-  },
  },
  {
    tabBarOptions: {
-     activeTintColor: BLUE,
+     activeTintColor: LIGHT_PURPLE,
    },
  }
 );
@@ -100,7 +92,7 @@ class Router extends React.Component {
   }
 }
 
-function mapStateToProps({ activeDeck }) {
+function mapStateToProps({ activeDeck}) {
   return {
     activeDeck,
   };

@@ -12,3 +12,6 @@ export const CLEAR_ACTIVE_DECK = "CLEAR_ACTIVE_DECK";
 
 export const SET_ACTIVE_CARD = "SET_ACTIVE_CARD";
 export const CLEAR_ACTIVE_CARD = "CLEAR_ACTIVE_CARD";
+
+export const START_LOADING = "START_LOADING";
+export const END_LOADING = "END_LOADING";

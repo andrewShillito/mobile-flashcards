@@ -7,6 +7,7 @@ import { setActiveDeck } from "../actions/activeDeck";
 import { setLocalNotification, clearLocalNotifications } from "../utils/notifications";
 import { Permissions } from "expo";
 import styles from "../styles/home";
+import LoadingCircle from "./LoadingCircle";
 
 class Home extends React.Component {
   componentDidMount() {
@@ -43,7 +44,7 @@ class Home extends React.Component {
       });
   }
   render() {
-    const { decks } = this.props; //array instead of obj because of mapStateToProps below
+    const { decks} = this.props; //array instead of obj because of mapStateToProps below
     return (
       <View style={styles.container}>
         <FlatList
@@ -57,12 +58,12 @@ class Home extends React.Component {
   }
 }
 
-function mapStateToProps({ decks }) {
+function mapStateToProps({ decks, loading }) {
   // mapping decks object to an array
   return {
     decks: Object.keys(decks).map(title => {
       return decks[title];
-    })
+    }),
   }
 }
 

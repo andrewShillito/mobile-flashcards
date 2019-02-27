@@ -10,6 +10,8 @@ import {
   EDIT_TITLE,
   SET_ACTIVE_CARD,
   CLEAR_ACTIVE_CARD,
+  START_LOADING,
+  END_LOADING,
 } from "../actions/types";
 import { combineReducers } from "redux";
 
@@ -91,8 +93,21 @@ function activeCard(store = null, action) {
   }
 }
 
+function loading(store = true, action) {
+  // loading icon not currently included as it is unnecessary (just get a brief flash)
+  switch (action.type) {
+    case START_LOADING:
+      return true;
+    case END_LOADING:
+      return false;
+    default:
+      return false;
+  }
+}
+
 export default combineReducers({
   decks,
   activeDeck,
   activeCard,
+  // loading icon not currently included as it is unnecessary (just get a brief flash)
 });
