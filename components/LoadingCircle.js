@@ -15,7 +15,6 @@ export default class LoadingCircle extends React.Component {
     animation: {},
   }
   componentDidMount() {
-    console.log("mounting");
     const animation = this.startAnimations();
     this.setState(() => ({
       animation: animation,
@@ -155,6 +154,7 @@ export default class LoadingCircle extends React.Component {
     const textStyle = {
       color: interpolateColor,
     };
+    
     return (
       <View style={styles.container}>
         <View style={styles.container}>
