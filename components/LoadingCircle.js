@@ -8,59 +8,86 @@ export default class LoadingCircle extends React.Component {
     spin2: new Animated.Value(0),
     spin3: new Animated.Value(0),
   }
-  circle1Spin = Animated.timing(
-    this.spin1,
-    {
-      toValue: 1,
-      duration: 3000,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }
-  )
-  circle2Spin = Animated.timing(
-    this.spin2,
-    {
-      toValue: 1,
-      duration: 3000,
-      easing: Easing.back(),
-      useNativeDriver: true,
-    }
-  )
-  circle3Spin = Animated.timing(
-    this.spin2,
-    {
-      toValue: 1,
-      duration: 3000,
-      easing: Easing.elastic(),
-      useNativeDriver: true,
-    }
-  )
   componentDidMount() {
-    Animated.parallel([
-      this.circle1Spin,
-      this.circle2Spin,
-      this.circle3Spin,
-    ]).start();
+    console.log("mounting");
+    // this.setState() //future home of starting animation and storing the return for stop func
+    Animated.loop(
+      Animated.timing(
+        this.state.spin1,
+      {
+        toValue: 1,
+        duration: 2000,
+        easing: Easing.linear(),
+        useNativeDriver: true,
+      }),
+      {
+        iterations: 4
+      }
+    ).start();
+  }
+  startAnimations = () => {
+    return Animated.loop(
+      Animated.parallel([
+        Animated.timing(
+          this.state.spin1,
+        {
+          toValue: 1,
+          duration: 2000,
+          easing: Easing.linear(),
+          useNativeDriver: true,
+        }),
+        Animated.timing(
+          this.state.spin2,
+          {
+            toValue: 1,
+            duration: 2000,
+            easing: Easing.liner(),
+            useNativeDriver: true,
+          }),
+        Animated.timing(
+          this.state.spin3,
+          {
+            toValue: 1,
+            duration: 2000,
+            easing: Easing.liner(),
+            useNativeDriver: true,
+          })
+      ]),
+      {
+        iterations: 4
+      }
+    ).start();
   }
   render() {
-    let interpolate1 = this.state.spin1.interpolate({
+    const { spin1, spin2, spin3 } = this.state;
+
+    const interpolate1 = spin1.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["0deg", "360deg"],
+      });
+    const transform1 = {
+      transform: [{ rotate: interpolate1}]
+    };
+    let interpolate2 = spin2.interpolate({
       inputRange: [0, 1],
-      outputRange: ["0deg", "360deg"],
+      outputRange: ["0deg", "540deg"],
     });
-    let interpolate2 = this.state.spin2.interpolate({
+    const transform2 = {
+      transform: [{ rotate: interpolate2 }]
+    }
+    let interpolate3 = spin3.interpolate({
       inputRange: [0, 1],
-      outputRange: ["0deg", "360deg"],
+      outputRange: ["0deg", "720deg"],
     });
-    let interpolate3 = this.state.spin3.interpolate({
-      inputRange: [0, 1],
-      outputRange: ["0deg", "360deg"],
-    });
+    const transform3 = {
+      transform: [{ rotate: interpolate3 }]
+    }
     return (
       <View style={styles.container}>
-        <Animated.View style={[styles.circle1, {transform: [{rotate: interpolate1}]}]}>
-          <Animated.View style={[styles.circle2, {transform: [{rotate: interpolate2}]}]}>
-            <Animated.View style={[styles.circle3, {transform: [{rotate: interpolate3}]}]}>
-              <Text style={styles.text}>Loading</Text>
+        <Animated.View style={[styles.circle1, transform1]}>
+          <Animated.View style={[styles.circle2, transform2]}>
+            <Animated.View style={[styles.circle3, transform3]}>
+                <Text style={styles.text}>Loading...</Text>
             </Animated.View>
           </Animated.View>
         </Animated.View>
@@ -68,6 +95,14 @@ export default class LoadingCircle extends React.Component {
     );
   }
 }
+
+// Additional circles:
+
+//   <Animated.View style={[styles.circle2, {transform: [{rotate: interpolate2}]}]}>
+//     <Animated.View style={[styles.circle3, {transform: [{rotate: interpolate3}]}]}>
+//       <Text style={styles.text}>Loading</Text>
+//     </Animated.View>
+//   </Animated.View>
 
 const dimen1 = 192;
 const dimen2 = 160;
