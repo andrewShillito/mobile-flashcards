@@ -174,13 +174,12 @@ const dimen3 = 128;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: LIGHT_BLUE,
+    backgroundColor: WHITE,
     alignItems: "center",
     justifyContent: "center",
   },
   loaderContainer: {
     position: "relative",
-    backgroundColor: LIGHT_BLUE,
     margin: "auto",
     height: dimen1,
     width: dimen1,
@@ -193,9 +192,9 @@ const styles = StyleSheet.create({
     borderWidth: 7,
     borderRadius: dimen1/2,
     borderTopColor: BLUE,
-    borderRightColor: LIGHT_BLUE,
+    borderRightColor: WHITE,
     borderBottomColor: BLUE,
-    borderLeftColor: LIGHT_BLUE,
+    borderLeftColor: WHITE,
   },
   circle2: {
     height: dimen2,
@@ -204,9 +203,9 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderWidth: 6,
     borderRadius: dimen2/2,
-    borderTopColor: LIGHT_BLUE,
-    borderRightColor: LIGHT_BLUE,
-    borderBottomColor: LIGHT_BLUE,
+    borderTopColor: WHITE,
+    borderRightColor: WHITE,
+    borderBottomColor: WHITE,
     borderLeftColor: BLUE,
   },
   circle3: {
@@ -216,10 +215,10 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderWidth: 5,
     borderRadius: dimen3/2,
-    borderTopColor: LIGHT_BLUE,
+    borderTopColor: WHITE,
     borderRightColor: BLUE,
-    borderBottomColor: LIGHT_BLUE,
-    borderLeftColor: LIGHT_BLUE,
+    borderBottomColor: WHITE,
+    borderLeftColor: WHITE,
   },
   text: {
     color: WHITE,
