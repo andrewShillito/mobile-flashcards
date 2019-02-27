@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Animated, StyleSheet, TouchableWithoutFeedback, Text, Easing } from "react-native";
+import { View, Animated, Text, Easing } from "react-native";
 import { PURPLE, LIGHT_PURPLE, } from "../styles/shared";
 import styles from "../styles/loadingCircle";
 
@@ -154,7 +154,7 @@ export default class LoadingCircle extends React.Component {
     const textStyle = {
       color: interpolateColor,
     };
-    
+
     return (
       <View style={styles.container}>
         <View style={styles.container}>
