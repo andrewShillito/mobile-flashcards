@@ -1,12 +1,12 @@
 import { StyleSheet } from "react-native";
-import { BACKGROUND_PRIMARY, PURPLE } from "../styles/shared";
+import { BACKGROUND_PRIMARY, PURPLE, WHITE } from "../styles/shared";
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
-    backgroundColor: BACKGROUND_PRIMARY,
+    backgroundColor: WHITE,
   },
   header: {
     fontSize: 30,
