@@ -9,6 +9,10 @@ import {
   _editDeckTitle,
   _editCard,
   _removeCard,
+  _addCategory,
+  _removeCategory,
+  _addDeckToCategory,
+  _removeDeckFromCategory,
 } from "./_data";
 
 const getDecks = function() {
@@ -51,6 +55,22 @@ const deleteCard = function(deckTitle, cardIndex) {
   return _removeCard(deckTitle, cardIndex);
 }
 
+const addCategory = function(id) {
+  return _addCategory(id);
+}
+
+const removeCategory = function(id) {
+  return _removeCategory(id);
+}
+
+const addDeckToCategory = function(category, title) {
+  return _addDeckToCategory(category, title);
+}
+
+const removeDeckFromCategory = function(category, title) {
+  return _removeDeckFromCategory(category, title);
+}
+
 export {
   getDecks,
   getDeck,
@@ -62,4 +82,8 @@ export {
   editDeckTitle,
   editCard,
   deleteCard,
+  addCategory,
+  removeCategory,
+  addDeckToCategory,
+  removeDeckFromCategory,
 }
