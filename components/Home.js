@@ -2,7 +2,8 @@ import React from 'react';
 import { Text, View, FlatList } from 'react-native';
 import Deck from "./Deck";
 import { connect } from "react-redux";
-import { handleReceiveDecks } from "../actions/decks";
+import { handleReceiveDecks} from "../actions/decks";
+import { handleReceiveCategories } from "../actions/categories";
 import { setActiveDeck, clearActiveDeck } from "../actions/activeDeck";
 import { setLocalNotification, clearLocalNotifications } from "../utils/notifications";
 import { Permissions } from "expo";
@@ -11,6 +12,7 @@ import styles from "../styles/home";
 class Home extends React.Component {
   componentDidMount() {
     this.props.dispatch(handleReceiveDecks());
+    this.props.dispatch(handleReceiveCategories());
     // this.askPermission(); // commented to prevent generating new notifications
     clearLocalNotifications(); // for development
     if (this.props.activeDeck !== null) {
