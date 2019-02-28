@@ -8,6 +8,7 @@ import { clearActiveCard } from "../actions/activeCard";
 import FormGroupSecondary from "./FormGroupSecondary";
 import ModalWrapperPrimary from "./ModalWrapperPrimary";
 import ButtonBarBottomPrimary from "./ButtonBarBottomPrimary";
+import { validateInputLength, validateUniqueCard } from "../utils/helpers";
 import styles from "../styles/editCardModal";
 
 class EditCardModal extends React.Component {
@@ -20,10 +21,8 @@ class EditCardModal extends React.Component {
     sameAsCurrentCardMessage: "Same as current card",
     emptyInputMessage: "Complete both fields or go back to cancel",
     successMessage: "Ready for submission",
-    inputTooLongMessage: "Max input length exceeded",
     warningColor: "#dc3545",
     successColor: "#28a745",
-    maxInputLength: 120,
   }
   validateInput = () => {
     const { questions, activeCard, cardIndex } = this.props;
@@ -31,20 +30,17 @@ class EditCardModal extends React.Component {
     if (activeCard === null) {
       return false;
     }
-
-    if (this.state.question.length && this.state.answer.length) {
+    if (validateInputLength(this.state.question) && validateInputLength(this.state.answer)) {
       if (activeCard.question === this.state.question && activeCard.answer === this.state.answer) {
         this.setMessage(this.state.sameAsCurrentCardMessage, this.state.warningColor);
         return false;
-      } else if (questions.some((card) => card.question === this.state.question && card.answer === this.state.answer)) {
+      } else if (validateUniqueCard(this.state.question, this.state.answer, questions)) {
         this.setMessage(this.state.duplicateCardMessage, this.state.warningColor);
         return false;
-      } else if (this.state.question.length > this.state.maxInputLength || this.state.answer.length> this.state.maxInputLength) {
-        this.setMessage(this.state.inputTooLongMessage, this.state.warningColor);
-        return false;
+      } else {
+        this.setMessage(this.state.successMessage, this.state.successColor);
+        return true;
       }
-      this.setMessage(this.state.successMessage, this.state.successColor);
-      return true;
     }
     this.setMessage(this.state.emptyInputMessage, this.state.warningColor);
     return false;
@@ -80,6 +76,9 @@ class EditCardModal extends React.Component {
   deleteCard = () => {
     this.props.closeModal();
     this.props.dispatch(handleRemoveCard(this.props.activeDeck, this.props.cardIndex));
+    this.clearInputs();
+  }
+  clearInputs = () => {
     this.setState(() => ({
       question: "",
       answer: "",
@@ -132,6 +131,7 @@ class EditCardModal extends React.Component {
           leftText="Go Back"
           onPressLeft={() => {
               toggleModal();
+              this.clearInputs();
               this.props.dispatch(clearActiveCard());
             }}
           rightText="Delete Card"
