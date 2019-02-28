@@ -1,7 +1,9 @@
 import { AsyncStorage } from "react-native";
 
-const DECKS_STORAGE_KEY = "mobileFlashcards:decks"
+const DECKS_STORAGE_KEY = "mobileFlashcards:decks";
+const CATEGORIES_STORAGE_KEY = "mobileFlashcards:categories";
 
+// deprecated - just for store structure reference
 let decks = {
   React: {
     title: 'React',
@@ -34,6 +36,14 @@ let activeCard = { // for reference of redux store prop - will not be stored in 
   answer: "",
   deck: "",
   index: null,
+};
+
+// deprecated - just for store structure reference
+let categories = {
+  programming: [ // arr of deck objects with ID prop - add future props if necessary
+    { id: "JavaScript", },
+    { id: "React", },
+  ],
 };
 
 const formatDeck = function(title) {
@@ -184,6 +194,7 @@ const _removeDeck = function(title) {
 }
 
 const _setActiveDeck = function(title) {
+  // deprecated - activeDeck only stored in redux for app state
   return AsyncStorage.getItem(DECKS_STORAGE_KEY)
     .then(JSON.parse)
     .then((data) => {
@@ -197,12 +208,61 @@ const _setActiveDeck = function(title) {
 }
 
 const _clearActiveDeck = function() {
+  // deprecated - activeDeck only stored in redux for app state
   return new Promise((res, rej) => {
     setTimeout(() => {
       activeDeck = null;
       res();
     }, 200)
   });
+}
+
+const _getCategories = function() {
+  return AsyncStorage.getItem(CATEGORIES_STORAGE_KEY)
+    .then(JSON.parse)
+    .then((data) => {
+      if (data === null) {
+        AsyncStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(categories));
+        return {...categories};
+      } else {
+        return {...data};
+      }
+    })
+    .catch((err) => console.log(err));
+}
+
+const _addCategory = function(id) {
+  return AsyncStorage.getItem(CATEGORIES_STORAGE_KEY)
+    .then(JSON.parse)
+    .then(data => {
+      if (data[id] !== undefined) {
+        return Error("Category already exists");
+      } else {
+        data[id] = [];
+        return AsyncStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(data))
+          .then(() => {
+            return data[id];
+          })
+          .catch((err) => console.log(err));
+      }
+    })
+    .catch((err) => console.log(err));
+}
+
+const _removeCategory = function(id) {
+  return AsyncStorage.getItem(CATEGORIES_STORAGE_KEY)
+    .then(JSON.parse)
+    .then(data => {
+      if (data[id] === undefined) {
+        return Error("Category not found");
+      } else {
+        delete data[id];
+        AsyncStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(data))
+          .catch((err) => console.log(err, "\ndata:\n", data));
+        return {...data};
+      }
+    })
+    .catch((err) => console.log(err, "\ndata:\n", data));
 }
 
 export {
