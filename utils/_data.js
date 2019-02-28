@@ -262,7 +262,7 @@ const _removeCategory = function(id) {
         return {...data};
       }
     })
-    .catch((err) => console.log(err, "\ndata:\n", data));
+    .catch((err) => console.log(err));
 }
 
 const _addDeckToCategory = function(category, title) {
@@ -282,7 +282,7 @@ const _addDeckToCategory = function(category, title) {
           .catch((err) => console.log(err, "\ndata:\n", data));
       }
     })
-    .catch((err) => console.log(err, "\ndata:\n", data));
+    .catch((err) => console.log(err));
 }
 
 const _removeDeckFromCategory = function(category, title) {
@@ -302,7 +302,7 @@ const _removeDeckFromCategory = function(category, title) {
           .catch((err) => console.log(err, "\ndata:\n", data));
       }
     })
-    .catch((err) => console.log(err, "\ndata:\n", data));
+    .catch((err) => console.log(err));
 }
 
 export {
