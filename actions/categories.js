@@ -8,32 +8,33 @@ function receiveCategories(categories) {
   };
 }
 
-function addCategory(newSet) {
+function addCategory(id, newSet) {
   return {
     type: ADD_CATEGORY,
+    id,
     newSet,
   };
 }
 
-function removeCategory(id) {
+function removeCategory(categories) {
   return {
     type: REMOVE_CATEGORY,
-    id,
+    categories,
   };
 }
 
-function addDeckToCategory(categoryItems) {
+function addDeckToCategory(category, categoryItems) {
   return {
     type: ADD_DECK_TO_CATEGORY,
     categoryItems,
   };
 }
 
-function removeDeckFromCategory(category, title) {
+function removeDeckFromCategory(category, categoryItems) {
   return {
     type: REMOVE_DECK_FROM_CATEGORY,
     category,
-    title,
+    categoryItems,
   };
 }
 
@@ -51,7 +52,7 @@ export function handleAddCategory(id) {
   return dispatch => {
     return _addCategory(id)
       .then((newSet) => {
-        dispatch(addCategory(newSet));
+        dispatch(addCategory(id, newSet));
       })
       .catch((err) => console.log(err));
   }
@@ -61,7 +62,7 @@ export function handleRemoveCategory(id) {
   return dispatch => {
     return _removeCategory(id)
       .then((categories) => {
-        dispatch(removeCategory(id));
+        dispatch(removeCategory(categories));
       })
       .catch((err) => console.log(err));
   }
@@ -71,7 +72,7 @@ export function handleAddDeckToCategory(category, title) {
   return dispatch => {
     return _addDeckToCategory(category, title)
       .then((categoryItems) => {
-        dispatch(addDeckToCategory(categoryItems));
+        dispatch(addDeckToCategory(category, categoryItems));
       })
       .catch((err) => console.log(err));
   }
@@ -81,7 +82,7 @@ export function handleRemoveDeckFromCategory(category, title) {
   return dispatch => {
     return _removeDeckFromCategory(category, title)
       .then((categoryItems) => {
-        dispatch(removeDeckFromCategory(categoryItems));
+        dispatch(removeDeckFromCategory(category, categoryItems));
       })
       .catch((err) => console.log(err));
   }
