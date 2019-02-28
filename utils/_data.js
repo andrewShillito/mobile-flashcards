@@ -241,7 +241,7 @@ const _addCategory = function(id) {
         data[id] = new Set();
         return AsyncStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(data))
           .then(() => {
-            return {...data};
+            return data[id];
           })
           .catch((err) => console.log(err));
       }
@@ -314,6 +314,7 @@ export {
   _editDeckTitle,
   _editCard,
   _removeCard,
+  _getCategories,
   _addCategory,
   _removeCategory,
   _addDeckToCategory,

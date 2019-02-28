@@ -9,6 +9,7 @@ import {
   _editDeckTitle,
   _editCard,
   _removeCard,
+  _getCategories,
   _addCategory,
   _removeCategory,
   _addDeckToCategory,
@@ -71,6 +72,10 @@ const removeDeckFromCategory = function(category, title) {
   return _removeDeckFromCategory(category, title);
 }
 
+const getCategories = function(){
+  return _getCategories();
+}
+
 export {
   getDecks,
   getDeck,
@@ -82,6 +87,7 @@ export {
   editDeckTitle,
   editCard,
   deleteCard,
+  getCategories,
   addCategory,
   removeCategory,
   addDeckToCategory,
