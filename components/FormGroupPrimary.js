@@ -6,14 +6,15 @@ export default function FormGroupPrimary({ inputProps, buttonProps, textProps })
   // input props is array of obj
   return (
     <>
-      {inputProps.map((obj) => (
-        <TextInputPrimary
+      {inputProps.map((obj, index) => {
+        return (
+          <TextInputPrimary
           placeholder={obj.placeholder}
           onChangeText={obj.onChangeText}
           value={obj.value}
           key={obj.placeholder}
-        />
-      ))}
+        />)
+      })}
       <SubmitGroupPrimary
         onPress={buttonProps.onPress}
         color={textProps.color}
