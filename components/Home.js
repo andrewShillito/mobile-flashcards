@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, FlatList } from 'react-native';
+import { Text, View, FlatList, Picker } from 'react-native';
 import Deck from "./Deck";
 import { connect } from "react-redux";
 import { handleReceiveDecks} from "../actions/decks";
@@ -10,6 +10,9 @@ import { Permissions } from "expo";
 import styles from "../styles/home";
 
 class Home extends React.Component {
+  state = {
+    category: "all",
+  }
   componentDidMount() {
     this.props.dispatch(handleReceiveDecks());
     this.props.dispatch(handleReceiveCategories());
@@ -53,12 +56,31 @@ class Home extends React.Component {
         }
       });
   }
+  updateSelectedCategory = (category) => {
+    this.setState(() => ({
+      category,
+    }));
+  }
   render() {
-    const { decks} = this.props; //array instead of obj because of mapStateToProps below
+    const { decks, categories } = this.props; //array instead of obj because of mapStateToProps below
+    console.log(categories.programming);
+    const selectedDecks = (this.state.category !== "all") // add test for empty category list
+      ? [...categories[this.state.category]].map((name) => decks[name])
+      : Object.keys(decks).map((title) => decks[title]);
+
     return (
       <View style={styles.container}>
+        <Picker
+          selectedValue={this.state.category}
+          onValueChange={(itemValue, itemIndex) => this.state.updateSelectedCategory(itemValue)}
+          >
+          <Picker.Item label="Show All" value="all" key="all"/>
+          {Object.keys(categories).map((name) => (
+            <Picker.Item label={name} value={name} key={name}/>
+          ))}
+        </Picker>
         <FlatList
-          data={decks}
+          data={selectedDecks}
           renderItem={this.renderItem}
           keyExtractor={(item) => item.title}
           ListEmptyComponent={() => <Text style={{alignSelf: "center", fontSize: 20}}>No decks! Create a new one to view here.</Text>}
@@ -68,13 +90,11 @@ class Home extends React.Component {
   }
 }
 
-function mapStateToProps({ decks, activeDeck }) {
-  // mapping decks object to an array
+function mapStateToProps({ decks, activeDeck, categories }) {
   return {
-    decks: Object.keys(decks).map(title => {
-      return decks[title];
-    }),
+    decks,
     activeDeck,
+    categories,
   }
 }
 
