@@ -9,7 +9,6 @@ import FormGroupSecondary from "./FormGroupSecondary";
 import ModalWrapperPrimary from "./ModalWrapperPrimary";
 import ButtonBarBottomPrimary from "./ButtonBarBottomPrimary";
 import styles from "../styles/editCardModal";
-import CloseKeyboardWrapper from "./CloseKeyboardWrapper";
 
 class EditCardModal extends React.Component {
   state = {
@@ -121,25 +120,23 @@ class EditCardModal extends React.Component {
           this.props.dispatch(clearActiveCard());
         }}
         >
-        <CloseKeyboardWrapper containerStyle={}>
-          <Text style={styles.header}>
-            {`${cardIndex+1}. ${activeCard !== null ? activeCard.question : ""}`}
-          </Text>
-          <FormGroupSecondary
-            inputProps={inputProps}
-            buttonProps={buttonProps}
-            textProps={textProps}
-            />
-          <ButtonBarBottomPrimary
-            leftText="Go Back"
-            onPressLeft={() => {
-                toggleModal();
-                this.props.dispatch(clearActiveCard());
-              }}
-            rightText="Delete Card"
-            onPressRight={this.deleteCard}
-            />
-        </CloseKeyboardWrapper>
+        <Text style={styles.header}>
+          {`${cardIndex+1}. ${activeCard !== null ? activeCard.question : ""}`}
+        </Text>
+        <FormGroupSecondary
+          inputProps={inputProps}
+          buttonProps={buttonProps}
+          textProps={textProps}
+          />
+        <ButtonBarBottomPrimary
+          leftText="Go Back"
+          onPressLeft={() => {
+              toggleModal();
+              this.props.dispatch(clearActiveCard());
+            }}
+          rightText="Delete Card"
+          onPressRight={this.deleteCard}
+          />
       </ModalWrapperPrimary>
     );
   }

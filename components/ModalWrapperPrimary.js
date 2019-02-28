@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, TouchableWithoutFeedback, View } from "react-native";
+import { Modal, TouchableWithoutFeedback, View, Keyboard } from "react-native";
 import styles from "../styles/modalWrapperPrimary";
 
 export default function ModalWrapperPrimary({ visible, onRequestClose, children, onPressOutside }) {
@@ -12,7 +12,7 @@ export default function ModalWrapperPrimary({ visible, onRequestClose, children,
     >
       <TouchableWithoutFeedback onPress={onPressOutside}>
         <View style={styles.container}>
-          <TouchableWithoutFeedback onPress={() => {}}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.content}>
               {children}
             </View>
