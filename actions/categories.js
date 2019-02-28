@@ -1,5 +1,5 @@
 import { ADD_CATEGORY, REMOVE_CATEGORY, ADD_DECK_TO_CATEGORY, REMOVE_DECK_FROM_CATEGORY, RECEIVE_CATEGORIES } from "./types";
-import { addCategory, removeCategory, addDeckToCategory, removeDeckFromCategory, getCategories } from "../utils/api";
+import { addCategory as _addCategory, removeCategory as _removeCategory, addDeckToCategory as _addDeckToCategory, removeDeckFromCategory as _removeDeckFromCategory, getCategories } from "../utils/api";
 
 function receiveCategories(categories) {
   return {
@@ -8,17 +8,32 @@ function receiveCategories(categories) {
   };
 }
 
-function createCategory(newSet) {
+function addCategory(newSet) {
   return {
     type: ADD_CATEGORY,
     newSet,
   };
 }
 
-function deleteCategory(id) {
+function removeCategory(id) {
   return {
     type: REMOVE_CATEGORY,
     id,
+  };
+}
+
+function addDeckToCategory(categoryItems) {
+  return {
+    type: ADD_DECK_TO_CATEGORY,
+    categoryItems,
+  };
+}
+
+function removeDeckFromCategory(category, title) {
+  return {
+    type: REMOVE_DECK_FROM_CATEGORY,
+    category,
+    title,
   };
 }
 
@@ -34,9 +49,9 @@ export function handleReceiveCategories() {
 
 export function handleAddCategory(id) {
   return dispatch => {
-    return addCategory(id)
+    return _addCategory(id)
       .then((newSet) => {
-        dispatch(createCategory(newSet));
+        dispatch(addCategory(newSet));
       })
       .catch((err) => console.log(err));
   }
@@ -44,9 +59,29 @@ export function handleAddCategory(id) {
 
 export function handleRemoveCategory(id) {
   return dispatch => {
-    return removeCategory(id)
+    return _removeCategory(id)
       .then((categories) => {
-        dispatch(deleteCategory(id));
+        dispatch(removeCategory(id));
+      })
+      .catch((err) => console.log(err));
+  }
+}
+
+export function handleAddDeckToCategory(category, title) {
+  return dispatch => {
+    return _addDeckToCategory(category, title)
+      .then((categoryItems) => {
+        dispatch(addDeckToCategory(categoryItems));
+      })
+      .catch((err) => console.log(err));
+  }
+}
+
+export function handleRemoveDeckFromCategory(category, title) {
+  return dispatch => {
+    return _removeDeckFromCategory(category, title)
+      .then((categoryItems) => {
+        dispatch(removeDeckFromCategory(categoryItems));
       })
       .catch((err) => console.log(err));
   }
