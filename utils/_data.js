@@ -40,10 +40,10 @@ let activeCard = { // for reference of redux store prop - will not be stored in 
 
 // deprecated - just for store structure reference
 let categories = {
-  programming: [ // arr of deck objects with ID prop - add future props if necessary
-    { id: "JavaScript", },
-    { id: "React", },
-  ],
+  programming: new Set([
+    "JavaScript",
+    "React"
+  ]),
 };
 
 const formatDeck = function(title) {
@@ -238,10 +238,10 @@ const _addCategory = function(id) {
       if (data[id] !== undefined) {
         return Error("Category already exists");
       } else {
-        data[id] = [];
+        data[id] = new Set();
         return AsyncStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(data))
           .then(() => {
-            return data[id];
+            return {...data};
           })
           .catch((err) => console.log(err));
       }
@@ -260,6 +260,46 @@ const _removeCategory = function(id) {
         AsyncStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(data))
           .catch((err) => console.log(err, "\ndata:\n", data));
         return {...data};
+      }
+    })
+    .catch((err) => console.log(err, "\ndata:\n", data));
+}
+
+const _addDeckToCategory = function(category, title) {
+  return AsyncStorage.getItem(CATEGORIES_STORAGE_KEY)
+    .then(JSON.parse)
+    .then(data => {
+      if (data[id] === undefined) {
+        return Error("Category not found");
+      } else if (data[id].has(title)) {
+        return; // handle this in actions
+      } else {
+        data[id].add(title);
+        AsyncStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(data))
+          .then(() => {
+            return data[id];
+          })
+          .catch((err) => console.log(err, "\ndata:\n", data));
+      }
+    })
+    .catch((err) => console.log(err, "\ndata:\n", data));
+}
+
+const _removeDeckFromCategory = function(category, title) {
+  return AsyncStorage.getItem(CATEGORIES_STORAGE_KEY)
+    .then(JSON.parse)
+    .then(data => {
+      if (data[id] === undefined) {
+        return Error("Category not found");
+      } else if (!data[id].has(title)) {
+        return Error("Deck not in category");
+      } else {
+        data[id].delete(title);
+        return AsyncStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(data))
+          .then(() => {
+            return data[id];
+          })
+          .catch((err) => console.log(err, "\ndata:\n", data));
       }
     })
     .catch((err) => console.log(err, "\ndata:\n", data));
