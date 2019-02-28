@@ -314,4 +314,8 @@ export {
   _editDeckTitle,
   _editCard,
   _removeCard,
+  _addCategory,
+  _removeCategory,
+  _addDeckToCategory,
+  _removeDeckFromCategory,
 };
