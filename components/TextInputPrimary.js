@@ -5,20 +5,19 @@ import { MAX_SHORT_INPUT_LENGTH, BLUE, BLACK, PINK } from "../styles/shared";
 
 export default class TextInputPrimary extends React.Component {
   state = {
-    borderColor: BLACK,
+    borderBottomColor: BLACK,
   }
   toggleColor = () => {
-    // this._textInput.setNativeProps({style: {borderBottomColor: PINK}})
-    // console.log((this._textInput.setNativeProps).toSource());
-    // console.log(this._textInput._inputRef.viewConfig.validAttributes.style.borderBottomColor.process(PINK));
+    this.setState((prevState) => ({
+      borderBottomColor: prevState.borderBottomColor === BLACK ? BLUE : BLACK,
+    }));
   }
   render() {
     const { onChangeText, value, placeholder } = this.props;
-    const { borderColor } = this.state;
+    const { borderBottomColor } = this.state;
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { borderBottomColor, }]}>
         <TextInput
-          ref={(component) => this._textInput = component}
           style={styles.input}
           placeholder={placeholder}
           onChangeText={(title) => onChangeText(title)}
@@ -26,6 +25,7 @@ export default class TextInputPrimary extends React.Component {
           maxLength={MAX_SHORT_INPUT_LENGTH}
           selectionColor={BLUE}
           onFocus={this.toggleColor}
+          onBlur={this.toggleColor}
           />
       </View>
     );
