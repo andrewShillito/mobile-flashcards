@@ -1,17 +1,10 @@
 import {
-  RECEIVE_DECKS,
-  ADD_DECK,
-  REMOVE_DECK,
-  ADD_CARD,
-  REMOVE_CARD,
-  EDIT_CARD,
-  SET_ACTIVE_DECK,
-  CLEAR_ACTIVE_DECK,
-  EDIT_TITLE,
-  SET_ACTIVE_CARD,
-  CLEAR_ACTIVE_CARD,
-  START_LOADING,
-  END_LOADING,
+  RECEIVE_DECKS, ADD_DECK, REMOVE_DECK, EDIT_TITLE,
+  ADD_CARD, REMOVE_CARD, EDIT_CARD,
+  SET_ACTIVE_DECK, CLEAR_ACTIVE_DECK,
+  SET_ACTIVE_CARD, CLEAR_ACTIVE_CARD,
+  START_LOADING, END_LOADING,
+  ADD_CATEGORY, REMOVE_CATEGORY, RECEIVE_CATEGORIES, ADD_DECK_TO_CATEGORY, REMOVE_DECK_FROM_CATEGORY,
 } from "../actions/types";
 import { combineReducers } from "redux";
 
@@ -101,7 +94,38 @@ function loading(store = true, action) {
     case END_LOADING:
       return false;
     default:
-      return false;
+      return store;
+  }
+}
+
+function categories(store = {}, action) {
+  switch (action.type) {
+    case RECEIVE_CATEGORIES:
+      return {
+        ...store,
+        ...action.categories,
+      };
+    case ADD_CATEGORY:
+      return {
+        ...store,
+        [action.id]: action.newSet,
+      };
+    case REMOVE_CATEGORY:
+      return {
+        ...action.categories,
+      }
+    case ADD_DECK_TO_CATEGORY:
+      return {
+        ...store,
+        [action.category]: action.categoryItems,
+      };
+    case REMOVE_DECK_FROM_CATEGORY:
+      return {
+        ...store,
+        [action.category]: action.categoryItems,
+      };
+    default:
+      return store;
   }
 }
 
@@ -109,5 +133,6 @@ export default combineReducers({
   decks,
   activeDeck,
   activeCard,
+  categories,
   // loading icon not currently included as it is unnecessary (just get a brief flash)
 });
