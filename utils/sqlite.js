@@ -22,7 +22,7 @@ export function createDecks() {
 export function getDecks(onSuccess, onError = (trans, error) => logResponse(trans, error)) {
   // onSuccess will be passed by calling component
   // onError is optional for specific error handling
-  // double check this syntax
+  // double check the syntax of the parameters
   db.transaction(tx => {
     tx.executeSql(
       Queries.getDecks, [],
