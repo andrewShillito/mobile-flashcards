@@ -45,6 +45,16 @@ export function getDeck(title, onSuccess, onError = errorHandler) {
   });
 }
 
+export function createDeck(title, onSuccess, onError = errorHandler) {
+  let created = Date.now().toString();
+  db.transaction(tx => {
+    tx.executeSql(
+      Queries.createDeck, [title, created, created],
+      onSuccess, onError
+    );
+  });
+}
+
 export function removeDeck(title, onSuccess, onError = errorHandler) {
   db.transaction(tx => {
     tx.executeSql(

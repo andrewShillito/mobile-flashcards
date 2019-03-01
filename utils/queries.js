@@ -11,7 +11,7 @@ export const getDecks = "SELECT * FROM decks";
 
 export const getDeck = "SELECT * FROM decks WHERE title=?";
 
-export const createDeck = "INSERT INTO decks (title, last_accessed) VALUES (?, ?)";
+export const createDeck = "INSERT INTO decks (title, create_date, last_accessed) VALUES (?, ?, ?)";
 
 export const removeDeck = "DELETE FROM decks WHERE title=?";
 
