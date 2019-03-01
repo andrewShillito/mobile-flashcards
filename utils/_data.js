@@ -16,7 +16,10 @@ let decks = {
         question: 'Where do you make Ajax requests in React?',
         answer: 'The componentDidMount lifecycle event'
       }
-    ]
+    ],
+    category: null,
+    createDate: "",
+    lastEditDate: "",
   },
   JavaScript: {
     title: 'JavaScript',
@@ -25,7 +28,8 @@ let decks = {
         question: 'What is a closure?',
         answer: 'The combination of a function and the lexical environment within which that function was declared.'
       }
-    ]
+    ],
+    category: null,
   }
 }
 
