@@ -24,7 +24,7 @@ export const renameTable = "ALTER TABLE ? RENAME TO ?";
 
 // if each card is stored in a table with all other cards and foreign key === deck name
 export const createCards = "CREATE TABLE IF NOT EXISTS cards " + ([
-  "(card_id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT",
+  "(card_id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT", // maybe use a date string index (creation)?
   "deck_id TEXT NOT NULL",
   "question TEXT NOT NULL",
   "answer TEXT NOT NULL",
@@ -37,7 +37,7 @@ export const getAllCards = "SELECT * FROM cards";
 
 export const getCardsFromDeck = "SELECT * FROM cards WHERE deck_id=?";
 
-export const removeCard = "DELETE FROM cards WHERE question=?, answer=?";
+export const removeCard = "DELETE FROM cards WHERE deck_id=?, question=?, answer=?";
 // in future may just use index (card_id) which could be easier query - refactor later
 
 export const removeAllCardsFromDeck = "DELETE FROM cards WHERE deck_id=?";
