@@ -4,7 +4,6 @@ export const createDecks = "create table if not exists decks " +
   "category TEXT",
   "create_date TEXT NOT NULL",
   "last_tested TEXT",
-  "last_accessed TEXT NOT NULL",
   "last_score REAL)"
 ].join(", "))+;
 
@@ -12,7 +11,7 @@ export const getDecks = "SELECT * FROM decks";
 
 export const getDeck = "SELECT * FROM decks WHERE title=?";
 
-export const createDeck = "INSERT INTO decks (title, create_date, last_accessed) VALUES (?, ?, ?)";
+export const createDeck = "INSERT INTO decks (title, create_date) VALUES (?, ?)";
 
 export const removeDeck = "DELETE FROM decks WHERE title=?";
 
