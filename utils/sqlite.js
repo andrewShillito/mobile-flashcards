@@ -138,28 +138,44 @@ export function updateCard(newQuestion, newAnswer, deck_id, question, answer, on
   });
 }
 
-export function
+export function createScores() {
+  db.transaction(tx => {
+    tx.executeSql(Queries.createScores, [],
+      (transaction, result) => logResponse(this, result), // success func
+      (transaction, error) => logResponse(this, error)
+    );
+  });
+}
 
-// deprecated - cards table will now store all cards and have foreign key identifier for deck
-// export function createCard(title, { question, answer }, onSuccess, onError = errorHandler) {
-//   // title will be the active deck
-//   // will be called when creating first card
-//   // card format: {question: "blah", answer: "blah"}
-//   // checks if table for that deck exists and if not creates that table
-//   // then creates the card row in that table
-//   db.transaction(tx => {
-//     tx.executeSql(
-//       Queries.createCardTable, [title],
-//       (trans, res) => logResponse(trans, res), onError // just logging the result of this if successful
-//     );
-//     tx.executeSql(
-//       Queries.createCard, [title, question, answer],
-//       onSuccess, onError
-//     );
-//   });
-// }
-//
-// export function removeCard(title, card_id, onSuccess, onError = errorHandler) {
-//   // what will the sql indexing look like? (start at 0 or 1?)
-//   // may be able to just use the id ()
-// }
+export function recordScore(deck_id, time, score, onSuccess = errorHandler, onError = errorHandler) {
+  db.transaction(tx => {
+    tx.executeSql(Queries.createScores, [],
+      onSuccess, onError
+    );
+  });
+}
+
+export function getAllScores(onSuccess, onError = errorHandler) {
+  db.transaction(tx => {
+    tx.executeSql(Queries.getAllScores, [],
+      onSuccess,
+      (transaction, error) => logResponse(this, error)
+    );
+  });
+}
+
+export function getAllScoresFromDeck(deck_id, onSuccess, onError = errorHandler) {
+  db.transaction(tx => {
+    tx.executeSql(Queries.getAllScoresFromDeck, [deck_id],
+      onSuccess, onError
+    );
+  });
+}
+
+export function removeAllScoresFromDeck(deck_id, onSuccess, onError = errorHandler) {
+  db.transaction(tx => {
+    tx.executeSql(Queries.removeAllScoresFromDeck, [deck_id],
+      onSuccess, onError
+    );
+  });
+}
