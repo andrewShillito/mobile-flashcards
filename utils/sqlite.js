@@ -1,7 +1,7 @@
 import { SQLite } from "expo";
 import { decks } from "./_data";
 import * as Queries from "./queries";
-import { logResponse } from "./helpers";
+import { logResponse, getCurrentTimeString } from "./helpers";
 
 const db = SQLite.openDatabase("mobile_flaschards"); // create a DB if none exists and otherwise open it
 
@@ -46,10 +46,10 @@ export function getDeck(title, onSuccess, onError = errorHandler) {
 }
 
 export function createDeck(title, onSuccess, onError = errorHandler) {
-  let created = Date.now().toString();
+  let created = getCurrentTimeString();
   db.transaction(tx => {
     tx.executeSql(
-      Queries.createDeck, [title, created, created],
+      Queries.createDeck, [title, created],
       onSuccess, onError
     );
   });
@@ -147,9 +147,10 @@ export function createScores() {
   });
 }
 
-export function recordScore(deck_id, time, score, onSuccess = errorHandler, onError = errorHandler) {
+export function recordScore(deck_id, score, onSuccess = errorHandler, onError = errorHandler) {
+  let time = getCurrentTimeString();
   db.transaction(tx => {
-    tx.executeSql(Queries.createScores, [],
+    tx.executeSql(Queries.createScores, [deck_id, time, score],
       onSuccess, onError
     );
   });
