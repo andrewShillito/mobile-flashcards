@@ -20,3 +20,7 @@ export const getName = (fn) => { // get function name for error logging
 export const logResponse = (func, res) => {
   return console.log(getName(func), JSON.stringify(res));
 }
+
+export const getCurrentTimeString = () => {
+  return Date.now().toString();
+}
