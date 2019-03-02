@@ -60,13 +60,3 @@ export const getAllScores = "SELECT * FROM scores";
 export const getAllScoresFromDeck = "SELECT * FROM scores WHERE deck_id=?";
 
 export const removeAllScoresFromDeck = "DELETE FROM scores WHERE deck_id=?";
-
-// deprecated - if each card table is named after the deck it is from
-export const createCardTable = "CREATE TABLE IF NOT EXISTS ? " +
-([
-  "(card_id INTEGER PRIMARY KEY NOT NULL auto_increment",
-  "question TEXT NOT NULL",
-  "answer TEXT NOT NULL"
-]).join(", ");
-
-export const createCard = "INSERT INTO ? (question, answer) VALUES (?, ?)"
