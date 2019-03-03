@@ -21,18 +21,18 @@ export const removeDeckQuestions = "DROP TABLE IF EXISTS ?";
 
 export const updateDeckTitle = "UPDATE decks SET title=? WHERE title=?";
 
-export const updateLastTested = "UPDATE decks SET last_tested=? WHERE title=?";
+export const updateLastTest = "UPDATE decks SET last_tested=?, last_score=? WHERE title=?";
 
 // CARDS QUERIES
 
 // each card is stored in a table with all other cards and foreign key === deck name
-export const createCards = "CREATE TABLE IF NOT EXISTS cards " + ([
-  "(card_id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT", // maybe use a date string index (creation)?
+export const createCards = "CREATE TABLE IF NOT EXISTS cards " + "(" + ([
+  "card_id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT", // maybe use a date string index (creation)?
   "deck_id TEXT NOT NULL",
   "question TEXT NOT NULL",
   "answer TEXT NOT NULL",
-  "FOREIGN KEY (deck_id) REFERENCES decks(title))"
-]).join(", ");
+  "FOREIGN KEY (deck_id) REFERENCES decks(title) ON UPDATE CASCADE ON DELETE CASCADE"
+]).join(", ") + ")";
 
 export const createCard = "INSERT INTO cards (deck_id, question, answer) VALUES (?, ?, ?)";
 
@@ -54,7 +54,7 @@ export const createDeckScores = "CREATE TABLE IF NOT EXISTS deck_scores " + "(" 
   "time TEXT NOT NULL PRIMARY KEY",
   "deck_id TEXT NOT NULL",
   "score REAL NOT NULL",
-  "FOREIGN KEY (deck_id) REFERENCES decks(title)"
+  "FOREIGN KEY (deck_id) REFERENCES decks(title) ON UPDATE CASCADE ON DELETE CASCADE"
 ]).join(", ") + ")";
 
 export const recordDeckScore = "INSERT INTO deck_scores (deck_id, time, score) VALUES (?, ?, ?)";
@@ -65,6 +65,8 @@ export const getAllScoresFromDeck = "SELECT * FROM deck_scores WHERE deck_id=?";
 
 export const removeAllScoresFromDeck = "DELETE FROM deck_scores WHERE deck_id=?";
 
+// MISC QUERIES
+export const renameTable = "ALTER TABLE ? RENAME TO ?";
 
 // CARD SCORES QUERIES - future feature - not currently implementing
 export const createCardScores = "CREATE TABLE IF NOT EXISTS card_scores " + "(" +([
@@ -72,8 +74,5 @@ export const createCardScores = "CREATE TABLE IF NOT EXISTS card_scores " + "(" 
   "time TEXT NOT NULL PRIMARY KEY",
   "card_id NOT NULL",
   "score INTEGER NOT NULL",
-  "FOREIGN KEY (card_id) REFERENCES cards(card_id)"
+  "FOREIGN KEY (card_id) REFERENCES cards(card_id) ON UPDATE CASCADE ON DELETE CASCADE"
 ].join(", ")) + ")";
-
-// MISC QUERIES
-export const renameTable = "ALTER TABLE ? RENAME TO ?";
