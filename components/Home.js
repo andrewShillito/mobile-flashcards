@@ -7,11 +7,14 @@ import { handleReceiveCategories } from "../actions/categories";
 import { setActiveDeck, clearActiveDeck } from "../actions/activeDeck";
 import { setLocalNotification, clearLocalNotifications } from "../utils/notifications";
 import { Permissions } from "expo";
+import SelectCategoryModal from "./SelectCategoryModal";
+import ButtonSecondary from "./ButtonSecondary";
 import styles from "../styles/home";
 
 class Home extends React.Component {
   state = {
-    category: "all",
+    selectedCategory: "all",
+    isModalVisible: false,
   }
   componentDidMount() {
     this.props.dispatch(handleReceiveDecks());
@@ -56,29 +59,41 @@ class Home extends React.Component {
         }
       });
   }
-  updateSelectedCategory = (category) => {
+  updateSelectedCategory = (val, index) => {
     this.setState(() => ({
-      category,
+      selectedCategory: val,
+    }));
+  }
+  toggleModal = () => {
+    this.setState((prevState) => ({
+      isModalVisible: !prevState.isModalVisible,
     }));
   }
   render() {
     const { decks, categories } = this.props; //array instead of obj because of mapStateToProps below
-    console.log(categories.programming);
-    const selectedDecks = (this.state.category !== "all") // add test for empty category list
-      ? [...categories[this.state.category]].map((name) => decks[name])
-      : Object.keys(decks).map((title) => decks[title]);
+    console.log(categories);
+    // const selectedDecks = (this.state.category !== "all") // add test for empty category list
+    //   ? [...categories[this.state.category]].map((name) => decks[name])
+    //   : Object.keys(decks).map((title) => decks[title]);
+    const selectedDecks = Object.keys(decks).map(title => decks[title]);
 
     return (
       <View style={styles.container}>
-        <Picker
-          selectedValue={this.state.category}
-          onValueChange={(itemValue, itemIndex) => this.state.updateSelectedCategory(itemValue)}
-          >
-          <Picker.Item label="Show All" value="all" key="all"/>
-          {Object.keys(categories).map((name) => (
-            <Picker.Item label={name} value={name} key={name}/>
-          ))}
-        </Picker>
+        <View style={{flexDirection: "row", justifyContent: "space-evenly", alignItems: "center"}}>
+          <Text>{`Showing ${this.state.selectedCategory}`}</Text>
+          <ButtonSecondary onPress={this.toggleModal}>Select Category</ButtonSecondary>
+        </View>
+        <SelectCategoryModal
+          onPress={() => {
+
+          }}
+          onValueChange={this.updateSelectedCategory}
+          categories={this.props.categories}
+          selectedCategory={this.state.category}
+          visible={this.state.isModalVisible}
+          onRequestClose={this.state.toggleModal}
+          onPressOutside={this.state.toggleModal}
+          />
         <FlatList
           data={selectedDecks}
           renderItem={this.renderItem}
