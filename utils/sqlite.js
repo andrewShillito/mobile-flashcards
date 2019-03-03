@@ -2,13 +2,24 @@ import { SQLite } from "expo";
 import { decks } from "./_data";
 import * as Queries from "./queries";
 import { logResponse, getCurrentTimeString } from "./helpers";
+import { decks } from "./_data";
 
 const db = SQLite.openDatabase("mobile_flaschards"); // create a DB if none exists and otherwise open it
 
 const errorHandler = (trans, error) => logResponse(trans, error);
 
 export function populateInitialData(decks) {
-
+  // initialize tables
+  createDecksTable();
+  createCardsTable();
+  createDeckScores();
+  // create decks and their cards
+  Object.keys(decks).forEach((deck) => {
+    createDeck(deck.title, errorHandler);
+    deck.questions.forEach((card) => {
+      createCard(deck.title, card.question, card.answer, errorHandler);
+    });
+  });
 }
 
 export function createDecksTable() {
