@@ -1,7 +1,7 @@
 
 // DECKS QUERIES
 export const createDecks = "create table if not exists decks " + "(" + ([
-  "(title TEXT PRIMARY KEY NOT NULL",
+  "title TEXT PRIMARY KEY NOT NULL",
   "category TEXT", // category name or null
   "create_date TEXT NOT NULL", // date text
   "last_tested TEXT", // date text or null - will contain same value as deckScores related date
@@ -28,7 +28,7 @@ export const dropDecks = "DROP TABLE decks";
 
 // each card is stored in a table with all other cards and foreign key === deck name
 export const createCards = "CREATE TABLE IF NOT EXISTS cards " + "(" + ([
-  "card_id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT", // maybe use a date string index (creation)?
+  "card_id TEXT PRIMARY KEY", // will be a date string
   "deck_id TEXT NOT NULL",
   "question TEXT NOT NULL",
   "answer TEXT NOT NULL",
@@ -53,8 +53,7 @@ export const dropCards = "DROP TABLE cards";
 
 // DECK SCORES QUERIES
 export const createDeckScores = "CREATE TABLE IF NOT EXISTS deck_scores " + "(" + ([
-  "score_id INTEGER NOT NULL AUTO_INCREMENT",
-  "time TEXT NOT NULL PRIMARY KEY",
+  "time TEXT NOT NULL PRIMARY KEY", // date string
   "deck_id TEXT NOT NULL",
   "score REAL NOT NULL",
   "FOREIGN KEY (deck_id) REFERENCES decks(title) ON UPDATE CASCADE ON DELETE CASCADE"

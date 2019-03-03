@@ -4,7 +4,7 @@ const DECKS_STORAGE_KEY = "mobileFlashcards:decks";
 const CATEGORIES_STORAGE_KEY = "mobileFlashcards:categories";
 
 // dummy data for development population
-let decks = {
+export const decks = {
   React: {
     title: 'React',
     questions: [
