@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { PURPLE } from "./shared";
+import { PURPLE, BLUE } from "./shared";
 
 export default StyleSheet.create({
   container: {
@@ -8,9 +8,10 @@ export default StyleSheet.create({
     alignItems: "center"
   },
   text: {
-    fontSize: 20
+    fontSize: 20,
+    color: PURPLE,
   },
   category: {
-    color: PURPLE,
+    color: BLUE,
   }
 });

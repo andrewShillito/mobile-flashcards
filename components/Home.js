@@ -9,6 +9,7 @@ import { setLocalNotification, clearLocalNotifications } from "../utils/notifica
 import { Permissions } from "expo";
 import SelectCategoryModal from "./SelectCategoryModal";
 import ButtonSecondary from "./ButtonSecondary";
+import HomeCategorySelector from "./HomeCategorySelector";
 import styles from "../styles/home";
 
 class Home extends React.Component {
@@ -72,6 +73,7 @@ class Home extends React.Component {
   render() {
     const { decks, categories } = this.props; //array instead of obj because of mapStateToProps below
     console.log(categories);
+    const categoryList = categories ? Object.keys(categories) : [];
     // const selectedDecks = (this.state.category !== "all") // add test for empty category list
     //   ? [...categories[this.state.category]].map((name) => decks[name])
     //   : Object.keys(decks).map((title) => decks[title]);
@@ -79,20 +81,17 @@ class Home extends React.Component {
 
     return (
       <View style={styles.container}>
-        <View style={{flexDirection: "row", justifyContent: "space-evenly", alignItems: "center"}}>
-          <Text>{`Showing ${this.state.selectedCategory}`}</Text>
-          <ButtonSecondary onPress={this.toggleModal}>Select Category</ButtonSecondary>
-        </View>
+        <HomeCategorySelector
+          category={this.state.selectedCategory}
+          onPress={this.toggleModal}
+          />
         <SelectCategoryModal
-          onPress={() => {
-
-          }}
           onValueChange={this.updateSelectedCategory}
-          categories={this.props.categories}
+          categories={categoryList}
           selectedCategory={this.state.category}
           visible={this.state.isModalVisible}
-          onRequestClose={this.state.toggleModal}
-          onPressOutside={this.state.toggleModal}
+          onRequestClose={this.toggleModal}
+          onPressOutside={this.toggleModal}
           />
         <FlatList
           data={selectedDecks}

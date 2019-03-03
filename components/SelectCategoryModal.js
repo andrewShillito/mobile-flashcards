@@ -1,7 +1,7 @@
 import React from "react";
 import { Picker } from "react-native";
-import ModalWrapperPrimary from "./ModalWrapperPrimary";
-import ButtonPrimary from "./ButtonPrimary";
+import ModalWrapperSecondary from "./ModalWrapperSecondary";
+import styles from "../styles/selectCategoryModal";
 
 export default class SelectCategoryModal extends React.Component {
   render() {
@@ -14,25 +14,27 @@ export default class SelectCategoryModal extends React.Component {
       },
     }
     return (
-      <ModalWrapperPrimary
+      <ModalWrapperSecondary
         visible={this.props.visible}
         onRequestClose={this.props.onRequestClose}
         onPressOutside={this.props.onPressOutside}
+        transparent={true}
       >
         <Picker
           selectedValue={this.props.selectedCategory}
           onValueChange={this.props.onValueChange}
+          style={styles.picker}
+          itemStyle={styles.text}
           >
           <Picker.Item label="Show All" value="all" key="all"/>
-          {Object.keys(dummyCategories).map((name) => (
-            <Picker.Item label={name} value={name} key={name}/>
-          ))}
+          {this.props.categories.length
+            ? this.props.categories.map((name) => (
+              <Picker.Item label={name} value={name} key={name} />
+            ))
+            : Object.keys(dummyCategories).map(cat => <Picker.Item label={cat} value={cat} key={cat} />)
+          }
         </Picker>
-        <ButtonPrimary
-          onPress={this.props.onPress}
-        >Submit
-        </ButtonPrimary>
-      </ModalWrapperPrimary>
+      </ModalWrapperSecondary>
     );
   }
 }
