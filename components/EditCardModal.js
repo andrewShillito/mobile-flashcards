@@ -85,7 +85,7 @@ class EditCardModal extends React.Component {
     }));
   }
   render() {
-    const { activeCard, activeDeck, isModalVisible, toggleModal, cardIndex } = this.props;
+    const { activeCard, activeDeck, isModalVisible, toggleModal, closeModal, cardIndex } = this.props;
     const { message, messageColor } = this.state;
     const inputProps = [
       {
@@ -113,9 +113,12 @@ class EditCardModal extends React.Component {
     return (
       <ModalWrapperPrimary
         visible={isModalVisible}
-        onRequestClose={toggleModal}
+        onRequestClose={() => {
+          closeModal();
+          this.props.dispatch(clearActiveCard());
+        }}
         onPressOutside={() => {
-          this.props.closeModal();
+          closeModal();
           this.props.dispatch(clearActiveCard());
         }}
         >
