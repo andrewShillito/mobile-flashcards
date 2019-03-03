@@ -3,7 +3,7 @@ import { AsyncStorage } from "react-native";
 const DECKS_STORAGE_KEY = "mobileFlashcards:decks";
 const CATEGORIES_STORAGE_KEY = "mobileFlashcards:categories";
 
-// deprecated - just for store structure reference
+// dummy data for development population
 let decks = {
   React: {
     title: 'React',
