@@ -23,6 +23,8 @@ export const updateDeckTitle = "UPDATE decks SET title=? WHERE title=?";
 
 export const updateLastTest = "UPDATE decks SET last_tested=?, last_score=? WHERE title=?";
 
+export const dropDecks = "DROP TABLE decks";
+
 // CARDS QUERIES
 
 // each card is stored in a table with all other cards and foreign key === deck name
@@ -48,6 +50,8 @@ export const removeAllCardsFromDeck = "DELETE FROM cards WHERE deck_id=?";
 export const updateCard = "UPDATE cards SET question=?, answer=? WHERE deck_id=?, question=?, answer=?";
 // lots of params, think about how to shorten the necessary params for func call
 
+export const dropCards = "DROP TABLE cards";
+
 // DECK SCORES QUERIES
 export const createDeckScores = "CREATE TABLE IF NOT EXISTS deck_scores " + "(" + ([
   "score_id INTEGER NOT NULL AUTO_INCREMENT",
@@ -64,6 +68,8 @@ export const getAllDeckScores = "SELECT * FROM deck_scores";
 export const getAllScoresFromDeck = "SELECT * FROM deck_scores WHERE deck_id=?";
 
 export const removeAllScoresFromDeck = "DELETE FROM deck_scores WHERE deck_id=?";
+
+export const dropDeckScores = "DROP TABLE deck_scores";
 
 // MISC QUERIES
 export const renameTable = "ALTER TABLE ? RENAME TO ?";

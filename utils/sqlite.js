@@ -22,6 +22,14 @@ export function populateInitialData(decks) {
   });
 }
 
+export function dropAllTables() {
+  db.transaction(tx => {
+    tx.executeSql(Queries.dropDeckScores, [], errorHandler, errorHandler);
+    tx.executeSql(Queries.dropCards, [], errorHandler, errorHandler);
+    tx.executeSql(Queries.dropDecks, [], errorHandler, errorHandler);
+  });
+}
+
 export function createDecksTable() {
   // initializes decks table if none exists
   db.transaction(tx => {
