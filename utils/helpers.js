@@ -13,8 +13,7 @@ export function validateUniqueCard(question, answer, questions){
 export const getName = (fn) => { // get function name for error logging
   // source: http://jsfiddle.net/ncays/ and
   // https://stackoverflow.com/questions/1013239/can-i-get-the-name-of-the-currently-running-function-in-javascript
-  var match = fn.arguments.callee.toString().match(/function\s+([^\s\(]+)/);
-  return match && match.length ? match[1] : match;
+  return fn.toString();
 }
 
 export const logResponse = (func, res) => {
