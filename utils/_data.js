@@ -19,7 +19,8 @@ let decks = {
     ],
     category: null,
     createDate: "",
-    lastEditDate: "",
+    last_tested: "",
+    last_score: "",
   },
   JavaScript: {
     title: 'JavaScript',
@@ -30,6 +31,9 @@ let decks = {
       }
     ],
     category: null,
+    createDate: "",
+    last_tested: "",
+    last_score: "",
   }
 }
 
