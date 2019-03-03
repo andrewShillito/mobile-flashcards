@@ -72,28 +72,11 @@ export function removeDeck(title, onSuccess, onError = errorHandler) {
 export function updateDeckTitle(title, newTitle, onSuccess, onError = errorHandler) {
   db.transaction(tx => {
     tx.executeSql(
-      Queries.updateDeckTitle, [newTitle, title],
-      onSuccess, onError
-    );
-    tx.executeSql(
-      Queries.renameTable, [title, newTitle],
-      (trans, res) => logResponse(trans, resets),
-      onError
+      Queries.updateDeckTitle, [newTitle, title], // theoretically, on UPDATE CASCADE should update
+      onSuccess, onError                          // the foreign key automatically
     );
   });
 }
-
-export function updateLastTested(title, onSuccess = errorHandler, onError = errorHandler) {
-  let last_tested = getCurrentTimeString();
-  db.transaction(tx => {
-    tx.executeSql(
-      Queries.updateLastTested, [last_tested, title],
-        onSuccess, onError
-    );
-  });
-}
-
-export function updateLastScore() {} // unsure how to do this - need to update the decks foreign key? score_id from scores
 
 export function createCardsTable() {
   db.transaction(tx => {
@@ -164,6 +147,10 @@ export function recordScore(deck_id, score, onSuccess = errorHandler, onError = 
   db.transaction(tx => {
     tx.executeSql(Queries.recordDeckScore, [deck_id, time, score],
       onSuccess, onError
+    );
+    tx.executeSql(
+      Queries.updateLastTest, [time, score, deck_id],
+        onSuccess, onError
     );
   });
 }
