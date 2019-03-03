@@ -1,13 +1,12 @@
 
 // DECKS QUERIES
-export const createDecks = "create table if not exists decks " +
-([
+export const createDecks = "create table if not exists decks " + "(" + ([
   "(title TEXT PRIMARY KEY NOT NULL",
   "category TEXT", // category name or null
   "create_date TEXT NOT NULL", // date text
   "last_tested TEXT", // date text or null - will contain same value as deckScores related date
   "last_score REAL", // real number or null
-].join(", "))+;
+].join(", ")) + ")";
 
 export const getDecks = "SELECT * FROM decks";
 

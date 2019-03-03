@@ -1,23 +1,24 @@
 import { SQLite } from "expo";
 import { decks } from "./_data";
 import * as Queries from "./queries";
-import { logResponse, getCurrentTimeString } from "./helpers";
-import { decks } from "./_data";
+import { getCurrentTimeString } from "./helpers";
 
 const db = SQLite.openDatabase("mobile_flaschards"); // create a DB if none exists and otherwise open it
 
+const logResponse = (trans, response) => console.log("transaction:", trans, "\nresponse:", response);
 const errorHandler = (trans, error) => logResponse(trans, error);
 
-export function populateInitialData(decks) {
+export function populateInitialData() {
   // initialize tables
   createDecksTable();
   createCardsTable();
   createDeckScores();
   // create decks and their cards
-  Object.keys(decks).forEach((deck) => {
-    createDeck(deck.title, errorHandler);
-    deck.questions.forEach((card) => {
-      createCard(deck.title, card.question, card.answer, errorHandler);
+  Object.keys(decks).forEach((name) => {
+    createDeck(name, errorHandler);
+    console.log("deck:", decks[name]);
+    decks[name].questions.forEach((card) => {
+      createCard(name, card.question, card.answer, errorHandler);
     });
   });
 }
@@ -114,7 +115,7 @@ export function createCard(deck_id, question, answer, onSuccess, onError = error
   });
 }
 
-export function getAllCards(onSuccess, onError = errorHandler) => {
+export function getAllCards(onSuccess, onError = errorHandler) {
   db.transaction(tx => {
     tx.executeSql(Queries.getAllCards, [], onSuccess, onError)
   });
