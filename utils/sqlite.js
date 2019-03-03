@@ -83,6 +83,18 @@ export function updateDeckTitle(title, newTitle, onSuccess, onError = errorHandl
   });
 }
 
+export function updateLastTested(title, onSuccess = errorHandler, onError = errorHandler) {
+  let last_tested = getCurrentTimeString();
+  db.transaction(tx => {
+    tx.executeSql(
+      Queries.updateLastTested, [last_tested, title],
+        onSuccess, onError
+    );
+  });
+}
+
+export function updateLastScore() {} // unsure how to do this - need to update the decks foreign key? score_id from scores
+
 export function createCardsTable() {
   db.transaction(tx => {
     tx.executeSql(Queries.createCards, [],
@@ -138,9 +150,9 @@ export function updateCard(newQuestion, newAnswer, deck_id, question, answer, on
   });
 }
 
-export function createScores() {
+export function createDeckScores() {
   db.transaction(tx => {
-    tx.executeSql(Queries.createScores, [],
+    tx.executeSql(Queries.createDeckScores, [],
       (transaction, result) => logResponse(this, result), // success func
       (transaction, error) => logResponse(this, error)
     );
@@ -150,7 +162,7 @@ export function createScores() {
 export function recordScore(deck_id, score, onSuccess = errorHandler, onError = errorHandler) {
   let time = getCurrentTimeString();
   db.transaction(tx => {
-    tx.executeSql(Queries.createScores, [deck_id, time, score],
+    tx.executeSql(Queries.recordDeckScore, [deck_id, time, score],
       onSuccess, onError
     );
   });
@@ -158,7 +170,7 @@ export function recordScore(deck_id, score, onSuccess = errorHandler, onError = 
 
 export function getAllScores(onSuccess, onError = errorHandler) {
   db.transaction(tx => {
-    tx.executeSql(Queries.getAllScores, [],
+    tx.executeSql(Queries.getAllDeckScores, [],
       onSuccess,
       (transaction, error) => logResponse(this, error)
     );
