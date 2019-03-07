@@ -72,6 +72,8 @@ export const dropDeckScores = "DROP TABLE deck_scores";
 // MISC QUERIES
 export const renameTable = "ALTER TABLE ? RENAME TO ?";
 
+export const checkTableCreation = "SELECT sql FROM sqlite_master WHERE name=?";
+
 // CARD SCORES QUERIES - future feature - not currently implementing
 export const createCardScores = "CREATE TABLE IF NOT EXISTS card_scores " + "(" +([
   "score_id INTEGER NOT NULL AUTO_INCREMENT",

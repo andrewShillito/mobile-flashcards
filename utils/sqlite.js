@@ -5,29 +5,73 @@ import { getCurrentTimeString } from "./helpers";
 
 const db = SQLite.openDatabase("mobile_flaschards"); // create a DB if none exists and otherwise open it
 
-const logResponse = (trans, response) => console.log("transaction:", trans, "\nresponse:", response);
-const errorHandler = (trans, error) => logResponse(trans, error);
+const logResponse = (trans, response) => console.log("\nresponse:", response);
+const errorHandler = (trans, error) => console.log("\nerror:", error);
 
-export function populateInitialData() {
+const loggingTx = function(tx, Query, params = []) {
+  return tx.executeSql(Query, params,
+    (transaction, result) => logResponse(this, result), // success func
+    (transaction, error) => logResponse(this, error))
+}
+
+const boundLoggingTx = function(Query, params = []) {
+  return this.executeSql(Query, params,
+    (transaction, result) => logResponse(this, result), // success func
+    (transaction, error) => logResponse(this, error));
+}
+
+export function populateInitialData(queryList = [
+  Queries.dropDeckScores,
+  Queries.dropCards,
+  Queries.dropDecks,
+
+  Queries.createDecks,
+  Queries.createCards,
+  Queries.createDeckScores,
+
+  Queries.getDecks,
+  Queries.getAllCards,
+  Queries.getAllDeckScores
+]) {
   // initialize tables
-  createDecksTable();
-  createCardsTable();
-  createDeckScores();
-  // create decks and their cards
-  Object.keys(decks).forEach((name) => {
-    createDeck(name, errorHandler);
-    console.log("deck:", decks[name]);
-    decks[name].questions.forEach((card) => {
-      createCard(name, card.question, card.answer, errorHandler);
+  // dropAllTables();
+  //
+  // createDecksTable();
+  // createCardsTable();
+  // createDeckScores();
+
+  db.transaction(tx => {
+    const func = boundLoggingTx.bind(tx); // to shorten function call by binding tx to this keyword
+    queryList.forEach((query) => func(query)); // React and JS decks have exact same time stamp because this is super fast
+
+    Object.keys(decks).forEach((name) => {
+      func(Queries.createDeck, [name, getCurrentTimeString()]);
+      decks[name].questions.forEach(card => {
+        func(Queries.createCard, [name, card.question, card.answer]);
+      });
     });
+
+    func(Queries.getDecks);
+    func(Queries.getAllCards);
+    func(Queries.getAllDeckScores);
+
   });
+  // // create decks and their cards
+
+  // Object.keys(decks).forEach((name) => {
+  //   createDeck(name, logResponse);
+  //   console.log("deck:", decks[name]);
+  //   decks[name].questions.forEach((card) => {
+  //     createCard(name, card.question, card.answer, logResponse);
+  //   });
+  // });
 }
 
 export function dropAllTables() {
   db.transaction(tx => {
     tx.executeSql(Queries.dropDeckScores, [], errorHandler, errorHandler);
     tx.executeSql(Queries.dropCards, [], errorHandler, errorHandler);
-    tx.executeSql(Queries.dropDecks, [], errorHandler, errorHandler);
+    tx.executeSql(Queries.dropDecks, [], logResponse, errorHandler);
   });
 }
 
@@ -39,6 +83,7 @@ export function createDecksTable() {
       (transaction, result) => logResponse(this, result), // success func
       (transaction, error) => logResponse(this, error)
     );
+    loggingTx(tx, Queries.checkTableCreation, ["decks"]);
   });
 }
 
@@ -104,6 +149,7 @@ export function createCardsTable() {
       (transaction, result) => logResponse(this, result), // success func
       (transaction, error) => logResponse(this, error)
     );
+    loggingTx(tx, Queries.checkTableCreation, ["cards"]);
   });
 }
 
@@ -159,6 +205,7 @@ export function createDeckScores() {
       (transaction, result) => logResponse(this, result), // success func
       (transaction, error) => logResponse(this, error)
     );
+    loggingTx(tx, Queries.checkTableCreation, ["deck_scores"]);
   });
 }
 
