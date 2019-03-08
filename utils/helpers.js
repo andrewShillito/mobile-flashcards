@@ -21,18 +21,21 @@ export const logResponse = (func, res) => {
 }
 
 export const getCurrentTimeISOString = () => {
-  return new Date(Date.now()).toISOString(); // time in human readable format - not suitable for keys
+  // time in ISO String format
+  return new Date(Date.now()).toISOString();
 }
 
 export const getRandomizedCurrentTimeISOString = () => {
+  // pseduo random human readable format date in future times
   let randInt = getRandomInt();
-  return new Date(Date.now() + randInt).toISOString(); // pseduo random human readable format date in future
+  return new Date(Date.now() + randInt).toISOString();
 }
 
 export const getRandomInt = () => {
+  // from MDN - min inclusive, max exclusive
   let min = 1;
   let max = 1000;
-  return Math.floor(Math.random() * (max-min) + min); // from MDN - min inclusive, max exclusive
+  return Math.floor(Math.random() * (max-min) + min);
 }
 
 const setIncrement = () => {
@@ -51,12 +54,15 @@ const getSafeTime = () => {
 }
 
 export const getSafeTimeISO = () => {
+  // prevents collisions in initial data population
+  // for in-app use - use getCurrentTimeISOString
   return getSafeTime().toISOString();
 }
 
 export function parseISOString(s) {
   // credit to stack overflow user RobG
   // parses iso string to get date object
+  // source: https://stackoverflow.com/questions/27012854/change-iso-date-string-to-date-object-javascript
   var b = s.split(/\D+/);
   return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
 }
