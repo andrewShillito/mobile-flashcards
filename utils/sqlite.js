@@ -60,8 +60,8 @@ export function populateInitialData(queryList = [
 
 export function dropAllTables() {
   db.transaction(tx => {
-    tx.executeSql(Queries.dropDeckScores, [], errorHandler, errorHandler);
-    tx.executeSql(Queries.dropCards, [], errorHandler, errorHandler);
+    tx.executeSql(Queries.dropDeckScores, [], logResponse, errorHandler);
+    tx.executeSql(Queries.dropCards, [], logResponse, errorHandler);
     tx.executeSql(Queries.dropDecks, [], logResponse, errorHandler);
   });
 }
