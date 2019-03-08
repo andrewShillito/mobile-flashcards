@@ -21,5 +21,5 @@ export const logResponse = (func, res) => {
 }
 
 export const getCurrentTimeString = () => {
-  return Date.now().toString();
+  return new Date(Date.now()).toDateString(); // human readable format
 }
