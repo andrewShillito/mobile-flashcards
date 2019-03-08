@@ -11,13 +11,19 @@ const errorHandler = (trans, error) => console.log("\nerror:", error);
 const loggingTx = function(tx, Query, params = []) {
   return tx.executeSql(Query, params,
     (transaction, result) => logResponse(this, result), // success func
-    (transaction, error) => logResponse(this, error))
+    (transaction, error) => errorHandler(this, error))
 }
 
 const boundLoggingTx = function(Query, params = []) {
   return this.executeSql(Query, params,
     (transaction, result) => logResponse(this, result), // success func
-    (transaction, error) => logResponse(this, error));
+    (transaction, error) => errorHandler(this, error));
+}
+
+const boundNoLogTx = function(Query, params = []) {
+  return this.executeSql(Query, params,
+    () => {}, 
+    (transaction, error) => errorHandler(this, error));
 }
 
 export function populateInitialData(queryList = [
@@ -33,19 +39,14 @@ export function populateInitialData(queryList = [
   Queries.getAllCards,
   Queries.getAllDeckScores
 ]) {
-  // initialize tables
-  // dropAllTables();
-  //
-  // createDecksTable();
-  // createCardsTable();
-  // createDeckScores();
-
   db.transaction(tx => {
     const func = boundLoggingTx.bind(tx); // to shorten function call by binding tx to this keyword
-    queryList.forEach((query) => func(query)); // React and JS decks have exact same time stamp because this is super fast
+    const noLogFunc = boundNoLogTx.bind(tx);
+
+    queryList.forEach((query) => noLogFunc(query));
 
     Object.keys(decks).forEach((name) => {
-      func(Queries.createDeck, [name, getCurrentTimeString()]);
+      func(Queries.createDeck, [name, getCurrentTimeString()]); // multiple decks will have same creation time due to speed of this
       decks[name].questions.forEach(card => {
         func(Queries.createCard, [name, card.question, card.answer]);
       });
@@ -54,17 +55,7 @@ export function populateInitialData(queryList = [
     func(Queries.getDecks);
     func(Queries.getAllCards);
     func(Queries.getAllDeckScores);
-
   });
-  // // create decks and their cards
-
-  // Object.keys(decks).forEach((name) => {
-  //   createDeck(name, logResponse);
-  //   console.log("deck:", decks[name]);
-  //   decks[name].questions.forEach((card) => {
-  //     createCard(name, card.question, card.answer, logResponse);
-  //   });
-  // });
 }
 
 export function dropAllTables() {
@@ -75,13 +66,13 @@ export function dropAllTables() {
   });
 }
 
-export function createDecksTable() {
+export function createDecksTable(onSuccess = logResponse, onError = errorHandler) {
   // initializes decks table if none exists
   db.transaction(tx => {
     tx.executeSql(
       Queries.createDecks, [],
-      (transaction, result) => logResponse(this, result), // success func
-      (transaction, error) => logResponse(this, error)
+      onSuccess,
+      onError
     );
     loggingTx(tx, Queries.checkTableCreation, ["decks"]);
   });
@@ -94,7 +85,7 @@ export function getDecks(onSuccess, onError = errorHandler) {
   db.transaction(tx => {
     tx.executeSql(
       Queries.getDecks, [],
-      (trans, res) => onSuccess(trans, res),
+      onSuccess,
       onError,
     )
   });
@@ -104,7 +95,7 @@ export function getDeck(title, onSuccess, onError = errorHandler) {
   db.transaction(tx => {
     tx.executeSql(
       Queries.getDeck, [title],
-      (trans, res) => onSuccess(trans, res),
+      onSuccess,
       onError
     );
   });
@@ -128,7 +119,7 @@ export function removeDeck(title, onSuccess, onError = errorHandler) {
     );
     tx.executeSql(
       Queries.removeDeckQuestions, [title],
-      (trans, res) => logResponse(trans, res),
+      onSuccess,
       onError
     );
   });
@@ -143,11 +134,11 @@ export function updateDeckTitle(title, newTitle, onSuccess, onError = errorHandl
   });
 }
 
-export function createCardsTable() {
+export function createCardsTable(onSuccess = logResponse, onError = errorHandler) {
   db.transaction(tx => {
     tx.executeSql(Queries.createCards, [],
-      (transaction, result) => logResponse(this, result), // success func
-      (transaction, error) => logResponse(this, error)
+      onSuccess,
+      onError
     );
     loggingTx(tx, Queries.checkTableCreation, ["cards"]);
   });
@@ -199,11 +190,11 @@ export function updateCard(newQuestion, newAnswer, deck_id, question, answer, on
   });
 }
 
-export function createDeckScores() {
+export function createDeckScores(onSuccess = logResponse, onError = errorHandler) {
   db.transaction(tx => {
     tx.executeSql(Queries.createDeckScores, [],
-      (transaction, result) => logResponse(this, result), // success func
-      (transaction, error) => logResponse(this, error)
+      onSuccess, // success func
+      onError
     );
     loggingTx(tx, Queries.checkTableCreation, ["deck_scores"]);
   });
@@ -226,7 +217,7 @@ export function getAllScores(onSuccess, onError = errorHandler) {
   db.transaction(tx => {
     tx.executeSql(Queries.getAllDeckScores, [],
       onSuccess,
-      (transaction, error) => logResponse(this, error)
+      onError
     );
   });
 }
