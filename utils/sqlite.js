@@ -46,17 +46,15 @@ export function populateInitialData(queryList = [
     queryList.forEach((query) => noLogFunc(query));
 
     Object.keys(decks).forEach((name) => {
-      func(Queries.createDeck, [name, getSafeTimeISO()]); // multiple decks will have same creation time due to speed of this
+      func(Queries.createDeck, [name, getSafeTimeISO()]);
       decks[name].questions.forEach(card => {
         func(Queries.createCard, [getSafeTimeISO(), name, card.question, card.answer]);
       });
     });
 
-    func(Queries.getAllCards);
     tx.executeSql(Queries.getDecks, [],
       (_, { rows }) => res(rows._array),
-      (_, error) => rej(error)
-    );
+      (_, error) => rej(error));
   }));
 }
 

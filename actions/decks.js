@@ -17,10 +17,10 @@ export const handleReceiveDecks = () => {
     // dispatch(startLoading()); // not necessary as loading is currently extremely quick
 
     return populateInitialData() // gets an array of pre-populated decks back from sqlite
-      .then(decks => {
+      .then(data => {
         // dispatch(endLoading()); // not necessary as laoding is currently extremely quick
 
-        console.log("receiving:", decks);
+        console.log("receiving:", data);
         // need to fetch cards and scores from sqlite as well
         // will need to wrap db methods in promises
 
