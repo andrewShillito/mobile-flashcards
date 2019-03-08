@@ -3,6 +3,8 @@ import { saveDeckTitle, getDeck, getDecks, deleteDeck, editDeckTitle } from "../
 import { setActiveDeck, clearActiveDeck } from "./activeDeck";
 import { startLoading, endLoading } from "./loading";
 
+import { populateInitialData } from "../utils/sqlite";
+
 const receiveDecks = (decks) => {
   return {
     type: RECEIVE_DECKS,
@@ -12,11 +14,17 @@ const receiveDecks = (decks) => {
 
 export const handleReceiveDecks = () => {
   return dispatch => { //passed dispatch from redux-thunk middleware
-    // implement loading
     // dispatch(startLoading()); // not necessary as loading is currently extremely quick
-    return getDecks()
+
+    return populateInitialData() // gets an array of pre-populated decks back from sqlite
       .then(decks => {
         // dispatch(endLoading()); // not necessary as laoding is currently extremely quick
+
+        console.log("receiving:", decks);
+        // need to fetch cards and scores from sqlite as well
+        // will need to wrap db methods in promises
+
+        // update store data
         dispatch(receiveDecks(decks));
       })
       .catch(err => console.log(err));

@@ -27,8 +27,7 @@ class Home extends React.Component {
     if (this.props.activeDeck !== null) {
       this.props.dispatch(clearActiveDeck());
     }
-    // dropAllTables(); // for development purposes
-    populateInitialData();
+    // populateInitialData();
   }
   renderItem = ({ item }) => {
     return <Deck deck={item} goToDeckDetail={this.goToDeckDetail} goToQuiz={this.goToQuiz} goToEdit={this.goToEdit} active={this.props.activeDeck === item.title} />

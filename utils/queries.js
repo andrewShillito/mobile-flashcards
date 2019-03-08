@@ -14,6 +14,8 @@ export const getDeck = "SELECT * FROM decks WHERE title=?";
 
 export const createDeck = "INSERT INTO decks (title, create_date) VALUES (?, ?)";
 
+export const createDeckWithCategory = "INSERT INTO decks (title, create_date, category) VALUES (?, ?, ?)"
+
 export const removeDeck = "DELETE FROM decks WHERE title=?";
 
 export const removeDeckQuestions = "DROP TABLE IF EXISTS ?";
@@ -23,6 +25,10 @@ export const updateDeckTitle = "UPDATE decks SET title=? WHERE title=?";
 export const updateLastTest = "UPDATE decks SET last_tested=?, last_score=? WHERE title=?";
 
 export const dropDecks = "DROP TABLE decks";
+
+export const setDeckCategory = "UPDATE decks SET category=? WHERE title=?";
+
+export const clearDeckCategory = "UPDATE decks SET category=null WHERE title=?";
 
 // CARDS QUERIES
 // each card is stored in a table with all other cards and foreign key === deck name

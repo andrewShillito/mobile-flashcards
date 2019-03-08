@@ -39,7 +39,7 @@ export function populateInitialData(queryList = [
   Queries.getAllCards,
   Queries.getAllDeckScores
 ]) {
-  db.transaction(tx => {
+  return new Promise((res, rej) => db.transaction(tx => {
     const func = boundLoggingTx.bind(tx); // to shorten function call by binding tx to this keyword
     const noLogFunc = boundNoLogTx.bind(tx);
 
@@ -52,10 +52,12 @@ export function populateInitialData(queryList = [
       });
     });
 
-    func(Queries.getDecks);
     func(Queries.getAllCards);
-    func(Queries.getAllDeckScores);
-  });
+    tx.executeSql(Queries.getDecks, [],
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error)
+    );
+  }));
 }
 
 export function dropAllTables() {
