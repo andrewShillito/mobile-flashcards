@@ -1,7 +1,7 @@
 import { SQLite } from "expo";
 import { decks } from "./_data";
 import * as Queries from "./queries";
-import { getCurrentTimeString } from "./helpers";
+import { getSafeTimeISO } from "./helpers";
 
 const db = SQLite.openDatabase("mobile_flaschards"); // create a DB if none exists and otherwise open it
 
@@ -22,7 +22,7 @@ const boundLoggingTx = function(Query, params = []) {
 
 const boundNoLogTx = function(Query, params = []) {
   return this.executeSql(Query, params,
-    () => {}, 
+    () => {},
     (transaction, error) => errorHandler(this, error));
 }
 
@@ -46,9 +46,9 @@ export function populateInitialData(queryList = [
     queryList.forEach((query) => noLogFunc(query));
 
     Object.keys(decks).forEach((name) => {
-      func(Queries.createDeck, [name, getCurrentTimeString()]); // multiple decks will have same creation time due to speed of this
+      func(Queries.createDeck, [name, getSafeTimeISO()]); // multiple decks will have same creation time due to speed of this
       decks[name].questions.forEach(card => {
-        func(Queries.createCard, [name, card.question, card.answer]);
+        func(Queries.createCard, [getSafeTimeISO(), name, card.question, card.answer]);
       });
     });
 
@@ -102,7 +102,7 @@ export function getDeck(title, onSuccess, onError = errorHandler) {
 }
 
 export function createDeck(title, onSuccess, onError = errorHandler) {
-  let created = getCurrentTimeString();
+  let created = getSafeTimeISO();
   db.transaction(tx => {
     tx.executeSql(
       Queries.createDeck, [title, created],
@@ -145,8 +145,9 @@ export function createCardsTable(onSuccess = logResponse, onError = errorHandler
 }
 
 export function createCard(deck_id, question, answer, onSuccess, onError = errorHandler) {
+  let card_id =
   db.transaction(tx => {
-    tx.executeSql(Queries.createCard, [deck_id, question, answer],
+    tx.executeSql(Queries.createCard, [card_id, deck_id, question, answer],
       onSuccess, onError
     );
   });
@@ -201,7 +202,7 @@ export function createDeckScores(onSuccess = logResponse, onError = errorHandler
 }
 
 export function recordScore(deck_id, score, onSuccess = errorHandler, onError = errorHandler) {
-  let time = getCurrentTimeString();
+  let time = getSafeTimeISO();
   db.transaction(tx => {
     tx.executeSql(Queries.recordDeckScore, [deck_id, time, score],
       onSuccess, onError
