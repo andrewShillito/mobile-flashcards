@@ -154,9 +154,13 @@ export function createCard(deck_id, question, answer, onSuccess, onError = error
 }
 
 export function getAllCards(onSuccess, onError = errorHandler) {
-  db.transaction(tx => {
-    tx.executeSql(Queries.getAllCards, [], onSuccess, onError)
-  });
+  return new Promise((res, rej) => {
+    db.transaction(tx => {
+      tx.executeSql(Queries.getAllCards, [],
+        (_, { rows }) => res(rows._array),
+        (_, error) => rej(error));
+    });
+  })
 }
 
 export function getCardsFromDeck(deck_id, onSuccess, onError = errorHandler) {
@@ -166,6 +170,8 @@ export function getCardsFromDeck(deck_id, onSuccess, onError = errorHandler) {
     );
   });
 }
+
+export function getCardsFromAllDecks(deckArr) {}
 
 export function removeCard(deck_id, question, answer, onSuccess, onError = errorHandler) {
   db.transaction(tx => {

@@ -3,7 +3,7 @@ import { saveDeckTitle, getDeck, getDecks, deleteDeck, editDeckTitle } from "../
 import { setActiveDeck, clearActiveDeck } from "./activeDeck";
 import { startLoading, endLoading } from "./loading";
 
-import { populateInitialData } from "../utils/sqlite";
+import { populateInitialData, getAllCards } from "../utils/sqlite";
 
 const receiveDecks = (decks) => {
   return {
@@ -19,8 +19,9 @@ export const handleReceiveDecks = () => {
     return populateInitialData() // gets an array of pre-populated decks back from sqlite
       .then(data => {
         // dispatch(endLoading()); // not necessary as laoding is currently extremely quick
-
+        const cards = getAllCards();
         console.log("receiving:", data);
+        console.log("all cards:", cards);
         // need to fetch cards and scores from sqlite as well
         // will need to wrap db methods in promises
 
