@@ -24,13 +24,16 @@ export const handleReceiveDecks = () => {
         let decks = {};
         let categories = {};
         data.forEach((card) => {
+          // builds decks and categories from sql data for redux store
           if (decks[card.title] !== undefined) {
+            // primary deck data already in decks - just add the card to the questions arr
             decks[card.title].questions = decks[card.title].questions.concat([{
               question: card.question,
               answer: card.answer,
               card_id: card.card_id,
             }]);
           } else {
+            // deck not yet created in decks
             let { title, category, create_date, last_score, last_tested, card_id, question, answer } = card;
             decks[card.title] = {
               title,
@@ -47,15 +50,20 @@ export const handleReceiveDecks = () => {
               ]
             };
             if (category === null) {
+              // uncategorized deck
               if (categories["Uncategorized"] !== undefined) {
+                // uncategorized category already exists in categories
                 categories["Uncategorized"].add(title);
               } else {
+                // uncategorized category not yet created in categories
                 categories["Uncategorized"] = new Set([title]);
               }
             }
             else if (categories[category] !== undefined) {
+              // category already exists in categories and category is not null
               categories[category].add(title);
             } else {
+              // category does not exist in categories - make new set
               categories[category] = new Set([title]);
             }
           }
