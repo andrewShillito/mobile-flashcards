@@ -4,7 +4,7 @@ import { setActiveDeck, clearActiveDeck } from "./activeDeck";
 import { startLoading, endLoading } from "./loading";
 import { receiveCategories } from "./categories";
 
-import { populateInitialData, getAllCards, getCardsFromDeck } from "../utils/sqlite";
+import { populateInitialData, createDeck } from "../utils/sqlite";
 
 const receiveDecks = (decks) => {
   return {
@@ -85,9 +85,12 @@ const addDeck = (deck) => {
 
 export const handleAddDeck = (title) => {
   return dispatch => {
-    return saveDeckTitle(title)
-      .then(deck => {
-        dispatch(addDeck(deck));
+    return createDeck(title)
+      .then(deckArr => {
+        console.log("newDeck:", deckArr)
+        let deck = deckArr[0];
+        deck.questions = [];
+        dispatch(addDeck(deckArr[0]));
         dispatch(setActiveDeck(title));
       })
       .catch(err => console.log(err));

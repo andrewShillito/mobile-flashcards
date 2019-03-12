@@ -1,7 +1,7 @@
 import { SQLite } from "expo";
 import { decks } from "./_data";
 import * as Queries from "./queries";
-import { getSafeTimeISO } from "./helpers";
+import { getSafeTimeISO, getCurrentTimeISOString } from "./helpers";
 
 const db = SQLite.openDatabase("mobile_flaschards"); // create a DB if none exists and otherwise open it
 
@@ -101,11 +101,13 @@ export function getDeck(title, onSuccess, onError = errorHandler) {
   });
 }
 
-export function createDeck(title) {
-  let created = getSafeTimeISO();
+export function createDeck(title, created = getCurrentTimeISOString()) {
   return new Promise((res, rej) => db.transaction(tx => {
-      tx.executeSql(
-        Queries.createDeck, [title, created],
+      tx.executeSql(Queries.createDeck, [title, created],
+        (_, { rows }) => {},
+        (_, error) => rej(error)
+      );
+      tx.executeSql(Queries.getDeck, [title],
         (_, { rows }) => res(rows._array),
         (_, error) => rej(error)
       );
