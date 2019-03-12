@@ -101,14 +101,16 @@ export function getDeck(title, onSuccess, onError = errorHandler) {
   });
 }
 
-export function createDeck(title, onSuccess, onError = errorHandler) {
+export function createDeck(title) {
   let created = getSafeTimeISO();
-  db.transaction(tx => {
-    tx.executeSql(
-      Queries.createDeck, [title, created],
-      onSuccess, onError
-    );
-  });
+  return new Promise((res, rej) => db.transaction(tx => {
+      tx.executeSql(
+        Queries.createDeck, [title, created],
+        (_, { rows }) => res(rows._array),
+        (_, error) => rej(error)
+      );
+    })
+  )
 }
 
 export function removeDeck(title, onSuccess, onError = errorHandler) {
