@@ -45,19 +45,13 @@ export function populateInitialData(queryList = [
     Object.keys(decks).forEach((name) => {
       noLogFunc(Queries.createDeck, [name, getSafeTimeISO()]);
 
-      // noLogFunc("CREATE TABLE ? IF NOT EXISTS (card_id TEXT NOT NULL, FOREIGN KEY (card_id) REFERENCES cards(card_id) ON UPDATE CASCADE ON DELETE CASCADE)", [name]);
-
       decks[name].questions.forEach(card => {
         let time = getSafeTimeISO()
         noLogFunc(Queries.createCard, [time, name, card.question, card.answer]);
 
-        // noLogFunc("INSERT INTO ? (card_id) VALUES (?)", [name, time]);
       });
     });
-    //
-    // tx.executeSql(Queries.getDecks, [],
-    //   (_, { rows }) => res(rows._array),
-    //   (_, error) => rej(error));
+
     tx.executeSql("SELECT * FROM decks INNER JOIN cards ON cards.deck_id = decks.title ORDER BY decks.title", [],
       (_, { rows }) => res(rows._array),
       (_, error) => rej(error));
