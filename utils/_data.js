@@ -17,7 +17,7 @@ export const decks = {
         answer: 'The componentDidMount lifecycle event'
       }
     ],
-    category: null,
+    category: "programming",
     createDate: "",
     last_tested: "",
     last_score: "",
@@ -30,7 +30,7 @@ export const decks = {
         answer: 'The combination of a function and the lexical environment within which that function was declared.'
       }
     ],
-    category: null,
+    category: "programming",
     createDate: "",
     last_tested: "",
     last_score: "",

@@ -1,7 +1,7 @@
 import { ADD_CATEGORY, REMOVE_CATEGORY, ADD_DECK_TO_CATEGORY, REMOVE_DECK_FROM_CATEGORY, RECEIVE_CATEGORIES } from "./types";
 import { addCategory as _addCategory, removeCategory as _removeCategory, addDeckToCategory as _addDeckToCategory, removeDeckFromCategory as _removeDeckFromCategory, getCategories } from "../utils/api";
 
-function receiveCategories(categories) {
+export function receiveCategories(categories) {
   console.log("dispatched:", categories);
   return {
     type: RECEIVE_CATEGORIES,

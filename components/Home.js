@@ -21,13 +21,12 @@ class Home extends React.Component {
   }
   componentDidMount() {
     this.props.dispatch(handleReceiveDecks());
-    this.props.dispatch(handleReceiveCategories());
+
     // this.askPermission(); // commented to prevent generating new notifications
     clearLocalNotifications(); // for development
     if (this.props.activeDeck !== null) {
       this.props.dispatch(clearActiveDeck());
     }
-    // populateInitialData();
   }
   renderItem = ({ item }) => {
     return <Deck deck={item} goToDeckDetail={this.goToDeckDetail} goToQuiz={this.goToQuiz} goToEdit={this.goToEdit} active={this.props.activeDeck === item.title} />

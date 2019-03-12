@@ -35,9 +35,6 @@ export function populateInitialData(queryList = [
   Queries.createCards,
   Queries.createDeckScores,
 
-  Queries.getDecks,
-  Queries.getAllCards,
-  Queries.getAllDeckScores
 ]) {
   return new Promise((res, rej) => db.transaction(tx => {
     const func = boundLoggingTx.bind(tx); // to shorten function call by binding tx to this keyword
@@ -46,13 +43,22 @@ export function populateInitialData(queryList = [
     queryList.forEach((query) => noLogFunc(query));
 
     Object.keys(decks).forEach((name) => {
-      func(Queries.createDeck, [name, getSafeTimeISO()]);
+      noLogFunc(Queries.createDeck, [name, getSafeTimeISO()]);
+
+      // noLogFunc("CREATE TABLE ? IF NOT EXISTS (card_id TEXT NOT NULL, FOREIGN KEY (card_id) REFERENCES cards(card_id) ON UPDATE CASCADE ON DELETE CASCADE)", [name]);
+
       decks[name].questions.forEach(card => {
-        func(Queries.createCard, [getSafeTimeISO(), name, card.question, card.answer]);
+        let time = getSafeTimeISO()
+        noLogFunc(Queries.createCard, [time, name, card.question, card.answer]);
+
+        // noLogFunc("INSERT INTO ? (card_id) VALUES (?)", [name, time]);
       });
     });
-
-    tx.executeSql(Queries.getDecks, [],
+    //
+    // tx.executeSql(Queries.getDecks, [],
+    //   (_, { rows }) => res(rows._array),
+    //   (_, error) => rej(error));
+    tx.executeSql("SELECT * FROM decks INNER JOIN cards ON cards.deck_id = decks.title ORDER BY decks.title", [],
       (_, { rows }) => res(rows._array),
       (_, error) => rej(error));
   }));
@@ -153,22 +159,22 @@ export function createCard(deck_id, question, answer, onSuccess, onError = error
   });
 }
 
-export function getAllCards(onSuccess, onError = errorHandler) {
-  return new Promise((res, rej) => {
-    db.transaction(tx => {
+export function getAllCards() {
+  return new Promise((res, rej) => db.transaction(tx => {
       tx.executeSql(Queries.getAllCards, [],
         (_, { rows }) => res(rows._array),
-        (_, error) => rej(error));
-    });
-  })
+        (_, error) => rej(error))
+    })
+  );
 }
 
-export function getCardsFromDeck(deck_id, onSuccess, onError = errorHandler) {
-  db.transaction(tx => {
-    tx.executeSql(Queries.getCardsFromDeck, [deck_id],
-      onSuccess, onError
-    );
-  });
+export function getCardsFromDeck(deck_id) {
+  return new Promise((res, rej) => db.transaction(tx => {
+      tx.executeSql(Queries.getCardsFromDeck, [deck_id],
+        (_, { rows }) => res(rows._array),
+        (_, error) => rej(error));
+    })
+  );
 }
 
 export function getCardsFromAllDecks(deckArr) {}
@@ -220,13 +226,13 @@ export function recordScore(deck_id, score, onSuccess = errorHandler, onError = 
   });
 }
 
-export function getAllScores(onSuccess, onError = errorHandler) {
-  db.transaction(tx => {
+export function getAllScores() {
+  return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.getAllDeckScores, [],
-      onSuccess,
-      onError
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error)
     );
-  });
+  }));
 }
 
 export function getAllScoresFromDeck(deck_id, onSuccess, onError = errorHandler) {
