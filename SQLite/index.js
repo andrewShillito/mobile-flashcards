@@ -170,6 +170,9 @@ export function createCardsTable() {
 export function createCard(deck_id, question, answer, card_id = getCurrentTimeISOString()) {
   return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.createCard, [card_id, deck_id, question, answer],
+      (_, { rows }) => {},
+      (_, error) => rej(error));
+    tx.executeSql(Queries.getCard, [card_id], 
       (_, { rows }) => res(rows._array),
       (_, error) => rej(error));
     })

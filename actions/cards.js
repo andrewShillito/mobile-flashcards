@@ -9,6 +9,8 @@ import {
   editCard as _editCard,
 } from "../utils/api";
 import { clearActiveCard } from "./activeCard";
+import { createCard, getAllCards, getCardsFromDeck, removeCard as _removeCard, updateCard } from "../SQLite/";
+
 
 export const addCard = (title, card) => {
   return {
@@ -18,11 +20,12 @@ export const addCard = (title, card) => {
   };
 }
 
-export const handleAddCard = (deckTitle, card) => {
+export const handleAddCard = (deckTitle, { question, answer}) => {
   return dispatch => {
-    return addCardToDeck(deckTitle, card)
-      .then((deck) => {
-        dispatch(addCard(deckTitle, card));
+    return createCard(deckTitle, question, answer)
+      .then((rowsArr) => {
+        console.log("newCard from SQL:", rowsArr[0]);
+        dispatch(addCard(deckTitle, rowsArr[0]));
       })
       .catch((err) => console.log(err));
   };

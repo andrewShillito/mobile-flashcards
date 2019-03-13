@@ -37,53 +37,54 @@ export function removeDeckFromCategory(category, title) {
     title,
   };
 }
+// Deprecated AsyncStorage methods
 
-export function handleReceiveCategories() {
-  return dispatch => {
-    return getCategories()
-      .then((categories) => {
-        dispatch(receiveCategories(categories));
-      })
-      .catch((err) => console.log(err));
-  }
-}
-
-export function handleAddCategory(id) {
-  return dispatch => {
-    return _addCategory(id)
-      .then((newSet) => {
-        dispatch(addCategory(id, newSet));
-      })
-      .catch((err) => console.log(err));
-  }
-}
-
-export function handleRemoveCategory(id) {
-  return dispatch => {
-    return _removeCategory(id)
-      .then((categories) => {
-        dispatch(removeCategory(categories));
-      })
-      .catch((err) => console.log(err));
-  }
-}
-
-export function handleAddDeckToCategory(category, title) {
-  return dispatch => {
-    return _addDeckToCategory(category, title)
-      .then((categoryItems) => {
-        dispatch(addDeckToCategory(category, categoryItems));
-      })
-      .catch((err) => console.log(err));
-  }
-}
-
-export function handleRemoveDeckFromCategory(category, title) {
-  return dispatch => {
-    return _removeDeckFromCategory(category, title)
-      .then((categoryItems) => {
-        dispatch(removeDeckFromCategory(category, categoryItems));
-      })
-      .catch((err) => console.log(err));
-  }
-}
+// export function handleReceiveCategories() {
+//   return dispatch => {
+//     return getCategories()
+//       .then((categories) => {
+//         dispatch(receiveCategories(categories));
+//       })
+//       .catch((err) => console.log(err));
+//   }
+// }
+//
+// export function handleAddCategory(id) {
+//   return dispatch => {
+//     return _addCategory(id)
+//       .then((newSet) => {
+//         dispatch(addCategory(id, newSet));
+//       })
+//       .catch((err) => console.log(err));
+//   }
+// }
+//
+// export function handleRemoveCategory(id) {
+//   return dispatch => {
+//     return _removeCategory(id)
+//       .then((categories) => {
+//         dispatch(removeCategory(categories));
+//       })
+//       .catch((err) => console.log(err));
+//   }
+// }
+//
+// export function handleAddDeckToCategory(category, title) {
+//   return dispatch => {
+//     return _addDeckToCategory(category, title)
+//       .then((categoryItems) => {
+//         dispatch(addDeckToCategory(category, categoryItems));
+//       })
+//       .catch((err) => console.log(err));
+//   }
+// }
+//
+// export function handleRemoveDeckFromCategory(category, title) {
+//   return dispatch => {
+//     return _removeDeckFromCategory(category, title)
+//       .then((categoryItems) => {
+//         dispatch(removeDeckFromCategory(category, categoryItems));
+//       })
+//       .catch((err) => console.log(err));
+//   }
+// }
