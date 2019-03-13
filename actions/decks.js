@@ -2,9 +2,10 @@ import { RECEIVE_DECKS, ADD_DECK, REMOVE_DECK, EDIT_TITLE } from "./types";
 import { saveDeckTitle, getDeck, getDecks, deleteDeck, editDeckTitle } from "../utils/api";
 import { setActiveDeck, clearActiveDeck } from "./activeDeck";
 import { startLoading, endLoading } from "./loading";
-import { receiveCategories } from "./categories";
+import { receiveCategories, removeDeckFromCategory, addDeckToCategory } from "./categories";
 
-import { populateInitialData, createDeck, getDecksAndCards, checkForExistingTable } from "../SQLite";
+import { populateInitialData, createDeck, getDecksAndCards, checkForExistingTable,
+  removeDeck as _removeDeck, updateDeckTitle } from "../SQLite";
 
 const receiveDecks = (decks) => {
   return {
@@ -93,15 +94,15 @@ const addDeck = (deck) => {
   };
 }
 
-export const handleAddDeck = (title) => {
+export const handleAddDeck = (category, title) => {
   return dispatch => {
     return createDeck(title)
       .then(deckArr => {
-        console.log("newDeck:", deckArr)
         let deck = deckArr[0];
         deck.questions = [];
         dispatch(addDeck(deckArr[0]));
         dispatch(setActiveDeck(title));
+        dispatch(addDeckToCategory(category, title));
       })
       .catch(err => console.log(err));
   };
@@ -114,12 +115,13 @@ const removeDeck = (title) => {
   };
 }
 
-export const handleRemoveDeck = (title) => {
+export const handleRemoveDeck = (category, title) => {
   return dispatch => {
-    return deleteDeck(title)
-      .then(() => {
+    return _removeDeck(title)
+      .then(() => { // returns empty arr
         dispatch(removeDeck(title));
         dispatch(clearActiveDeck());
+        dispatch(removeDeckFromCategory(category, title))
       })
       .catch((err) => console.log(err));
   };
@@ -135,10 +137,13 @@ const editTitle = (oldTitle, newDeck) => {
 
 export const handleEditTitle = (oldTitle, newTitle) => {
   return dispatch => {
-    return editDeckTitle(oldTitle, newTitle)
-      .then((newDeck) => {
+    return updateDeckTitle(oldTitle, newTitle)
+      .then((rowsArr) => {
+        let newDeck = rowsArr[0]; // may be error prone because of hard coding
         dispatch(setActiveDeck(newDeck.title));
         dispatch(editTitle(oldTitle, newDeck));
+        dispatch(addDeckToCategory(newDeck.category, newDeck.title));
+        dispatch(removeDeckFromCategory(newDeck.category, oldTitle));
       })
       .catch((err) => console.log(err));
   };

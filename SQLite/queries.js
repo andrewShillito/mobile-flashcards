@@ -2,7 +2,7 @@
 // DECKS QUERIES
 export const createDecks = "create table if not exists decks " + "(" + ([
   "title TEXT PRIMARY KEY NOT NULL",
-  "category TEXT", // category name or null
+  "category TEXT DEFAULT 'Uncategorized'", // category name or null
   "create_date TEXT NOT NULL", // date num in unix epoch
   "last_tested INTEGER", // date num in unix epoch - will contain same value as deckScores related date
   "last_score REAL", // real number or null
@@ -17,8 +17,6 @@ export const createDeck = "INSERT INTO decks (title, create_date, category) VALU
 export const createDeckWithCategory = "INSERT INTO decks (title, create_date, category) VALUES (?, ?, ?)"
 
 export const removeDeck = "DELETE FROM decks WHERE title=?";
-
-export const removeDeckQuestions = "DROP TABLE IF EXISTS ?";
 
 export const updateDeckTitle = "UPDATE decks SET title=? WHERE title=?";
 
@@ -51,13 +49,11 @@ export const getAllCards = "SELECT * FROM cards";
 
 export const getCardsFromDeck = "SELECT * FROM cards WHERE deck_id=?";
 
-export const removeCard = "DELETE FROM cards WHERE deck_id=?, question=?, answer=?";
-// in future may just use index (card_id) which could be easier query - refactor later
+export const removeCard = "DELETE FROM cards WHERE card_id=?";
 
 export const removeAllCardsFromDeck = "DELETE FROM cards WHERE deck_id=?";
 
 export const updateCard = "UPDATE cards SET question=?, answer=? WHERE card_id=?";
-// lots of params, think about how to shorten the necessary params for func call
 
 export const dropCards = "DROP TABLE cards";
 

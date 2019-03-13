@@ -45,7 +45,9 @@ class EditDeck extends React.Component {
     }
   }
   deleteDeck = () => {
-    this.props.dispatch(handleRemoveDeck(this.props.activeDeck));
+    let category = this.props.deck.category === null ? "Uncategorized" : this.props.deck.category;
+    let activeDeck = this.props.activeDeck;
+    this.props.dispatch(handleRemoveDeck(category, activeDeck));
     this.clearInput();
     this.props.navigation.navigate("Home");
   }
@@ -126,6 +128,7 @@ function mapStateToProps({ activeDeck, decks }) {
   return {
     activeDeck,
     deckNames: Object.keys(decks),
+    deck: decks[activeDeck],
   }
 }
 

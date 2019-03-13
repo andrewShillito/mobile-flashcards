@@ -8,11 +8,6 @@ const db = SQLite.openDatabase("mobile_flashcards.db"); // create a DB if none e
 const logResponse = (trans, response) => console.log("\nresponse:", response);
 const errorHandler = (trans, error) => console.log("\nerror:", error);
 
-// for checking if table exists:
-// SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}';
-// or
-// PRAGMA table_info(your_table_name) - If the resulting table is empty then your_table_name doesn't exist.
-
 const loggingTx = function(tx, Query, params = []) {
   return tx.executeSql(Query, params,
     (transaction, result) => logResponse(this, result), // success func
@@ -109,10 +104,11 @@ export function getDecks() {
 
 export function getDecksAndCards() {
   return new Promise((res, rej) => db.transaction(tx => {
-    tx.executeSql("SELECT * FROM decks INNER JOIN cards ON cards.deck_id = decks.title ORDER BY decks.title", [],
+    tx.executeSql(Queries.getDecksAndCards, [],
       (_, { rows }) => res(rows._array),
       (_, error) => rej(error));
-  }));
+    })
+  );
 }
 
 export function getDeck(title) {
@@ -127,21 +123,27 @@ export function getDeck(title) {
 export function createDeck(title, created = getCurrentTimeISOString(), category = null) {
   return new Promise((res, rej) => db.transaction(tx => {
       tx.executeSql(Queries.createDeck, [title, created, category],
-        (_, { rows }) => res(rows._array), // as long as it responds with the new row
+        (_, { rows }) => {},
         (_, error) => rej(error)
       );
+      tx.executeSql(Queries.getDeck, [title],
+        (_, { rows }) => res(rows._array),
+        (_, error) => rej(error));
     })
-  )
+  );
 }
 
 export function removeDeck(title) {
   return new Promise((res, rej) => db.transaction(tx => {
-    tx.executeSql(Queries.removeDeckQuestions, [title], // removes cards relating to deck
+    tx.executeSql(Queries.removeDeck, [title], // removes cards relating to deck
       (_, { rows }) => {},
       (_, error) => rej(error));
-    tx.executeSql(Queries.removeDeck, [title], // removes deck from decks table
+    tx.executeSql(Queries.removeAllCardsFromDeck, [title], // removes deck from decks table
       (_, { rows }) => res(rows._array),
       (_, error) => rej(error));
+    // tx.executeSql("SELECT * FROM cards", [], // if need the new cards list
+    //   (_, { rows }) => res(rows._array),
+    //   (_, error) => rej(error));
     })
   );
 }
@@ -192,9 +194,9 @@ export function getCardsFromDeck(deck_id) {
   );
 }
 
-export function removeCard(deck_id, question, answer) {
+export function removeCard(card_id) {
   return new Promise((res, rej) => db.transaction(tx => {
-    tx.executeSql(Queries.removeCard, [deck_id, question, answer],
+    tx.executeSql(Queries.removeCard, [card_id],
       (_, { rows }) => res(rows._array),
       (_, error) => rej(error));
     })

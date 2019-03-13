@@ -16,6 +16,7 @@ import { clearActiveDeck } from "../actions/activeDeck";
 class New extends React.Component {
   state = {
     title: "",
+    category: "Uncategorized",
     message: "Submit to create a new deck",
     messageColor: SUCCESS,
     warningColor: RED,
@@ -38,7 +39,7 @@ class New extends React.Component {
       this.setState(() => ({
         title: '',
       }));
-      this.props.dispatch(handleAddDeck(this.state.title));
+      this.props.dispatch(handleAddDeck(this.state.category, this.state.title));
       this.props.navigation.navigate("DeckDetail");
     }
   }

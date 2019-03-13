@@ -8,33 +8,33 @@ export function receiveCategories(categories) {
   };
 }
 
-function addCategory(id, newSet) {
+export function addCategory(id) {
   return {
     type: ADD_CATEGORY,
     id,
-    newSet,
   };
 }
 
-function removeCategory(categories) {
+export function removeCategory(category) {
   return {
     type: REMOVE_CATEGORY,
-    categories,
+    category,
   };
 }
 
-function addDeckToCategory(category, categoryItems) {
+export function addDeckToCategory(category, title) {
   return {
     type: ADD_DECK_TO_CATEGORY,
-    categoryItems,
+    category,
+    title,
   };
 }
 
-function removeDeckFromCategory(category, categoryItems) {
+export function removeDeckFromCategory(category, title) {
   return {
     type: REMOVE_DECK_FROM_CATEGORY,
     category,
-    categoryItems,
+    title,
   };
 }
 

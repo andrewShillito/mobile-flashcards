@@ -108,21 +108,31 @@ function categories(store = {}, action) {
     case ADD_CATEGORY:
       return {
         ...store,
-        [action.id]: action.newSet,
+        [action.id]: new Set(),
       };
     case REMOVE_CATEGORY:
+      let newStore = {
+        ...store
+      };
+      newStore[action.category].forEach((title) => newStore["Uncategorized"].add(title));
+      // move decks to uncategorized
+      delete newStore[action.category];
+      // delete the category
+
       return {
-        ...action.categories,
+        ...newStore,
       }
     case ADD_DECK_TO_CATEGORY:
       return {
         ...store,
-        [action.category]: action.categoryItems,
+        [action.category]: new Set(store[action.category]).add(action.title),
       };
     case REMOVE_DECK_FROM_CATEGORY:
+      let newSet = new Set(store[action.category]);
+      newSet.delete(action.title); // returns true/false if successful/unsuccessful
       return {
         ...store,
-        [action.category]: action.categoryItems,
+        [action.category]: newSet,
       };
     default:
       return store;
