@@ -56,7 +56,7 @@ export const removeCard = "DELETE FROM cards WHERE deck_id=?, question=?, answer
 
 export const removeAllCardsFromDeck = "DELETE FROM cards WHERE deck_id=?";
 
-export const updateCard = "UPDATE cards SET question=?, answer=? WHERE deck_id=?, question=?, answer=?";
+export const updateCard = "UPDATE cards SET question=?, answer=? WHERE card_id=?";
 // lots of params, think about how to shorten the necessary params for func call
 
 export const dropCards = "DROP TABLE cards";

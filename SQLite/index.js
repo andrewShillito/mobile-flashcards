@@ -87,8 +87,7 @@ export function dropAllTables() {
 export function createDecksTable() {
   // initializes decks table if none exists
   return new Promise((res, rej) => db.transaction(tx => {
-    tx.executeSql(
-      Queries.createDecks, [],
+    tx.executeSql(Queries.createDecks, [],
       (_, { rows }) => {},
       (_, error) => rej(error));
     // tx.executeSql(
@@ -118,8 +117,7 @@ export function getDecksAndCards() {
 
 export function getDeck(title) {
   return new Promise((res, rej) => db.transaction(tx => {
-    tx.executeSql(
-      Queries.getDeck, [title],
+    tx.executeSql(Queries.getDeck, [title],
       (_, { rows }) => res(rows._array),
       (_, error) => rej(error));
     })
@@ -138,12 +136,10 @@ export function createDeck(title, created = getCurrentTimeISOString(), category 
 
 export function removeDeck(title) {
   return new Promise((res, rej) => db.transaction(tx => {
-    tx.executeSql(
-      Queries.removeDeckQuestions, [title], // removes cards relating to deck
+    tx.executeSql(Queries.removeDeckQuestions, [title], // removes cards relating to deck
       (_, { rows }) => {},
       (_, error) => rej(error));
-    tx.executeSql(
-      Queries.removeDeck, [title], // removes deck from decks table
+    tx.executeSql(Queries.removeDeck, [title], // removes deck from decks table
       (_, { rows }) => res(rows._array),
       (_, error) => rej(error));
     })
@@ -152,8 +148,7 @@ export function removeDeck(title) {
 
 export function updateDeckTitle(title, newTitle) {
   return new Promise((res, rej) => db.transaction(tx => {
-      tx.executeSql(
-        Queries.updateDeckTitle, [newTitle, title],
+      tx.executeSql(Queries.updateDeckTitle, [newTitle, title],
         // theoretically, on UPDATE CASCADE should update the cards and deck_scores foreign key automatically
         (_, { rows }) => res(rows._array),
         (_, error) => rej(error));
@@ -197,53 +192,52 @@ export function getCardsFromDeck(deck_id) {
   );
 }
 
-export function getCardsFromAllDecks(deckArr) {}
-
-export function removeCard(deck_id, question, answer, onSuccess, onError = errorHandler) {
-  db.transaction(tx => {
+export function removeCard(deck_id, question, answer) {
+  return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.removeCard, [deck_id, question, answer],
-      onSuccess, onError
-    );
-  });
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
 }
 
-export function removeAllCardsFromDeck(deck_id, onSuccess = errorHandler, onError = errorHandler) {
-  db.transaction(tx => {
+export function removeAllCardsFromDeck(deck_id) {
+  return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.removeAllCardsFromDeck, [deck_id],
-      onSuccess, onError
-    );
-  });
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
 }
 
-export function updateCard(newQuestion, newAnswer, deck_id, question, answer, onSuccess, onError = errorHandler) {
-  db.transaction(tx => {
-    tx.executeSql(Queries.updateCard, [newQuestion, newAnswer, deck_id, question, answer],
-      onSuccess, onError
-    );
-  });
+export function updateCard(card_id, newQuestion, newAnswer) {
+  return new Promise((res, rej) => db.transaction(tx => {
+    tx.executeSql(Queries.updateCard, [newQuestion, newAnswer, card_id],
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
 }
 
-export function createDeckScores(onSuccess = logResponse, onError = errorHandler) {
-  db.transaction(tx => {
+export function createDeckScores() {
+  return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.createDeckScores, [],
-      onSuccess, // success func
-      onError
-    );
-    loggingTx(tx, Queries.checkTableCreation, ["deck_scores"]);
-  });
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
 }
 
-export function recordScore(deck_id, score, onSuccess = errorHandler, onError = errorHandler) {
-  let time = getSafeTimeISO();
-  db.transaction(tx => {
+export function recordScore(deck_id, score, time = getCurrentTimeISOString()) {
+  return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.recordDeckScore, [deck_id, time, score],
-      onSuccess, onError
-    );
-    tx.executeSql(
-      Queries.updateLastTest, [time, score, deck_id],
-        onSuccess, onError
-    );
-  });
+      (_, { rows }) => {},
+      (_, error) => rej(error));
+    tx.executeSql(Queries.updateLastTest, [time, score, deck_id],
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
 }
 
 export function getAllScores() {
@@ -255,18 +249,20 @@ export function getAllScores() {
   }));
 }
 
-export function getAllScoresFromDeck(deck_id, onSuccess, onError = errorHandler) {
-  db.transaction(tx => {
+export function getAllScoresFromDeck(deck_id) {
+  return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.getAllScoresFromDeck, [deck_id],
-      onSuccess, onError
-    );
-  });
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
 }
 
-export function removeAllScoresFromDeck(deck_id, onSuccess, onError = errorHandler) {
-  db.transaction(tx => {
+export function removeAllScoresFromDeck(deck_id) {
+  return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.removeAllScoresFromDeck, [deck_id],
-      onSuccess, onError
-    );
-  });
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
 }
