@@ -1,9 +1,9 @@
-import { SQLite } from "expo";
-import { decks } from "./_data";
+import Expo, { SQLite } from "expo";
+import { decks } from "../utils/_data";
 import * as Queries from "./queries";
-import { getSafeTimeISO, getCurrentTimeISOString } from "./helpers";
+import { getSafeTimeISO, getCurrentTimeISOString } from "../utils/helpers";
 
-const db = SQLite.openDatabase("mobile_flaschards"); // create a DB if none exists and otherwise open it
+const db = SQLite.openDatabase("db.db"); // create a DB if none exists and otherwise open it
 
 const logResponse = (trans, response) => console.log("\nresponse:", response);
 const errorHandler = (trans, error) => console.log("\nerror:", error);
@@ -31,6 +31,15 @@ const boundNoLogTx = function(Query, params = []) {
     (transaction, error) => errorHandler(this, error));
 }
 
+export function checkForExistingTable() {
+  return new Promise((res, rej) => db.transaction(tx => {
+    tx.executeSql(Queries.checkForExistingTable, ["decks"],
+      (_, { rows }) => res(rows._array.length > 0), // returns bool that decks exists
+      (_, error) => rej(error)
+    );
+  }));
+}
+
 export function populateInitialData(queryList = [
   Queries.dropDeckScores,
   Queries.dropCards,
@@ -42,6 +51,9 @@ export function populateInitialData(queryList = [
 
 ]) {
   return new Promise((res, rej) => db.transaction(tx => {
+    // check if decks table exists - if it does, do not populate dummy data
+    // instead: fetch decks and cards from db
+
     const func = boundLoggingTx.bind(tx); // to shorten function call by binding tx to this keyword
     const noLogFunc = boundNoLogTx.bind(tx);
 
@@ -57,7 +69,7 @@ export function populateInitialData(queryList = [
       });
     });
 
-    tx.executeSql("SELECT * FROM decks INNER JOIN cards ON cards.deck_id = decks.title ORDER BY decks.title", [],
+    tx.executeSql(Queries.getDecksAndCards, [],
       (_, { rows }) => res(rows._array),
       (_, error) => rej(error));
   }));
@@ -114,9 +126,9 @@ export function getDeck(title, onSuccess, onError = errorHandler) {
   });
 }
 
-export function createDeck(title, created = getCurrentTimeISOString()) {
+export function createDeck(title, created = getCurrentTimeISOString(), category = null) {
   return new Promise((res, rej) => db.transaction(tx => {
-      tx.executeSql(Queries.createDeck, [title, created],
+      tx.executeSql(Queries.createDeck, [title, created, category],
         (_, { rows }) => {},
         (_, error) => rej(error)
       );

@@ -24,6 +24,9 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    packagerOpts: {
+      assetExts: ["db"]
     }
   }
 }

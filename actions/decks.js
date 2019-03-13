@@ -4,7 +4,7 @@ import { setActiveDeck, clearActiveDeck } from "./activeDeck";
 import { startLoading, endLoading } from "./loading";
 import { receiveCategories } from "./categories";
 
-import { populateInitialData, createDeck, getDecksAndCards } from "../utils/sqlite";
+import { populateInitialData, createDeck, getDecksAndCards, checkForExistingTable } from "../SQLite";
 
 const receiveDecks = (decks) => {
   return {
@@ -17,64 +17,73 @@ export const handleReceiveDecks = () => {
   return dispatch => { //passed dispatch from redux-thunk middleware
     // dispatch(startLoading()); // not necessary as loading is currently extremely quick
 
-    // return populateInitialData() // gets an array of pre-populated decks back from sqlite
-    return getDecksAndCards() // fetches what is in db already
+    var existingData = false;
+    checkForExistingTable() // returns bool representing if decks table exists
+      .then((bool) => existingData = bool)
+      .catch(err => console.log("Error checking for existing data:", err));
+
+    existingData ? getDecksAndCards() : populateInitialData() // this works apparently
       .then(data => {
         // dispatch(endLoading()); // not necessary as laoding is currently extremely quick
-
-        let decks = {};
-        let categories = {};
-        data.forEach((card) => {
-          // builds decks and categories from sql data for redux store
-          if (decks[card.title] !== undefined) {
-            // primary deck data already in decks - just add the card to the questions arr
-            decks[card.title].questions = decks[card.title].questions.concat([{
-              question: card.question,
-              answer: card.answer,
-              card_id: card.card_id,
-            }]);
-          } else {
-            // deck not yet created in decks
-            let { title, category, create_date, last_score, last_tested, card_id, question, answer } = card;
-            decks[card.title] = {
-              title,
-              category,
-              create_date,
-              last_score,
-              last_tested,
-              questions: [
-                {
-                  card_id,
-                  question,
-                  answer,
-                }
-              ]
-            };
-            if (category === null) {
-              // uncategorized deck
-              if (categories["Uncategorized"] !== undefined) {
-                // uncategorized category already exists in categories
-                categories["Uncategorized"].add(title);
-              } else {
-                // uncategorized category not yet created in categories
-                categories["Uncategorized"] = new Set([title]);
-              }
-            }
-            else if (categories[category] !== undefined) {
-              // category already exists in categories and category is not null
-              categories[category].add(title);
-            } else {
-              // category does not exist in categories - make new set
-              categories[category] = new Set([title]);
-            }
-          }
-        });
+        const [ decks, categories ] = formatDecksAndCards(data);
+        // returns [ decks, categories ] formatted for redux store
 
         dispatch(receiveDecks(decks));
         dispatch(receiveCategories(categories))
       })
-      .catch(err => console.log(err));
-  };
+    .catch(err => console.log(err));
+  }
+}
+
+function formatDecksAndCards(data) {
+  let decks = {};
+  let categories = {};
+  data.forEach((card) => {
+    // builds decks and categories from sql data for redux store
+    if (decks[card.title] !== undefined) {
+      // primary deck data already in decks - just add the card to the questions arr
+      decks[card.title].questions = decks[card.title].questions.concat([{
+        question: card.question,
+        answer: card.answer,
+        card_id: card.card_id,
+      }]);
+    } else {
+      // deck not yet created in decks
+      let { title, category, create_date, last_score, last_tested, card_id, question, answer } = card;
+      decks[card.title] = {
+        title,
+        category,
+        create_date,
+        last_score,
+        last_tested,
+        questions: [
+          {
+            card_id,
+            question,
+            answer,
+          }
+        ]
+      };
+      if (category === null) {
+        // uncategorized deck
+        if (categories["Uncategorized"] !== undefined) {
+          // uncategorized category already exists in categories
+          categories["Uncategorized"].add(title);
+        } else {
+          // uncategorized category not yet created in categories
+          categories["Uncategorized"] = new Set([title]);
+        }
+      }
+      else if (categories[category] !== undefined) {
+        // category already exists in categories and category is not null
+        categories[category].add(title);
+      } else {
+        // category does not exist in categories - make new set
+        categories[category] = new Set([title]);
+      }
+    }
+  });
+  return [decks, categories];
 }
 
 const addDeck = (deck) => {

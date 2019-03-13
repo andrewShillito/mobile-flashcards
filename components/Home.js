@@ -12,8 +12,6 @@ import ButtonSecondary from "./ButtonSecondary";
 import HomeCategorySelector from "./HomeCategorySelector";
 import styles from "../styles/home";
 
-import { populateInitialData, dropAllTables } from "../utils/sqlite";
-
 class Home extends React.Component {
   state = {
     selectedCategory: "all",
