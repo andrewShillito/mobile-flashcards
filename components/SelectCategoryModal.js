@@ -2,17 +2,11 @@ import React from "react";
 import { Picker } from "react-native";
 import ModalWrapperSecondary from "./ModalWrapperSecondary";
 import styles from "../styles/selectCategoryModal";
+import { connect } from "react-redux";
 
-export default class SelectCategoryModal extends React.Component {
+class SelectCategoryModal extends React.Component {
   render() {
-    const dummyCategories = {
-      programming: {
-        name: "programming"
-      },
-      other: {
-        name: "other",
-      },
-    }
+    const { categories } = this.props;
     return (
       <ModalWrapperSecondary
         visible={this.props.visible}
@@ -26,15 +20,26 @@ export default class SelectCategoryModal extends React.Component {
           style={styles.picker}
           itemStyle={styles.text}
           >
-          <Picker.Item label="Show All" value="all" key="all"/>
-          {this.props.categories.length
-            ? this.props.categories.map((name) => (
+          <Picker.Item label="Show All" value="Show All" key="Show All"/>
+          {categories.length
+            ? categories.map((name) => (
               <Picker.Item label={name} value={name} key={name} />
             ))
-            : Object.keys(dummyCategories).map(cat => <Picker.Item label={cat} value={cat} key={cat} />)
+            : null
           }
         </Picker>
       </ModalWrapperSecondary>
     );
   }
 }
+
+function mapStateToProps({ categories }, parentProps) {
+  // console.log("Categories Obj", categories);
+  // console.log("Categories Arr", Object.keys(categories));
+  return {
+    ...parentProps,
+    categories: Object.keys(categories)
+  }
+}
+
+export default connect(mapStateToProps)(SelectCategoryModal);

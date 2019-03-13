@@ -14,7 +14,7 @@ import styles from "../styles/home";
 
 class Home extends React.Component {
   state = {
-    selectedCategory: "all",
+    selectedCategory: "Show All",
     isModalVisible: false,
   }
   componentDidMount() {
@@ -27,7 +27,7 @@ class Home extends React.Component {
     }
   }
   renderItem = ({ item }) => {
-    return <Deck deck={item} goToDeckDetail={this.goToDeckDetail} goToQuiz={this.goToQuiz} goToEdit={this.goToEdit} active={this.props.activeDeck === item.title} />
+    return <Deck deck={item} goToDeckDetail={this.goToDeckDetail} goToQuiz={this.goToQuiz} goToEdit={this.goToEdit} active={item !== undefined ? this.props.activeDeck === item.title : false} />
   }
   goToDeckDetail = (title) => {
     if (this.props.activeDeck !== title) {
@@ -71,14 +71,20 @@ class Home extends React.Component {
     }));
   }
   render() {
-    const { decks, categories } = this.props; //array instead of obj because of mapStateToProps below
-    console.log(categories);
-    const categoryList = categories ? Object.keys(categories) : [];
-    // const selectedDecks = (this.state.category !== "all") // add test for empty category list
-    //   ? [...categories[this.state.category]].map((name) => decks[name])
-    //   : Object.keys(decks).map((title) => decks[title]);
-    const selectedDecks = Object.keys(decks).map(title => decks[title]);
+    const { decks } = this.props; //array instead of obj because of mapStateToProps below
 
+    const selectedDecks = this.state.selectedCategory === "Show All"
+      ? decks
+      : decks.filter(deck => {
+        let category = deck.category === null ? "Uncategorized" : deck.category;
+        if (category === this.state.selectedCategory) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+    // console.log("selected decks:", selectedDecks);
     return (
       <View style={styles.container}>
         <HomeCategorySelector
@@ -87,7 +93,6 @@ class Home extends React.Component {
           />
         <SelectCategoryModal
           onValueChange={this.updateSelectedCategory}
-          categories={categoryList}
           selectedCategory={this.state.category}
           visible={this.state.isModalVisible}
           onRequestClose={this.toggleModal}
@@ -96,7 +101,7 @@ class Home extends React.Component {
         <FlatList
           data={selectedDecks}
           renderItem={this.renderItem}
-          keyExtractor={(item) => item.title}
+          keyExtractor={(item) => item !== undefined ? item.title : null}
           ListEmptyComponent={() => <Text style={{alignSelf: "center", fontSize: 20}}>No decks! Create a new one to view here.</Text>}
           />
       </View>
@@ -104,11 +109,12 @@ class Home extends React.Component {
   }
 }
 
-function mapStateToProps({ decks, activeDeck, categories }) {
+function mapStateToProps({ decks, activeDeck }) {
   return {
-    decks,
-    activeDeck,
-    categories,
+    decks: Object.keys(decks).map(title => {
+      return decks[title];
+    }),
+    activeDeck
   }
 }
 

@@ -3,8 +3,8 @@ import {
   CLEAR_ACTIVE_CARD,
 } from "./types";
 
-export const setActiveCard = function(card) { // card will have question, answer, & deck props (strings)
-  return {                                    // also an index prop - deck prop may be unnecessary
+export const setActiveCard = function(card) {
+  return {
     type: SET_ACTIVE_CARD,
     card,
   };

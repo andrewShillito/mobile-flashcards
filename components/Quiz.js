@@ -93,6 +93,9 @@ class Quiz extends React.Component {
     this.markIncorrect();
     this.increment();
   }
+  recordScore = () => {
+
+  }
   render() {
     const deck = this.props.deck;
     if (this.state.index < deck.questions.length) {
@@ -111,18 +114,23 @@ class Quiz extends React.Component {
           />
       );
     }
-    clearLocalNotifications(); // quiz completed so clear existing notification(s)
-    // setLocalNotification(); // set new notification for tomorrow - commented to prevent dev notifications
 
-    return (
-      <QuizScore
-        numCorrect={`${this.state.numCorrect} out of ${deck.questions.length} correct`}
-        percentCorrect={`${Number(Math.round((this.state.numCorrect/deck.questions.length)+'e2')+"e-2")*100}%`}
-        startOver={this.startOver}
-        getScoreDetails={this.getScoreDetails}
-        goToDeckDetail={this.goToDeckDetail}
-        />
-    );
+    else {
+      clearLocalNotifications(); // quiz completed so clear existing notification(s)
+      // setLocalNotification(); // set new notification for tomorrow - commented to prevent dev notifications
+
+      this.recordScore();
+
+      return (
+        <QuizScore
+          numCorrect={`${this.state.numCorrect} out of ${deck.questions.length} correct`}
+          percentCorrect={`${Number(Math.round((this.state.numCorrect/deck.questions.length)+'e2')+"e-2")*100}%`}
+          startOver={this.startOver}
+          getScoreDetails={this.getScoreDetails}
+          goToDeckDetail={this.goToDeckDetail}
+          />
+      );
+    }
   }
 }
 

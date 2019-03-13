@@ -1,9 +1,7 @@
 import { RECEIVE_DECKS, ADD_DECK, REMOVE_DECK, EDIT_TITLE } from "./types";
-import { saveDeckTitle, getDeck, getDecks, deleteDeck, editDeckTitle } from "../utils/api";
 import { setActiveDeck, clearActiveDeck } from "./activeDeck";
 import { startLoading, endLoading } from "./loading";
 import { receiveCategories, removeDeckFromCategory, addDeckToCategory } from "./categories";
-
 import { populateInitialData, createDeck, getDecksAndCards, checkForExistingTable,
   removeDeck as _removeDeck, updateDeckTitle } from "../SQLite";
 
@@ -47,10 +45,11 @@ function formatDecksAndCards(data) {
         question: card.question,
         answer: card.answer,
         card_id: card.card_id,
+        deck_id: card.deck_id
       }]);
     } else {
       // deck not yet created in decks
-      let { title, category, create_date, last_score, last_tested, card_id, question, answer } = card;
+      let { title, category, create_date, last_score, last_tested, card_id, question, answer, deck_id } = card;
       decks[card.title] = {
         title,
         category,
@@ -62,6 +61,7 @@ function formatDecksAndCards(data) {
             card_id,
             question,
             answer,
+            deck_id
           }
         ]
       };

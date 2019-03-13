@@ -172,7 +172,7 @@ export function createCard(deck_id, question, answer, card_id = getCurrentTimeIS
     tx.executeSql(Queries.createCard, [card_id, deck_id, question, answer],
       (_, { rows }) => {},
       (_, error) => rej(error));
-    tx.executeSql(Queries.getCard, [card_id], 
+    tx.executeSql(Queries.getCard, [card_id],
       (_, { rows }) => res(rows._array),
       (_, error) => rej(error));
     })
@@ -218,6 +218,9 @@ export function removeAllCardsFromDeck(deck_id) {
 export function updateCard(card_id, newQuestion, newAnswer) {
   return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.updateCard, [newQuestion, newAnswer, card_id],
+      (_, { rows }) => {},
+      (_, error) => rej(error));
+    tx.executeSql(Queries.getCard, [card_id],
       (_, { rows }) => res(rows._array),
       (_, error) => rej(error));
     })

@@ -9,7 +9,6 @@ import {
 import { combineReducers } from "redux";
 
 function decks(store = {}, action) {
-  // console.log("Reducer:", action)
   let newState;
   switch(action.type) {
     case RECEIVE_DECKS:
@@ -34,14 +33,13 @@ function decks(store = {}, action) {
         [action.newDeck.title]: action.newDeck,
       }
       delete newState[action.oldTitle];
-
       return newState;
     case ADD_CARD:
       return {
         ...store,
-        [action.title]: {
-          ...store[action.title],
-          "questions": store[action.title].questions.concat([action.card])
+        [action.card.deck_id]: {
+          ...store[action.card.deck_id],
+          "questions": store[action.card.deck_id].questions.concat([action.card])
         }
       };
     case REMOVE_CARD:
@@ -49,14 +47,15 @@ function decks(store = {}, action) {
         ...store,
         [action.deckTitle]: {
           ...store[action.deckTitle],
-          "questions": store[action.deckTitle].questions.filter((question, index) => index !== action.cardIndex),
+          "questions": store[action.deckTitle].questions.filter(card => card.card_id !== action.card_id),
         },
       };
     case EDIT_CARD:
       return {
         ...store,
-        [action.deckTitle]: {
-          ...action.deck,
+        [action.card.deck_id]: {
+          ...store[action.card.deck_id],
+          questions: store[action.card.deck_id].questions.filter((card) => card.card_id !== card_id).concat([action.card])
         }
       }
     default:

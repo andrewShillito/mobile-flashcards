@@ -63,7 +63,8 @@ class EditCardModal extends React.Component {
         question: this.state.question,
         answer: this.state.answer,
       };
-      this.props.dispatch(handleEditCard(this.props.activeDeck, this.props.cardIndex, newCard));
+      let { card_id } = this.props.activeCard;
+      this.props.dispatch(handleEditCard(card_id, newCard));
       this.setState(() => ({
         question: "",
         answer: "",
@@ -75,7 +76,7 @@ class EditCardModal extends React.Component {
   }
   deleteCard = () => {
     this.props.closeModal();
-    this.props.dispatch(handleRemoveCard(this.props.activeDeck, this.props.cardIndex));
+    this.props.dispatch(handleRemoveCard(this.props.activeDeck, this.props.activeCard.card_id));
     this.clearInputs();
   }
   clearInputs = () => {

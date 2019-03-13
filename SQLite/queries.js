@@ -45,7 +45,7 @@ export const createCards = "CREATE TABLE IF NOT EXISTS cards " + "(" + ([
 
 export const createCard = "INSERT INTO cards (card_id, deck_id, question, answer) VALUES (?, ?, ?, ?)";
 
-export const getCard = "SELECT answer, card_id, question FROM CARDS WHERE card_id=?";
+export const getCard = "SELECT * FROM CARDS WHERE card_id=?";
 
 export const getAllCards = "SELECT * FROM cards";
 
@@ -62,7 +62,7 @@ export const dropCards = "DROP TABLE cards";
 // DECK SCORES QUERIES
 // All scores for decks (not cards) stored in a single table with foreign keys referencing the deck
 export const createDeckScores = "CREATE TABLE IF NOT EXISTS deck_scores " + "(" + ([
-  "time TEXT NOT NULL PRIMARY KEY", // date num in unix epoch
+  "time TEXT NOT NULL PRIMARY KEY", // date ISO string
   "deck_id TEXT NOT NULL",
   "score REAL NOT NULL",
   "FOREIGN KEY (deck_id) REFERENCES decks(title) ON UPDATE CASCADE ON DELETE CASCADE"

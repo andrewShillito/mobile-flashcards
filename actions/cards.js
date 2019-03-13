@@ -12,10 +12,9 @@ import { clearActiveCard } from "./activeCard";
 import { createCard, getAllCards, getCardsFromDeck, removeCard as _removeCard, updateCard } from "../SQLite/";
 
 
-export const addCard = (title, card) => {
+export const addCard = (card) => {
   return {
     type: ADD_CARD,
-    title,
     card,
   };
 }
@@ -24,46 +23,43 @@ export const handleAddCard = (deckTitle, { question, answer}) => {
   return dispatch => {
     return createCard(deckTitle, question, answer)
       .then((rowsArr) => {
-        console.log("newCard from SQL:", rowsArr[0]);
-        dispatch(addCard(deckTitle, rowsArr[0]));
+        dispatch(addCard(rowsArr[0]));
       })
       .catch((err) => console.log(err));
   };
 }
 
-export const removeCard = (deckTitle, cardIndex) => {
+export const removeCard = (deckTitle, card_id) => {
   return {
     type: REMOVE_CARD,
     deckTitle,
-    cardIndex,
+    card_id,
   };
 }
 
-export const handleRemoveCard = (deckTitle, cardIndex) => {
+export const handleRemoveCard = (deckTitle, card_id) => {
   return dispatch => {
-    return deleteCard(deckTitle, cardIndex)
-      .then((deck) => {
-        console.log("remove card deck:", deck);
-        dispatch(removeCard(deckTitle, cardIndex));
+    return _removeCard(card_id)
+      .then(() => {
+        dispatch(removeCard(deckTitle, card_id));
       })
       .then(() => dispatch(clearActiveCard()))
       .catch((err) => console.log(err));
   };
 }
 
-export const editCard = (deckTitle, deck) => {
+export const editCard = (card) => {
   return {
     type: EDIT_CARD,
-    deckTitle,
-    deck,
+    card,
   };
 }
 
-export const handleEditCard = (deckTitle, cardIndex, newCard) => {
+export const handleEditCard = (card_id, { question, answer }) => {
   return dispatch => {
-    return _editCard(deckTitle, cardIndex, newCard)
-      .then((deck) => {
-        dispatch(editCard(deckTitle, deck));
+    return updateCard(card_id, question, answer)
+      .then((card) => {
+        dispatch(editCard(card));
       })
       .then(() => dispatch(clearActiveCard()))
       .catch((err) => console.log(err));

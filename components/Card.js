@@ -6,12 +6,10 @@ import { setActiveCard } from "../actions/activeCard";
 
 class Card extends React.Component {
   handleTouch = () => {
-    const index = this.props.index;
+    const { question, index } = this.props;
     const newCard = {
-      deck: this.props.deck.title,
-      index: index,
-      question: this.props.deck.questions[index].question,
-      answer: this.props.deck.questions[index].answer,
+      index,
+      ...question,
     };
     this.props.toggleModal();
     this.props.dispatch(setActiveCard(newCard));
@@ -59,11 +57,11 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps({ decks, activeDeck }, { question, index }) {
+function mapStateToProps({ }, { question, index, toggleModal }) {
   return {
-    deck: decks[activeDeck],
     question,
     index,
+    toggleModal,
   };
 }
 

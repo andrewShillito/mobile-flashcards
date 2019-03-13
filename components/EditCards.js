@@ -19,7 +19,7 @@ class EditCards extends React.Component {
         <FlatList
           data={deck ? deck.questions : []}
           renderItem={this.renderItem}
-          keyExtractor={(item) => `${item.question} ${item.answer}`}
+          keyExtractor={(item) => item.card_id}
           ListEmptyComponent={() => <Text style={{alignSelf: "center", fontSize: 20}}>No cards in this deck!</Text>}
         />
       </View>
@@ -30,7 +30,8 @@ class EditCards extends React.Component {
 function mapStateToProps({ activeDeck, decks }, { toggleModal }) {
   return {
     deck: decks[activeDeck],
-  }
+    toggleModal,
+  };
 }
 
 export default connect(mapStateToProps)(EditCards);
