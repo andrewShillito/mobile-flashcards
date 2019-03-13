@@ -3,11 +3,6 @@ import {
   REMOVE_CARD,
   EDIT_CARD,
 } from "./types";
-import {
-  addCardToDeck,
-  deleteCard,
-  editCard as _editCard,
-} from "../utils/api";
 import { clearActiveCard } from "./activeCard";
 import { createCard, getAllCards, getCardsFromDeck, removeCard as _removeCard, updateCard } from "../SQLite/";
 
