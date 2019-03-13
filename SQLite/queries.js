@@ -28,7 +28,7 @@ export const setDeckCategory = "UPDATE decks SET category=? WHERE title=?";
 
 export const clearDeckCategory = "UPDATE decks SET category=null WHERE title=?";
 
-export const getDecksAndCards = "SELECT * FROM decks INNER JOIN cards ON cards.deck_id = decks.title ORDER BY decks.title";
+export const getDecksAndCards = "SELECT * FROM decks INNER JOIN cards ON cards.deck_id = decks.title ORDER BY decks.title, card_id";
 
 export const checkForExistingTable = "SELECT name FROM sqlite_master WHERE type='table' AND name=?";
 
@@ -44,6 +44,8 @@ export const createCards = "CREATE TABLE IF NOT EXISTS cards " + "(" + ([
 ]).join(", ") + ")";
 
 export const createCard = "INSERT INTO cards (card_id, deck_id, question, answer) VALUES (?, ?, ?, ?)";
+
+export const getCard = "SELECT answer, card_id, question FROM CARDS WHERE card_id=?";
 
 export const getAllCards = "SELECT * FROM cards";
 
