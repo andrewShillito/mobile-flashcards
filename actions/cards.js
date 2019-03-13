@@ -58,8 +58,8 @@ export const editCard = (card) => {
 export const handleEditCard = (card_id, { question, answer }) => {
   return dispatch => {
     return updateCard(card_id, question, answer)
-      .then((card) => {
-        dispatch(editCard(card));
+      .then((cardArr) => {
+        dispatch(editCard(cardArr[0]));
       })
       .then(() => dispatch(clearActiveCard()))
       .catch((err) => console.log(err));
