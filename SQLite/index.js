@@ -3,7 +3,7 @@ import { decks } from "../utils/_data";
 import * as Queries from "./queries";
 import { getSafeTimeISO, getCurrentTimeISOString } from "../utils/helpers";
 
-const db = SQLite.openDatabase("db.db"); // create a DB if none exists and otherwise open it
+const db = SQLite.openDatabase("mobile_flashcards.db"); // create a DB if none exists and otherwise open it
 
 const logResponse = (trans, response) => console.log("\nresponse:", response);
 const errorHandler = (trans, error) => console.log("\nerror:", error);
