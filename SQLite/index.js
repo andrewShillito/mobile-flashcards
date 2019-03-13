@@ -32,9 +32,11 @@ const boundNoLogTx = function(Query, params = []) {
 }
 
 export function checkForExistingTable() {
+  // checks if decks exists - existing db
+  // returns bool representing that decks exists
   return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.checkForExistingTable, ["decks"],
-      (_, { rows }) => res(rows._array.length > 0), // returns bool that decks exists
+      (_, { rows }) => res(rows._array.length > 0),
       (_, error) => rej(error)
     );
   }));
@@ -51,8 +53,6 @@ export function populateInitialData(queryList = [
 
 ]) {
   return new Promise((res, rej) => db.transaction(tx => {
-    // check if decks table exists - if it does, do not populate dummy data
-    // instead: fetch decks and cards from db
 
     const func = boundLoggingTx.bind(tx); // to shorten function call by binding tx to this keyword
     const noLogFunc = boundNoLogTx.bind(tx);
