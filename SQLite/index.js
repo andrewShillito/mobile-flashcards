@@ -76,36 +76,32 @@ export function populateInitialData(queryList = [
 }
 
 export function dropAllTables() {
-  db.transaction(tx => {
+  return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.dropDeckScores, [], logResponse, errorHandler);
     tx.executeSql(Queries.dropCards, [], logResponse, errorHandler);
     tx.executeSql(Queries.dropDecks, [], logResponse, errorHandler);
-  });
+    })
+  );
 }
 
-export function createDecksTable(onSuccess = logResponse, onError = errorHandler) {
+export function createDecksTable() {
   // initializes decks table if none exists
-  db.transaction(tx => {
+  return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(
       Queries.createDecks, [],
-      onSuccess,
-      onError
-    );
-    loggingTx(tx, Queries.checkTableCreation, ["decks"]);
-  });
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
 }
 
-export function getDecks(onSuccess, onError = errorHandler) {
-  // onSuccess will be passed by calling component
-  // onError is optional for specific error handling
-  // double check the syntax of the parameters
-  db.transaction(tx => {
-    tx.executeSql(
-      Queries.getDecks, [],
-      onSuccess,
-      onError,
-    )
-  });
+export function getDecks() {
+  return new Promise((res, rej) => db.transaction(tx => {
+    tx.executeSql(Queries.getDecks, [],
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
 }
 
 export function getDecksAndCards() {
@@ -116,14 +112,14 @@ export function getDecksAndCards() {
   }));
 }
 
-export function getDeck(title, onSuccess, onError = errorHandler) {
-  db.transaction(tx => {
+export function getDeck(title) {
+  return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(
       Queries.getDeck, [title],
-      onSuccess,
-      onError
-    );
-  });
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
 }
 
 export function createDeck(title, created = getCurrentTimeISOString(), category = null) {
