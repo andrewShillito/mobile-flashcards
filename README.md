@@ -1,5 +1,5 @@
 # Mobile flashcards
-A React Native App for iOS built using expo-cli, react navigation, and redux.
+A React Native App for iOS built using expo-cli, SQLite, react navigation, and redux.
 
 ## Try it on the Web!
 
@@ -34,8 +34,9 @@ Will start an expo server in a new browser tab.  You can then connect to expo vi
 ## Tab Navigator Routes
 
 1. Home - view a list of your flashcard decks.
-    - *Touch to open a side bar with buttons for viewing the deck, editing the deck,
-  and starting a quiz.*
+    - *limit view by category - category editing coming soon*
+    - *Touch decks to open a side bar with buttons for viewing the deck, editing the deck,
+  and starting a quiz*
 2. New - create new decks by inputting an un-used title
 
 ## Stack Navigator Routes
@@ -45,4 +46,4 @@ Will start an expo server in a new browser tab.  You can then connect to expo vi
 2. Quiz - Quiz yourself on your deck choosing correct or incorrect to track your score. Displays a score report when quiz is completed.
 3. EditDeck - Change deck title, add cards, or delete the deck.
 
-*Coming soon - more in-depth score reports, SQLite, Home Deck swipe handling*
+*Coming soon - more in-depth score reports, Home Deck swipe handling *
