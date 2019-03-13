@@ -6,7 +6,6 @@ import {
 import { clearActiveCard } from "./activeCard";
 import { createCard, getAllCards, getCardsFromDeck, removeCard as _removeCard, updateCard } from "../SQLite/";
 
-
 export const addCard = (card) => {
   return {
     type: ADD_CARD,
