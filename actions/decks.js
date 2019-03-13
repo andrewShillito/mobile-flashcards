@@ -4,7 +4,7 @@ import { setActiveDeck, clearActiveDeck } from "./activeDeck";
 import { startLoading, endLoading } from "./loading";
 import { receiveCategories } from "./categories";
 
-import { populateInitialData, createDeck } from "../utils/sqlite";
+import { populateInitialData, createDeck, getDecksAndCards } from "../utils/sqlite";
 
 const receiveDecks = (decks) => {
   return {
@@ -17,7 +17,8 @@ export const handleReceiveDecks = () => {
   return dispatch => { //passed dispatch from redux-thunk middleware
     // dispatch(startLoading()); // not necessary as loading is currently extremely quick
 
-    return populateInitialData() // gets an array of pre-populated decks back from sqlite
+    // return populateInitialData() // gets an array of pre-populated decks back from sqlite
+    return getDecksAndCards() // fetches what is in db already
       .then(data => {
         // dispatch(endLoading()); // not necessary as laoding is currently extremely quick
 

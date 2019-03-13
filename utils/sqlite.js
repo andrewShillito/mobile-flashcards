@@ -8,6 +8,11 @@ const db = SQLite.openDatabase("mobile_flaschards"); // create a DB if none exis
 const logResponse = (trans, response) => console.log("\nresponse:", response);
 const errorHandler = (trans, error) => console.log("\nerror:", error);
 
+// for checking if table exists:
+// SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}';
+// or
+// PRAGMA table_info(your_table_name) - If the resulting table is empty then your_table_name doesn't exist.
+
 const loggingTx = function(tx, Query, params = []) {
   return tx.executeSql(Query, params,
     (transaction, result) => logResponse(this, result), // success func
@@ -89,6 +94,14 @@ export function getDecks(onSuccess, onError = errorHandler) {
       onError,
     )
   });
+}
+
+export function getDecksAndCards() {
+  return new Promise((res, rej) => db.transaction(tx => {
+    tx.executeSql("SELECT * FROM decks INNER JOIN cards ON cards.deck_id = decks.title ORDER BY decks.title", [],
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+  }));
 }
 
 export function getDeck(title, onSuccess, onError = errorHandler) {
