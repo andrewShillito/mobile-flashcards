@@ -94,7 +94,10 @@ class Quiz extends React.Component {
     this.increment();
   }
   recordScore = () => {
-
+    // record score in decks_score table
+    // update last_tested and last_score in decks table
+    // update redux decks score info
+    // end
   }
   render() {
     const deck = this.props.deck;
