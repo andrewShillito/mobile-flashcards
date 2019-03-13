@@ -55,7 +55,7 @@ function decks(store = {}, action) {
         ...store,
         [action.card.deck_id]: {
           ...store[action.card.deck_id],
-          questions: store[action.card.deck_id].questions.filter((card) => card.card_id !== card_id).concat([action.card])
+          questions: store[action.card.deck_id].questions.filter((card) => card.card_id !== action.card.card_id).concat([action.card])
         }
       }
     default:
