@@ -34,6 +34,7 @@ export const getDecksAndCards = "SELECT * FROM decks INNER JOIN cards ON cards.d
 
 export const checkForExistingTable = "SELECT name FROM sqlite_master WHERE type='table' AND name=?";
 
+export const getTableStructure = "SELECT sql FROM sqlite_master WHERE name=?";
 // CARDS QUERIES
 // each card is stored in a table with all other cards and foreign key === deck name
 export const createCards = "CREATE TABLE IF NOT EXISTS cards " + "(" + ([

@@ -89,8 +89,12 @@ export function createDecksTable() {
   return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(
       Queries.createDecks, [],
-      (_, { rows }) => res(rows._array),
+      (_, { rows }) => {},
       (_, error) => rej(error));
+    // tx.executeSql(
+    //   Queries.getTableStructure, ["decks"], // checks table creation and returns the sql used to make it
+    //   (_, { rows }) => res(rows._array),
+    //   (_, error) => rej(error));
     })
   );
 }
@@ -125,64 +129,61 @@ export function getDeck(title) {
 export function createDeck(title, created = getCurrentTimeISOString(), category = null) {
   return new Promise((res, rej) => db.transaction(tx => {
       tx.executeSql(Queries.createDeck, [title, created, category],
-        (_, { rows }) => {},
-        (_, error) => rej(error)
-      );
-      tx.executeSql(Queries.getDeck, [title],
-        (_, { rows }) => res(rows._array),
+        (_, { rows }) => res(rows._array), // as long as it responds with the new row
         (_, error) => rej(error)
       );
     })
   )
 }
 
-export function removeDeck(title, onSuccess, onError = errorHandler) {
-  db.transaction(tx => {
+export function removeDeck(title) {
+  return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(
-      Queries.removeDeck, [title],
-      onSuccess, onError
-    );
+      Queries.removeDeckQuestions, [title], // removes cards relating to deck
+      (_, { rows }) => {},
+      (_, error) => rej(error));
     tx.executeSql(
-      Queries.removeDeckQuestions, [title],
-      onSuccess,
-      onError
-    );
-  });
+      Queries.removeDeck, [title], // removes deck from decks table
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
 }
 
-export function updateDeckTitle(title, newTitle, onSuccess, onError = errorHandler) {
-  db.transaction(tx => {
-    tx.executeSql(
-      Queries.updateDeckTitle, [newTitle, title], // theoretically, on UPDATE CASCADE should update
-      onSuccess, onError                          // the foreign key automatically
-    );
-  });
+export function updateDeckTitle(title, newTitle) {
+  return new Promise((res, rej) => db.transaction(tx => {
+      tx.executeSql(
+        Queries.updateDeckTitle, [newTitle, title],
+        // theoretically, on UPDATE CASCADE should update the cards and deck_scores foreign key automatically
+        (_, { rows }) => res(rows._array),
+        (_, error) => rej(error));
+    })
+  );
 }
 
-export function createCardsTable(onSuccess = logResponse, onError = errorHandler) {
-  db.transaction(tx => {
+export function createCardsTable() {
+  return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.createCards, [],
-      onSuccess,
-      onError
-    );
-    loggingTx(tx, Queries.checkTableCreation, ["cards"]);
-  });
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
 }
 
-export function createCard(deck_id, question, answer, onSuccess, onError = errorHandler) {
-  let card_id =
-  db.transaction(tx => {
+export function createCard(deck_id, question, answer, card_id = getCurrentTimeISOString()) {
+  return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.createCard, [card_id, deck_id, question, answer],
-      onSuccess, onError
-    );
-  });
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
 }
 
 export function getAllCards() {
   return new Promise((res, rej) => db.transaction(tx => {
       tx.executeSql(Queries.getAllCards, [],
         (_, { rows }) => res(rows._array),
-        (_, error) => rej(error))
+        (_, error) => rej(error));
     })
   );
 }
