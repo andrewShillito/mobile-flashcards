@@ -101,7 +101,6 @@ function loading(store = true, action) {
 function categories(store = {}, action) {
   switch (action.type) {
     case RECEIVE_CATEGORIES:
-      console.log("the reducer", action);
       return {
         ...store,
         ...action.categories,

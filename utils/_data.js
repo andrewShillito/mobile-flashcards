@@ -227,10 +227,8 @@ const _clearActiveDeck = function() {
 
 const _getCategories = function() {
   return AsyncStorage.getItem(CATEGORIES_STORAGE_KEY)
-    .then((raw) => {console.log("Raw Return", raw); return raw})
     .then(JSON.parse)
     .then((data) => {
-      console.log("received from AsyncStorage:", data)
       if (data === null) {
         AsyncStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(categories))
           .then(() => {
@@ -238,7 +236,6 @@ const _getCategories = function() {
           })
           .catch((err) => console.log(err));
       } else {
-        console.log("data return statement", {...data});
         return {...categories}; // change to {...data} when not returning dummy data
       }
     })
