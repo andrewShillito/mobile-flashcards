@@ -46,4 +46,4 @@ Will start an expo server in a new browser tab.  You can then connect to expo vi
 2. Quiz - Quiz yourself on your deck choosing correct or incorrect to track your score. Displays a score report when quiz is completed.
 3. EditDeck - Change deck title, add cards, or delete the deck.
 
-*Coming soon - more in-depth score reports, Home Deck swipe handling *
+*Coming soon - more in-depth score reports, Home Deck swipe handling*
