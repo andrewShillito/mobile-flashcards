@@ -64,7 +64,6 @@ class DeckDetail extends React.Component {
     this.setState(() => ({
       selectedCategory: val,
     }));
-    console.log("calling handleAddDeck with:", val, this.props.deck.title);
     this.props.dispatch(handleAddDeckToCategory(val, this.props.deck.title));
   }
   render() {
