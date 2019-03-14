@@ -96,7 +96,10 @@ const addDeck = (deck) => {
 
 export const handleAddDeck = (category, title) => {
   return dispatch => {
-    return createDeck(title)
+    let cat = (category === null || category === undefined || category === "Uncategorized")
+      ? "Uncategorized"
+      : category
+    return createDeck(title, cat)
       .then(deckArr => {
         let deck = deckArr[0];
         deck.questions = [];
@@ -108,20 +111,27 @@ export const handleAddDeck = (category, title) => {
   };
 }
 
-const removeDeck = (title) => {
+const removeDeck = (title, category, newCategory) => {
   return {
     type: REMOVE_DECK,
     title,
+    category,
+    newCategory,
   };
 }
 
 export const handleRemoveDeck = (category, title) => {
   return dispatch => {
-    return _removeDeck(title)
-      .then(() => { // returns empty arr
-        dispatch(removeDeck(title));
+    return _removeDeck(category, title)
+      .then((categoryArr) => { // returns arr of category members
+        let newCategory;
+        if (categoryArr.length) {
+          newCategory = new Set(categoryArr);
+        } else {
+          newCategory = new Set();
+        }
+        dispatch(removeDeck(title, category, newCategory));
         dispatch(clearActiveDeck());
-        dispatch(removeDeckFromCategory(category, title))
       })
       .catch((err) => console.log(err));
   };

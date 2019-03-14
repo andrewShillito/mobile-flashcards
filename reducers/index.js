@@ -136,7 +136,12 @@ function categories(store = {}, action) {
 
       return {
         ...newStore,
-      }
+      };
+    case REMOVE_DECK:
+      return {
+        ...store,
+        [action.category]: action.newCategory
+      };
     case ADD_DECK_TO_CATEGORY:
       return {
         ...store,

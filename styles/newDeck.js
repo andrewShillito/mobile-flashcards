@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { BACKGROUND_PRIMARY, PURPLE, WHITE } from "../styles/shared";
 
 export default StyleSheet.create({
@@ -12,4 +12,16 @@ export default StyleSheet.create({
     fontSize: 30,
     color: PURPLE,
   },
+  text: {
+    fontSize: 15,
+    color: PURPLE,
+  },
+  picker: {
+    width: Dimensions.get("window").width,
+    flex: 1,
+  },
+  pickerText: {
+    fontSize: 25,
+    color: PURPLE,
+  }
 });

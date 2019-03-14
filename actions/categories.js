@@ -45,7 +45,14 @@ export function handleAddDeckToCategory(category, title) {
       .then(categories => { // categories is [{ category: category, title: title }, etc...]
         let newCategories = {};
         categories.forEach((obj) => {
-          if (newCategories[obj.category] === undefined) {
+          if (obj.category === null) {
+            if (newCategories["Uncategorized"] === undefined) {
+              newCategories["Uncategorized"] = new Set(obj.title);
+            } else {
+              newCategories["Uncategorized"].add(obj.title);
+            }
+          }
+          else if (newCategories[obj.category] === undefined) {
             newCategories[obj.category] = new Set(obj.title);
           } else {
             newCategories[obj.category].add(obj.title);
@@ -58,9 +65,10 @@ export function handleAddDeckToCategory(category, title) {
   };
 }
 
-export function handleClearDeckCategory(title) {
+export function handleClearDeckCategory(category, title) {
   return dispatch => {
-    return clearDeckCategory()
+    let cat = category === null ? "Uncategorized" : category;
+    return clearDeckCategory(cat, title)
       .then(deckTitles => { // arr of decks in the altered category
         dispatch(removeDeckFromCategory(title, new Set(deckTitles)));
       })

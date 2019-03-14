@@ -84,7 +84,7 @@ class Home extends React.Component {
         }
       });
 
-    // console.log("selected decks:", selectedDecks);
+    console.log("selected decks:", selectedDecks);
     return (
       <View style={styles.container}>
         <HomeCategorySelector

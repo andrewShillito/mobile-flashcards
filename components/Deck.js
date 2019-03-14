@@ -87,12 +87,16 @@ class Deck extends React.Component {
       <Animated.View style={styles.container}>
         <TouchableOpacity style={styles.deck} onPress={this.handleTouch}>
           <DeckHeader>{deck.title}</DeckHeader>
-          <Text style={styles.text}>{`${deck.questions.length} card${deck.questions.length>1 || deck.questions.length === 0 ? "s" : ""}`}</Text>
+          <Text style={styles.text}>{ deck
+              ? deck.questions ? `${deck.questions.length} card${deck.questions.length>1 || deck.questions.length === 0 ? "s" : ""}` : ""
+              : ""}</Text>
         </TouchableOpacity>
         <Animated.View style={[styles.buttonContainer, {width: buttonWidth, marginRight: marginRight}]}>
           <InfoIcon onPress={this.handleInfoPress}/>
           <EditIcon onPress={this.handleEditPress}/>
-          <QuizIcon onPress={this.handleQuizPress} active={deck.questions.length > 0} />
+          <QuizIcon onPress={this.handleQuizPress} active={deck
+              ? deck.questions ? deck.questions.length > 0 : false
+              : false} />
         </Animated.View>
       </Animated.View>
     );

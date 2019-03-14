@@ -55,7 +55,7 @@ export function populateInitialData(queryList = [
     queryList.forEach((query) => noLogFunc(query));
 
     Object.keys(decks).forEach((name) => {
-      noLogFunc(Queries.createDeck, [name, getSafeTimeISO()]);
+      noLogFunc(Queries.createDeck, [name, getSafeTimeISO(), "Uncategorized"]);
 
       decks[name].questions.forEach(card => {
         let time = getSafeTimeISO()
@@ -120,7 +120,7 @@ export function getDeck(title) {
   );
 }
 
-export function createDeck(title, created = getCurrentTimeISOString(), category = null) {
+export function createDeck(title, category = "Uncategorized", created = getCurrentTimeISOString()) {
   return new Promise((res, rej) => db.transaction(tx => {
       tx.executeSql(Queries.createDeck, [title, created, category],
         (_, { rows }) => {},
@@ -133,17 +133,17 @@ export function createDeck(title, created = getCurrentTimeISOString(), category 
   );
 }
 
-export function removeDeck(title) {
+export function removeDeck(category, title) {
   return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.removeDeck, [title], // removes cards relating to deck
       (_, { rows }) => {},
       (_, error) => rej(error));
     tx.executeSql(Queries.removeAllCardsFromDeck, [title], // removes deck from decks table
+      (_, { rows }) => {},
+      (_, error) => rej(error));
+    tx.executeSql(Queries.getDecksByCategory, [category], // gets new category members
       (_, { rows }) => res(rows._array),
       (_, error) => rej(error));
-    // tx.executeSql("SELECT * FROM cards", [], // if need the new cards list
-    //   (_, { rows }) => res(rows._array),
-    //   (_, error) => rej(error));
     })
   );
 }
@@ -170,7 +170,7 @@ export function setDeckCategory(category, title) {
   );
 }
 
-export function clearDeckCategory(title) {
+export function clearDeckCategory(category, title) {
   return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.clearDeckCategory, [title],
       (_, { rows }) => {},
