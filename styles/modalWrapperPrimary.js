@@ -5,14 +5,15 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 20,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
   },
   content: {
     height: (Dimensions.get("window").height)*.75,
-    width: (Dimensions.get("window").width)*.90,
+    width: (Dimensions.get("window").width),
     backgroundColor: WHITE,
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2},
     shadowOpacity: 0.25,
