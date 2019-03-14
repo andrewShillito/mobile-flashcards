@@ -80,7 +80,6 @@ class Deck extends React.Component {
 
   render() {
     const { deck } = this.props;
-    console.log("Deck deck:", deck);
     const { marginRight, buttonWidth } = this.state;
 
     return (

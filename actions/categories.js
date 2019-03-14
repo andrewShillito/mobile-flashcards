@@ -41,25 +41,25 @@ export function removeDeckFromCategory(title, newCategory) {
 
 export function handleAddDeckToCategory(category, title) {
   return dispatch => {
-    return setDeckCategory()
+    return setDeckCategory(category, title)
       .then(categories => { // categories is [{ category: category, title: title }, etc...]
         let newCategories = {};
         categories.forEach((obj) => {
           if (obj.category === null) {
             if (newCategories["Uncategorized"] === undefined) {
-              newCategories["Uncategorized"] = new Set(obj.title);
+              newCategories["Uncategorized"] = new Set([obj.title]);
             } else {
               newCategories["Uncategorized"].add(obj.title);
             }
           }
           else if (newCategories[obj.category] === undefined) {
-            newCategories[obj.category] = new Set(obj.title);
+            newCategories[obj.category] = new Set([obj.title]);
           } else {
             newCategories[obj.category].add(obj.title);
           }
         });
         console.log("parsed sql categories:", newCategories);
-        dispatch(addDeckToCategory(decksFromCategory(category, title, newCategories)));
+        dispatch(addDeckToCategory(category, title, newCategories));
       })
       .catch(err => console.log(err));
   };

@@ -32,7 +32,7 @@ class New extends React.Component {
   }
   onPress = () => {
     if (!this.validateInput()) {
-      alert(this.message);
+      alert(this.state.message);
       return;
     }
     else {

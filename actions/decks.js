@@ -87,9 +87,10 @@ function formatDecksAndCards(data) {
   return [decks, categories];
 }
 
-const addDeck = (deck) => {
+const addDeck = (category, deck) => {
   return {
     type: ADD_DECK,
+    category,
     deck,
   };
 }
@@ -103,9 +104,8 @@ export const handleAddDeck = (category, title) => {
       .then(deckArr => {
         let deck = deckArr[0];
         deck.questions = [];
-        dispatch(addDeck(deckArr[0]));
+        dispatch(addDeck(category, deckArr[0]));
         dispatch(setActiveDeck(title));
-        dispatch(addDeckToCategory(category, title));
       })
       .catch(err => console.log(err));
   };
