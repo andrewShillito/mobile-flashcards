@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { BACKGROUND_PRIMARY, PURPLE, WHITE } from "../styles/shared";
+import { PURPLE, WHITE, BLACK } from "../styles/shared";
 
 export default StyleSheet.create({
   container: {
@@ -22,6 +22,6 @@ export default StyleSheet.create({
   },
   pickerText: {
     fontSize: 25,
-    color: PURPLE,
+    color: BLACK,
   }
 });
