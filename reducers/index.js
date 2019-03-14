@@ -58,6 +58,22 @@ function decks(store = {}, action) {
           questions: store[action.card.deck_id].questions.filter((card) => card.card_id !== action.card.card_id).concat([action.card])
         }
       }
+    case ADD_DECK_TO_CATEGORY:
+      return {
+        ...store,
+        [action.title]: {
+          ...store[action.title],
+          category: action.category
+        }
+      }
+    case REMOVE_DECK_FROM_CATEGORY:
+      return {
+        ...store,
+        [action.title]: {
+          ...store[action.title],
+          category: null
+        }
+      }
     default:
       return store;
   }
@@ -122,16 +138,20 @@ function categories(store = {}, action) {
         ...newStore,
       }
     case ADD_DECK_TO_CATEGORY:
+      // let nuSet;
+      // if (store[action.category] === null || store[action.category] === undefined || store[action.category].size === 0) { // prevents adding undefined or null? to the set
+      //   nuSet = new Set();
+      // } else {
+      //   nuSet = new Set(store[action.category]); // set is not empty
+      // }
       return {
         ...store,
-        [action.category]: new Set(store[action.category]).add(action.title),
+        [action.category]: action.newCategories,
       };
     case REMOVE_DECK_FROM_CATEGORY:
-      let newSet = new Set(store[action.category]);
-      newSet.delete(action.title); // returns true/false if successful/unsuccessful
       return {
         ...store,
-        [action.category]: newSet,
+        [action.category]: action.newCategory,
       };
     default:
       return store;

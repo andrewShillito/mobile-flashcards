@@ -14,7 +14,7 @@ export const getDeck = "SELECT * FROM decks WHERE title=?";
 
 export const createDeck = "INSERT INTO decks (title, create_date, category) VALUES (?, ?, ?)";
 
-export const createDeckWithCategory = "INSERT INTO decks (title, create_date, category) VALUES (?, ?, ?)"
+// export const createDeckWithCategory = "INSERT INTO decks (title, create_date, category) VALUES (?, ?, ?)"
 
 export const removeDeck = "DELETE FROM decks WHERE title=?";
 
@@ -29,6 +29,10 @@ export const setDeckCategory = "UPDATE decks SET category=? WHERE title=?";
 export const clearDeckCategory = "UPDATE decks SET category=null WHERE title=?";
 
 export const getDecksAndCards = "SELECT * FROM decks INNER JOIN cards ON cards.deck_id = decks.title ORDER BY decks.title, card_id";
+
+export const getDecksByCategory = "SELECT title FROM decks WHERE category=?";
+
+export const getCategories = "SELECT category, title FROM decks";
 
 export const checkForExistingTable = "SELECT name FROM sqlite_master WHERE type='table' AND name=?";
 

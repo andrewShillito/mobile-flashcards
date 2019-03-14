@@ -158,6 +158,30 @@ export function updateDeckTitle(title, newTitle) {
   );
 }
 
+export function setDeckCategory(category, title) {
+  return new Promise((res, rej) => db.transaction(tx => {
+    tx.executeSql(Queries.setDeckCategory, [category, title],
+      (_, { rows }) => {},
+      (_, error) => rej(error));
+    tx.executeSql(Queries.getCategories, [],
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
+}
+
+export function clearDeckCategory(title) {
+  return new Promise((res, rej) => db.transaction(tx => {
+    tx.executeSql(Queries.clearDeckCategory, [title],
+      (_, { rows }) => {},
+      (_, error) => rej(error));
+    tx.executeSql(Queries.getDecksByCategory, [category],
+      (_, { rows }) => res(rows._array),
+      (_, error) => rej(error));
+    })
+  );
+}
+
 export function createCardsTable() {
   return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.createCards, [],

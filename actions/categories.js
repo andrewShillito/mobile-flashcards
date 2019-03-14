@@ -1,4 +1,5 @@
 import { ADD_CATEGORY, REMOVE_CATEGORY, ADD_DECK_TO_CATEGORY, REMOVE_DECK_FROM_CATEGORY, RECEIVE_CATEGORIES } from "./types";
+import { setDeckCategory, clearDeckCategory } from "../SQLite";
 
 export function receiveCategories(categories) {
   return {
@@ -21,21 +22,52 @@ export function removeCategory(category) {
   };
 }
 
-export function addDeckToCategory(category, title) {
+export function addDeckToCategory(category, title, newCategories) {
   return {
     type: ADD_DECK_TO_CATEGORY,
     category,
     title,
+    newCategories,
   };
 }
 
-export function removeDeckFromCategory(category, title) {
+export function removeDeckFromCategory(title, newCategory) {
   return {
     type: REMOVE_DECK_FROM_CATEGORY,
-    category,
+    newCategory,
     title,
   };
 }
+
+export function handleAddDeckToCategory(category, title) {
+  return dispatch => {
+    return setDeckCategory()
+      .then(categories => { // categories is [{ category: category, title: title }, etc...]
+        let newCategories = {};
+        categories.forEach((obj) => {
+          if (newCategories[obj.category] === undefined) {
+            newCategories[obj.category] = new Set(obj.title);
+          } else {
+            newCategories[obj.category].add(obj.title);
+          }
+        });
+        console.log("parsed sql categories:", newCategories);
+        dispatch(addDeckToCategory(decksFromCategory(category, title, newCategories)));
+      })
+      .catch(err => console.log(err));
+  };
+}
+
+export function handleClearDeckCategory(title) {
+  return dispatch => {
+    return clearDeckCategory()
+      .then(deckTitles => { // arr of decks in the altered category
+        dispatch(removeDeckFromCategory(title, new Set(deckTitles)));
+      })
+      .catch(err => console.log(err));
+  };
+}
+
 // Deprecated AsyncStorage methods
 
 // export function handleReceiveCategories() {
