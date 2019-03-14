@@ -4,14 +4,12 @@ import { PURPLE, BLUE } from "./shared";
 export default StyleSheet.create({
   container: {
     flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center"
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   text: {
     fontSize: 20,
     color: PURPLE,
+    margin:15,
   },
-  category: {
-    color: BLUE,
-  }
 });
