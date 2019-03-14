@@ -138,12 +138,6 @@ function categories(store = {}, action) {
         ...newStore,
       }
     case ADD_DECK_TO_CATEGORY:
-      // let nuSet;
-      // if (store[action.category] === null || store[action.category] === undefined || store[action.category].size === 0) { // prevents adding undefined or null? to the set
-      //   nuSet = new Set();
-      // } else {
-      //   nuSet = new Set(store[action.category]); // set is not empty
-      // }
       return {
         ...store,
         [action.category]: action.newCategories,
