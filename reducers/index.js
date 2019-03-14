@@ -137,6 +137,17 @@ function categories(store = {}, action) {
       return {
         ...newStore,
       };
+    case ADD_DECK:
+      let newSet;
+      if (store[action.category] === undefined || store[action.category].size === 0) {
+        newSet = new Set([action.deck.title]);
+      } else {
+        newSet = new Set(store[action.category]).add(action.deck.title);
+      }
+      return {
+        ...store,
+        [action.category]: newSet,
+      };
     case REMOVE_DECK:
       return {
         ...store,
@@ -144,8 +155,7 @@ function categories(store = {}, action) {
       };
     case ADD_DECK_TO_CATEGORY:
       return {
-        ...store,
-        [action.category]: action.newCategories,
+        ...action.newCategories,
       };
     case REMOVE_DECK_FROM_CATEGORY:
       return {
