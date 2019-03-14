@@ -35,10 +35,11 @@ Will start an expo server in a new browser tab.  You can then connect to expo vi
 ## Tab Navigator Routes
 
 1. Home - view a list of your flashcard decks.
-    - *limit view by category - category editing coming soon*
+    - *sort by category or view all*
     - *Touch decks to open a side bar with buttons for viewing the deck, editing the deck,
   and starting a quiz*
-2. New - create new decks by inputting an un-used title
+2. New - create new decks
+    - *select an existing category or type in a new category name*
 
 ## Stack Navigator Routes
 
