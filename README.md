@@ -27,6 +27,7 @@ Will start an expo server in a new browser tab.  You can then connect to expo vi
 ## Features
 
 1. Access your decks on the home screen
+    - *sort by category or view all*
 2. Create, update, view, and destroy decks and flashcards within those decks
 3. Quiz yourself with your flashcard decks
 4. View a short score report at the end of your quiz
@@ -46,4 +47,4 @@ Will start an expo server in a new browser tab.  You can then connect to expo vi
 2. Quiz - Quiz yourself on your deck choosing correct or incorrect to track your score. Displays a score report when quiz is completed.
 3. EditDeck - Change deck title, add cards, or delete the deck.
 
-*Coming soon - more in-depth score reports, Home Deck swipe handling*
+*Coming soon - more in-depth score reports, Home Deck swipe handling, extended category functionality*
