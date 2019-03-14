@@ -33,12 +33,14 @@ class Home extends React.Component {
     if (this.props.activeDeck !== title) {
       this._setActiveDeck(title);
     }
+    this.resetSelectedCategory();
     this.props.navigation.navigate("DeckDetail")
   }
   goToQuiz = (title) => {
     if (this.props.activeDeck !== title) {
       this._setActiveDeck(title);
     }
+    this.resetSelectedCategory();
     this.props.navigation.push("DeckDetail");
     this.props.navigation.push("Quiz");
   }
@@ -46,6 +48,7 @@ class Home extends React.Component {
     if (this.props.activeDeck !== title) {
       this._setActiveDeck(title);
     }
+    this.resetSelectedCategory();
     this.props.navigation.push("DeckDetail");
     this.props.navigation.push("EditDeck");
   }
@@ -63,6 +66,11 @@ class Home extends React.Component {
   updateSelectedCategory = (val, index) => {
     this.setState(() => ({
       selectedCategory: val,
+    }));
+  }
+  resetSelectedCategory = () => {
+    this.setState(() => ({
+      selectedCategory: "Show All",
     }));
   }
   toggleModal = () => {

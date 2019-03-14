@@ -10,6 +10,7 @@ import { RED, SUCCESS } from "../styles/shared";
 import { clearActiveDeck } from "../actions/activeDeck";
 import ModalWrapperSecondary from "./ModalWrapperSecondary";
 import ButtonSecondary from "./ButtonSecondary";
+import TextInputPrimary from "./TextInputPrimary";
 
 class New extends React.Component {
   state = {
@@ -45,7 +46,7 @@ class New extends React.Component {
       this.props.navigation.navigate("DeckDetail");
       this.setState(() => ({
         title: '',
-        category: "",
+        category: "Uncategorized",
       }));
     }
   }
@@ -67,7 +68,6 @@ class New extends React.Component {
   openModal = () => {
     this.setState(() => ({
       isModalVisible: true,
-      category: "Uncategorized",
     }));
   }
   closeModal = () => {
@@ -126,10 +126,7 @@ class New extends React.Component {
       message: this.state.message,
     };
     const { categories } = this.props;
-    const category = categories.includes(this.state.category) ? category : "Uncategorized";
-    // const uncategorizedItem = categories.includes("Uncategorized")
-    //   ? <Picker.Item label="Uncategorized" value="Uncategorized" key="Uncategorized" />
-    //   : null
+    const selectedValue = categories.includes(this.state.category) ? this.state.category : "Uncategorized";
     return (
       <CloseKeyboardWrapper containerStyle={styles.container}>
         <Text style={styles.header}>Create a new deck</Text>
@@ -146,8 +143,8 @@ class New extends React.Component {
           transparent={true}
           >
           <Picker
-              selectedValue={category}
-              onValueChange={this.state.onChangeCategory}
+              selectedValue={selectedValue}
+              onValueChange={this.onChangeCategory}
               itemStyle={styles.pickerText}
               style={styles.picker}
               >
