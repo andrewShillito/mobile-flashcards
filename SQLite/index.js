@@ -47,6 +47,7 @@ export function populateInitialData(queryList = [
   Queries.createDeckScores,
 
 ]) {
+  console.log("populate data called");
   return new Promise((res, rej) => db.transaction(tx => {
 
     const func = boundLoggingTx.bind(tx); // to shorten function call by binding tx to this keyword
@@ -103,6 +104,7 @@ export function getDecks() {
 }
 
 export function getDecksAndCards() {
+  console.log("get decks and cards called");
   return new Promise((res, rej) => db.transaction(tx => {
     tx.executeSql(Queries.getDecksAndCards, [],
       (_, { rows }) => res(rows._array),
