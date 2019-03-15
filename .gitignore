@@ -6,3 +6,4 @@ npm-debug.*
 *.key
 *.mobileprovision
 utils/notes.txt
+utils/expoForum*
