@@ -12,27 +12,50 @@ const receiveDecks = (decks) => {
   };
 }
 
-export const handleReceiveDecks = () => {
-  return dispatch => { //passed dispatch from redux-thunk middleware
+export const handleReceiveDecks = () => (
+  async (dispatch) => {
     // dispatch(startLoading()); // not necessary as loading is currently extremely quick
-
-    var existingData = false;
-    checkForExistingTable() // returns bool representing if decks table exists
-      .then((bool) => existingData = bool)
-      .catch(err => console.log("Error checking for existing data:", err));
-
-    existingData ? getDecksAndCards() : populateInitialData() // this works apparently
-      .then(data => {
-        // dispatch(endLoading()); // not necessary as laoding is currently extremely quick
-        const [ decks, categories ] = formatDecksAndCards(data);
-        // returns [ decks, categories ] formatted for redux store
-
-        dispatch(receiveDecks(decks));
-        dispatch(receiveCategories(categories))
-      })
-    .catch(err => console.log(err));
+    try {
+      const existingData = await checkForExistingTable();
+      let data;
+      if (existingData) {
+        console.log("Is existing data:", existingData); // does get here and log true
+        data = await getDecksAndCards();
+      } else {
+        console.log("Is not existing data:", existingData);
+        data = await populateInitialData();
+      }
+      const [ decks, categories ] = formatDecksAndCards(data);
+      dispatch(receiveDecks(decks));
+      dispatch(receiveCategories(categories));
+      // dispatch(endLoading()); // not necessary as laoding is currently extremely quick
+    } catch (error) {
+      console.log(error);
+    }
   }
-}
+)
+
+// export const handleReceiveDecks = () => {
+//   return dispatch => { //passed dispatch from redux-thunk middleware
+//     // dispatch(startLoading()); // not necessary as loading is currently extremely quick
+//
+//     var existingData = false;
+//     checkForExistingTable() // returns bool representing if decks table exists
+//       .then((bool) => existingData = bool)
+//       .catch(err => console.log("Error checking for existing data:", err));
+//
+//     existingData ? getDecksAndCards() : populateInitialData() // this works apparently
+//       .then(data => {
+//         // dispatch(endLoading()); // not necessary as laoding is currently extremely quick
+//         const [ decks, categories ] = formatDecksAndCards(data);
+//         // returns [ decks, categories ] formatted for redux store
+//
+//         dispatch(receiveDecks(decks));
+//         dispatch(receiveCategories(categories))
+//       })
+//     .catch(err => console.log(err));
+//   }
+// }
 
 function formatDecksAndCards(data) {
   let decks = {};
